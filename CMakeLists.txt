@@ -25,7 +25,21 @@ set(HEADERS
     include/geometric_primitives/geom_utils_1.h
     include/geometric_primitives/sector.h
     include/geometric_primitives/geom2D.h
+
     include/random/generator.h
+    
+    include/data_structures/counter.h
+    include/data_structures/union_find.h
+
+    include/dctc/network_components/nodes/node.h
+    include/dctc/network_components/nodes/DO_node.h
+    include/dctc/network_components/nodes/DD_node.h
+    include/dctc/network_components/edges/edge.h
+    include/dctc/network_components/graphs/graph.h
+
+    include/dctc/instance/instance.h
+
+    include/dctc/algorithms/coverage/coverage_alg.h
 )
 
 set(SOURCES
@@ -42,7 +56,23 @@ set(SOURCES
     src/geometric_primitives/rotation.cpp
     src/geometric_primitives/sector.cpp
     src/geometric_primitives/geom2D_utils.cpp
+
     src/random/generator.cpp
+
+    src/data_structures/counter.cpp
+    src/data_structures/union_find.cpp
+
+    src/dctc/network_components/nodes/node.cpp
+    src/dctc/network_components/nodes/DO_node.cpp
+    src/dctc/network_components/nodes/DD_node.cpp
+    src/dctc/network_components/edges/edge.cpp
+    src/dctc/network_components/graphs/graph.cpp
+
+    src/dctc/instance/instance.cpp
+
+    src/dctc/algorithms/coverage/trivial_coverage_alg.cpp
+    src/dctc/algorithms/coverage/greedy_coverage_alg.cpp
+    src/dctc/algorithms/coverage/strip_coverage_alg.cpp
 )
 
 add_library(${This} STATIC ${SOURCES} ${HEADERS})

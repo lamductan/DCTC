@@ -11,7 +11,14 @@ set(TESTS
     #"src/geometric_primitives/test_sector.cpp"
     #"src/geometric_primitives/test_geom_utils.cpp"
 
-    "src/random/test_generator.cpp"
+    #"src/random/test_generator.cpp"
+
+    #"src/dctc/network_components/nodes/test_node.cpp"
+    #"src/dctc/network_components/nodes/test_DD_node.cpp"
+    #"src/dctc/network_components/nodes/test_DO_node.cpp"
+    #"src/dctc/network_components/edges/test_edge.cpp"
+
+    "src/dctc/instance/test_instance.cpp"
 )
 
 add_executable(tests ${TESTS})
