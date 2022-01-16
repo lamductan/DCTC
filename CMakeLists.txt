@@ -56,6 +56,7 @@ set(SOURCES
     src/geometric_primitives/rotation.cpp
     src/geometric_primitives/sector.cpp
     src/geometric_primitives/geom2D_utils.cpp
+    src/geometric_primitives/convex_hull.cpp
 
     src/random/generator.cpp
 

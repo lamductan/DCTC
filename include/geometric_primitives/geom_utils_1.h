@@ -25,6 +25,8 @@ double computeAngle(const Ray2D& r, const Vector2D& v);
 double computeAngle(const Vector2D& v, const Ray2D& r);
 double computeAngle(const Line2D& l1, const Line2D& l2);
 
+double getOppositeAngle(double angle);
+
 Point2D getPointOnRayAtDistance(const Ray2D& ray2D, double distance);
 Point2D getPointOnSegmentAtDistanceFromEndpoint1(const Segment2D& segment2D, double distance);
 Point2D getPointOnSegmentAtDistanceFromEndpoint2(const Segment2D& segment2D, double distance);
@@ -37,5 +39,7 @@ bool isLinePerpendicularLine(const Line2D& l1, const Line2D& l2);
 std::vector<Point2D> findIntersectionsBetweenGeom2DObjects(const Ray2D& ray2D, const Segment2D& segment2D);
 std::vector<Point2D> findIntersectionsBetweenGeom2DObjects(const Segment2D& segment2D, const Ray2D& ray2D);
 std::vector<Point2D> findIntersectionsBetweenGeom2DObjects(const Segment2D& segment2D_1, const Segment2D& segment2D_2);
+
+std::vector<Point2D> findConvexHull(std::vector<Point2D> points);
 
 #endif //GEOMETRIC_PRIMITIVES_GEOM_UTILS_1_H_

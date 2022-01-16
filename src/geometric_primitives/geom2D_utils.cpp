@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <cassert>
 #include <cmath>
 #include <vector>
@@ -15,11 +16,13 @@
 
 
 double computeCCW(const Point2D& a, const Point2D& b, const Point2D& c) {
-    return (b.getX() - a.getX()) * (c.getY() - a.getY()) - (c.getX() - a.getX())*(b.getY() - a.getY());
+    //return (b.getX() - a.getX()) * (c.getY() - a.getY()) - (c.getX() - a.getX())*(b.getY() - a.getY());
+    return Vector2D(a, b).cross(Vector2D(a, c));
 }
 
 double computeCCW(const Vector2D& a, const Vector2D& b) {
-    return a.getX()*b.getY() - b.getX()*a.getY();
+    //return a.getX()*b.getY() - b.getX()*a.getY();
+    return a.cross(b);
 }
 
 double computeAngle(const Vector2D& a, const Vector2D& b) {
@@ -80,6 +83,8 @@ double computeAngle(const Vector2D& v, const Ray2D& r) {
 double computeAngle(const Line2D& l1, const Line2D& l2) {
     return computeGeometricAngle(computeAngle(l1.getNormVector(), l2.getNormVector()));
 }
+
+double getOppositeAngle(double angle) {return standardize_angle(angle + PI);}
 
 Point2D getPointOnRayAtDistance(const Ray2D& ray2D, double distance) {
     Circle circle(ray2D.getPoint0(), distance);

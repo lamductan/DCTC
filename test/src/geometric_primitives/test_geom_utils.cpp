@@ -61,3 +61,52 @@ TEST(TestGeomUtils, TestBisector)
     ASSERT_TRUE(almost_eq(fabs(ans(O)), fabs(bisector(O)), 0.05));
     ASSERT_TRUE(almost_eq(fabs(ans(K)), fabs(bisector(K)), 0.05));
 }
+
+TEST(TestGeomUtils, TestConvexHull_1)
+{
+    Point2D K(20, 7);
+    Point2D I(15, 4);
+    Point2D L(16, 9);
+    Point2D J(19, 4);
+    std::vector<Point2D> points{K, I, L, J};
+    std::vector<Point2D> convex_hull = findConvexHull(points);
+    print_vector<Point2D>(convex_hull, '\n');
+    ASSERT_EQ(convex_hull.size(), 4);
+}
+
+TEST(TestGeomUtils, TestConvexHull_2)
+{
+    Point2D P(26, 10);
+    Point2D Q(27, 4);
+    Point2D N(24, 4);
+    Point2D O(29, 4);
+    std::vector<Point2D> points{P, Q, N, O};
+    std::vector<Point2D> convex_hull = findConvexHull(points);
+    print_vector<Point2D>(convex_hull, '\n');
+    ASSERT_EQ(convex_hull.size(), 3);
+}
+
+TEST(TestGeomUtils, TestConvexHull_3)
+{
+    Point2D R(12, 1);
+    Point2D U(18, 1);
+    Point2D T(16, 1);
+    Point2D S(14, 1);
+    std::vector<Point2D> points{R, U, T, S};
+    std::vector<Point2D> convex_hull = findConvexHull(points);
+    ASSERT_EQ(convex_hull.size(), 0);
+}
+
+TEST(TestGeomUtils, TestConvexHull_4)
+{
+    Point2D A(7, 7);
+    Point2D B(11.33, 4.5);
+    Point2D C(9.16, 11.51);
+    Point2D D(9.3, 8.55);
+    Point2D G(10.61, 5.73);
+    Point2D H(11.48, 7.91);
+    std::vector<Point2D> points{A, B, C, D, G, H};
+    std::vector<Point2D> convex_hull = findConvexHull(points);
+    print_vector<Point2D>(convex_hull, '\n');
+    ASSERT_EQ(convex_hull.size(), 4);
+}

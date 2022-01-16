@@ -8,8 +8,8 @@ set(TESTS
     #"src/geometric_primitives/test_ray2D.cpp"
     #"src/geometric_primitives/test_circle.cpp"
     #"src/geometric_primitives/test_rotation.cpp"
-    "src/geometric_primitives/test_sector.cpp"
-    #"src/geometric_primitives/test_geom_utils.cpp"
+    #"src/geometric_primitives/test_sector.cpp"
+    "src/geometric_primitives/test_geom_utils.cpp"
 
     #"src/random/test_generator.cpp"
 
