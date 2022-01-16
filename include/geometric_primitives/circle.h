@@ -25,6 +25,7 @@ protected:
 public:
     Circle();
     Circle(const Point2D& center, double radius);
+    virtual void setRadius(double radius);
     Point2D getCenter() const;
     double getRadius() const;
     double operator()(const Point2D& p) const;

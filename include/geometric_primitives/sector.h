@@ -29,11 +29,13 @@ private:
     Segment2D boundary2;
     
     void init(const Point2D& center, double radius, double angle, double orientation_angle=0);
+    void computeMidpointAndEndpoints();
     std::pair<Point2D, Point2D> getPointsInsideSector(const std::pair<Point2D, Point2D>& pair_points) const;
 
 public:
     Sector();
     Sector(const Point2D& center, double radius, double angle, double orientation_angle=0);
+    virtual void setRadius(double radius) override;
     void orientWithAngle(double orientation_angle);
     Point2D getOriginalBisectorUnitPoint() const;
     Point2D getBisectorUnitPoint() const;
@@ -78,6 +80,8 @@ public:
     double orientToCoverPoint2D(const Point2D& p);
     bool canOrientToCoverPoints2D(const std::vector<Point2D>& points) const;
     double orientToCoverPoints2D(const std::vector<Point2D>& points);
+
+    bool orientBoundaryPassingThroughPointAndCoverAnotherPoint(const Point2D& a, const Point2D& b);
 
     virtual std::string toString() const override;
     friend std::ostream& operator<<(std::ostream& os, const Circle& circle);

@@ -28,6 +28,8 @@ Point2D Circle::getCenter() const {return center;}
 
 double Circle::getRadius() const {return radius;}
 
+void Circle::setRadius(double radius) {this->radius = radius;}
+
 double Circle::operator()(const Point2D& p) const {
     double dx = p.getX() - center.getX();
     double dy = p.getY() - center.getY();

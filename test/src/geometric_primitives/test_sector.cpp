@@ -223,3 +223,16 @@ TEST(TestSector, Test_OrientToCoverPoints2D_3)
     std::vector<Point2D> points{Point2D(11.48, 7.91), Point2D(8.4, 10.79), Point2D(11.21, 4.71)};
     ASSERT_FALSE(sector.canOrientToCoverPoints2D(points));
 }
+
+TEST(TestSector, Test_OrientBoundary)
+{
+    Sector sector(Point2D(7, 7), 5, 2.0*(PI/6 + 0.3));
+    Point2D a = Point2D(11.48, 7.91);
+    Point2D b = Point2D(11.21, 4.71);
+    ASSERT_TRUE(sector.orientBoundaryPassingThroughPointAndCoverAnotherPoint(a, b));
+    ASSERT_TRUE(sector.getBoundarySegment1().containsPoint2D(a) || sector.getBoundarySegment2().containsPoint2D(a));
+    ASSERT_TRUE(sector.containsPoint2D(b));
+    double orientation_angle = sector.getOrientationAngle();
+    std::cout << orientation_angle << '\n';
+    ASSERT_TRUE(orientation_angle >= 5.6 && orientation_angle <= 5.7);
+}
