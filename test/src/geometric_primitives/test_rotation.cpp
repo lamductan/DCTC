@@ -3,7 +3,7 @@
 #include "geometric_primitives/geom_common.h"
 #include "geometric_primitives/point2D.h"
 #include "geometric_primitives/rotation.h"
-#include "geometric_primitives/geom_utils.h"
+#include "geometric_primitives/geom_utils_1.h"
 
 
 TEST(TestRotation, TestRotation1)

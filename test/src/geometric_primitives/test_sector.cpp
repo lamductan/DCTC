@@ -6,7 +6,7 @@
 #include "geometric_primitives/geom2D.h"
 
 
-std::set<Point2D> getRoundPoint2DSet(const std::vector<Point2D> points) {
+std::set<Point2D> getRoundPoint2DSet(const std::vector<Point2D>& points) {
     std::set<Point2D> st;
     for(const Point2D& point : points) {
         double x = round_double(point.getX());
@@ -32,6 +32,8 @@ TEST(TestSector, Test_1)
     std::cout << sector.getMidPoint() << ' ' << sector.getEndpoint1() << ' ' << sector.getEndpoint2() << '\n';
     std::cout << (Line2D) sector.getBoundarySegment1() << '\n';
     std::cout << (Line2D) sector.getBoundarySegment2() << '\n';
+    Point2D I(13, 4);
+    ASSERT_TRUE(sector.containsPoint2D(I));
 }
 
 TEST(TestSector, Test_SectorIntersectRay2D)

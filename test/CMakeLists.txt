@@ -9,7 +9,7 @@ set(TESTS
     #"src/geometric_primitives/test_circle.cpp"
     #"src/geometric_primitives/test_rotation.cpp"
     #"src/geometric_primitives/test_sector.cpp"
-    "src/geometric_primitives/test_geom_utils.cpp"
+    #"src/geometric_primitives/test_geom_utils.cpp"
 
     #"src/random/test_generator.cpp"
 
@@ -20,6 +20,7 @@ set(TESTS
 
     #"src/dctc/instance/test_instance.cpp"
 
+    #"src/dctc/algorithms/connectivity/test_convex_hull.cpp"
     "src/dctc/algorithms/connectivity/test_utils.cpp"
 )
 

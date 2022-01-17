@@ -104,7 +104,8 @@ std::vector<Point2D> Circle::findIntersectionsWithLine2D(const Line2D& line2D) c
     Point2D intersection2(xs.second, (-c - a*xs.second)/b);
     if (intersection1.getX() > intersection2.getX()) std::swap(intersection1, intersection2);
     if (intersection1 == intersection2) intersection2 = POINT_INFINITY;
-    return {intersection1, intersection2};
+    std::vector<Point2D> ans = std::vector<Point2D>{intersection1, intersection2};
+    return ans;
 }
 
 bool Circle::intersectsWithSegment2D(const Segment2D& segment2D) const {

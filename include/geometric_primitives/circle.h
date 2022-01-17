@@ -30,8 +30,8 @@ public:
     double getRadius() const;
     double operator()(const Point2D& p) const;
 
-    virtual bool passesThroughPoint2D(const Point2D& p) const;
-    virtual bool containsPoint2D(const Point2D& p) const override;
+    bool passesThroughPoint2D(const Point2D& p) const;
+    virtual bool containsPoint2D(const Point2D& p) const;
     bool intersectsWithLine2D(const Line2D& line2D) const;
     std::vector<Point2D> findIntersectionsWithLine2D(const Line2D& line2D) const;
     bool intersectsWithRay2D(const Ray2D& ray2D) const;

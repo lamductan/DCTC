@@ -49,8 +49,8 @@ public:
     Segment2D getBoundarySegment1() const;
     Segment2D getBoundarySegment2() const;
 
-    virtual bool passesThroughPoint2D(const Point2D& p) const override;
-    virtual bool containsPoint2D(const Point2D& p) const override;
+    bool passesThroughPoint2D(const Point2D& p) const;
+    virtual bool containsPoint2D(const Point2D& p) const;
     std::vector<Point2D> findIntersectionsSectorWithLine2D(const Line2D& line2D) const;
     std::vector<Point2D> findIntersectionsSectorWithRay2D(const Ray2D& ray2D) const;
     std::vector<Point2D> findIntersectionsSectorWithSegment2D(const Segment2D& segment2D) const;
@@ -75,13 +75,13 @@ public:
     bool sectorIntersectsWithSector(const Sector& other) const;
     std::vector<Point2D> findIntersectionsSectorWithSector(const Sector& other) const;
 
-    double findPossibleOrientAngleToCoverPoints2D(const std::vector<Point2D>& points) const;
-    bool canOrientToCoverPoint2D(const Point2D& p) const;
-    double orientToCoverPoint2D(const Point2D& p);
-    bool canOrientToCoverPoints2D(const std::vector<Point2D>& points) const;
-    double orientToCoverPoints2D(const std::vector<Point2D>& points);
-
-    bool orientBoundaryPassingThroughPointAndCoverAnotherPoint(const Point2D& a, const Point2D& b);
+    double findPossibleOrientAngleToCoverPoints2D(const std::vector<Point2D>& points, bool consider_distance=true) const;
+    bool canOrientToCoverPoint2D(const Point2D& p, bool consider_distance=true) const;
+    double orientToCoverPoint2D(const Point2D& p, bool consider_distance=true);
+    bool canOrientToCoverPoints2D(const std::vector<Point2D>& points, bool consider_distance=true) const;
+    double orientToCoverPoints2D(const std::vector<Point2D>& points, bool consider_distance=true);
+    double orientBoundaryPassingThroughPointAndCoverAnotherPoint(
+        const Point2D& a, const Point2D& b, bool consider_distance=true);
 
     virtual std::string toString() const override;
     friend std::ostream& operator<<(std::ostream& os, const Circle& circle);
