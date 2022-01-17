@@ -37,8 +37,6 @@ std::vector<Node*> orientFourNodesPI_2CoverPlane(std::vector<Node*> nodes) {
             if (computeGeometricAngle(pC, pA, pB) <= PI_2 && computeGeometricAngle(pC, pB, pA) <= PI_2)
                 break;
         }
-        for(int i = 0; i < 4; ++i) {
-        }
         sector_A = (Sector*) nA->getCommunicationAntenna();
         sector_B = (Sector*) nB->getCommunicationAntenna();
         orientation_angle_A = sector_A->orientBoundaryPassingThroughPointAndCoverAnotherPoint(pB, pC, false);
