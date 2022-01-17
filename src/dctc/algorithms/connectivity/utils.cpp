@@ -82,8 +82,8 @@ bool canNodesCoverPoint2D(const std::vector<Node*>& nodes, const Point2D& point2
 }
 
 bool canNodesCoverPlane(const std::vector<Node*>& nodes) {
-    double min_x = INT_MIN, max_x = INT_MAX;
-    double min_y = INT_MIN, max_y = INT_MAX;
+    double min_x = INT_MAX, max_x = INT_MIN;
+    double min_y = INT_MAX, max_y = INT_MIN;
     for(const Node* node : nodes) {
         double x = node->getX();
         double y = node->getY();
