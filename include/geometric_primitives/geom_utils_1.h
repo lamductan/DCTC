@@ -25,7 +25,7 @@ double computeAngle(const Ray2D& r, const Vector2D& v);
 double computeAngle(const Vector2D& v, const Ray2D& r);
 double computeAngle(const Line2D& l1, const Line2D& l2);
 
-double getOppositeAngle(double angle);
+double computeOppositeAngle(double angle);
 
 Point2D getPointOnRayAtDistance(const Ray2D& ray2D, double distance);
 Point2D getPointOnSegmentAtDistanceFromEndpoint1(const Segment2D& segment2D, double distance);

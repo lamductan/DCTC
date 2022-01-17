@@ -84,7 +84,7 @@ double computeAngle(const Line2D& l1, const Line2D& l2) {
     return computeGeometricAngle(computeAngle(l1.getNormVector(), l2.getNormVector()));
 }
 
-double getOppositeAngle(double angle) {return standardize_angle(angle + PI);}
+double computeOppositeAngle(double angle) {return standardize_angle(angle + PI);}
 
 Point2D getPointOnRayAtDistance(const Ray2D& ray2D, double distance) {
     Circle circle(ray2D.getPoint0(), distance);
