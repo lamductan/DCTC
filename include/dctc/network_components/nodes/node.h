@@ -36,6 +36,7 @@ protected:
 public:
     Node();
     Node(double x, double y, NodeType node_type);
+    Node(const Point2D& point2D, NodeType node_type);
     Node(const Node& other);
     int getId() const;
     double getX() const;
@@ -45,6 +46,10 @@ public:
     virtual std::string getNodeTypeStr() const;
     std::string toString() const;
     virtual Node* deepCopy() const;
+    virtual Circle* getSensingSector() const;
+    virtual Circle* getCommunicationAntenna() const;
+
+    virtual ~Node();
 
     friend std::ostream& operator<<(std::ostream& os, const Node& node);
 };

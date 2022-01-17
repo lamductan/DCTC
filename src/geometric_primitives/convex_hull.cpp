@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <stack>
 #include <vector>
-#include "geometric_primitives/point2D.h"
+#include "geometric_primitives/convex_hull.h"
 #include "geometric_primitives/geom_utils_1.h"
 
 // Reference: https://www.geeksforgeeks.org/convex-hull-set-2-graham-scan/

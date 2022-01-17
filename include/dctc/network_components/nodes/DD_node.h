@@ -12,14 +12,16 @@ private:
     Sector sensing_sector_;
     Sector communication_antenna_;
     void init(double x, double y, NodeType node_type, double r_s, double r_c, double theta_s, double theta_c);
-    std::string getStringContent() const override;
+    virtual std::string getStringContent() const override;
 public:
     DDNode();
     DDNode(double x, double y, NodeType node_type, double r_s, double r_c, double theta_s, double theta_c);
+    DDNode(const Point2D& point2D, NodeType node_type, double r_s, double r_c, double theta_s, double theta_c);
     DDNode(const DDNode& other);
-    std::string getNodeTypeStr() const override;
+    virtual std::string getNodeTypeStr() const override;
     virtual Node* deepCopy() const override;
-
+    virtual Circle* getSensingSector() const override;
+    virtual Circle* getCommunicationAntenna() const override;
 };
 
 #endif //DCTC_NETWORK_COMPONENTS_NODES_DD_NODE_H_

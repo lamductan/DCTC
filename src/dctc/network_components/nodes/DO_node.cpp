@@ -23,6 +23,10 @@ DONode::DONode(double x, double y, NodeType node_type, double r_s, double r_c, d
     init(x, y, node_type, r_s, r_c, theta_s);
 }
 
+DONode::DONode(const Point2D& point2D, NodeType node_type, double r_s, double r_c, double theta_s) {
+    init(point2D.getX(), point2D.getY(), node_type, r_s, r_c, theta_s);
+}
+
 std::string DONode::getNodeTypeStr() const {return "DONode";}
 
 std::string DONode::getStringContent() const {
@@ -36,3 +40,7 @@ Node* DONode::deepCopy() const {
     Node* new_node_ptr = new DONode(*this);
     return new_node_ptr;
 }
+
+Circle* DONode::getSensingSector() const {return (Circle*) &sensing_sector_;}
+
+Circle* DONode::getCommunicationAntenna() const {return (Circle*) &communication_antenna_;}

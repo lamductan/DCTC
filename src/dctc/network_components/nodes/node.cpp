@@ -22,6 +22,11 @@ Node::Node(double x, double y, NodeType node_type) {
     id_ = Counter::increase();
 }
 
+Node::Node(const Point2D& point2D, NodeType node_type) {
+    init(point2D.getX(), point2D.getY(), node_type);
+    id_ = Counter::increase();
+}
+
 Node::Node(const Node& other) {
     init(other.x_, other.y_, other.node_type_);
     id_ = Counter::increase();
@@ -59,4 +64,12 @@ std::vector<Node*> deepCopy(const std::vector<Node*>& nodes) {
     std::vector<Node*> deep_copied_nodes;
     for(Node* node : nodes) deep_copied_nodes.push_back(node->deepCopy());
     return deep_copied_nodes;
+}
+
+Circle* Node::getSensingSector() const {return nullptr;}
+
+Circle* Node::getCommunicationAntenna() const {return nullptr;}
+
+Node::~Node() {
+    std::cout << getNodeTypeStr() << "'s Destructor\n";
 }

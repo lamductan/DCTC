@@ -24,6 +24,7 @@ private:
 public:
     MSTGraph();
     MSTGraph(const std::vector<Node*>& nodes);
+    virtual std::string getGraphTypeStr() const;
     int getNNodes() const;
     std::vector<Node*> getNodes() const;
     std::vector<Edge*> getMSTEdges() const;

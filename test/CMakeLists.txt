@@ -19,6 +19,8 @@ set(TESTS
     #"src/dctc/network_components/edges/test_edge.cpp"
 
     #"src/dctc/instance/test_instance.cpp"
+
+    "src/dctc/algorithms/connectivity/test_utils.cpp"
 )
 
 add_executable(tests ${TESTS})

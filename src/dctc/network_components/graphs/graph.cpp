@@ -13,6 +13,8 @@ MSTGraph::MSTGraph(const std::vector<Node*>& nodes) {
     mst_weight_ = buildMST();
 }
 
+std::string MSTGraph::getGraphTypeStr() const {return "MSTGraph";}
+
 int MSTGraph::getNNodes() const {return n_nodes_;}
 
 std::vector<Node*> MSTGraph::getNodes() const {return nodes_;}
@@ -52,7 +54,7 @@ double MSTGraph::buildMST() {
 }
 
 MSTGraph::~MSTGraph() {
-    std::cout << "MSTGraph Destructor" << '\n';
+    std::cout << getGraphTypeStr() << "'s Destructor\n";
     for(Edge* edge : complete_edges_) delete edge;
     for(Node* node : nodes_) delete node;
 }

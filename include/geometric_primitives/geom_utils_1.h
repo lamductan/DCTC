@@ -40,6 +40,5 @@ std::vector<Point2D> findIntersectionsBetweenGeom2DObjects(const Ray2D& ray2D, c
 std::vector<Point2D> findIntersectionsBetweenGeom2DObjects(const Segment2D& segment2D, const Ray2D& ray2D);
 std::vector<Point2D> findIntersectionsBetweenGeom2DObjects(const Segment2D& segment2D_1, const Segment2D& segment2D_2);
 
-std::vector<Point2D> findConvexHull(std::vector<Point2D> points);
 
 #endif //GEOMETRIC_PRIMITIVES_GEOM_UTILS_1_H_

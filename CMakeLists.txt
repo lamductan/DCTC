@@ -24,6 +24,7 @@ set(HEADERS
     include/geometric_primitives/rotation.h
     include/geometric_primitives/geom_utils_1.h
     include/geometric_primitives/sector.h
+    include/geometric_primitives/convex_hull.h
     include/geometric_primitives/geom2D.h
 
     include/random/generator.h
@@ -40,6 +41,7 @@ set(HEADERS
     include/dctc/instance/instance.h
 
     include/dctc/algorithms/coverage/coverage_alg.h
+    include/dctc/algorithms/connectivity/utils.h
 )
 
 set(SOURCES
@@ -74,6 +76,8 @@ set(SOURCES
     src/dctc/algorithms/coverage/trivial_coverage_alg.cpp
     src/dctc/algorithms/coverage/greedy_coverage_alg.cpp
     src/dctc/algorithms/coverage/strip_coverage_alg.cpp
+    src/dctc/algorithms/connectivity/utils.cpp
+    src/dctc/algorithms/connectivity/convex_hull.cpp
 )
 
 add_library(${This} STATIC ${SOURCES} ${HEADERS})
