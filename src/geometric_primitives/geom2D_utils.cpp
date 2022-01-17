@@ -120,7 +120,6 @@ bool isLinePerpendicularLine(const Line2D& l1, const Line2D& l2) {
 }
 
 std::vector<Point2D> findIntersectionsBetweenGeom2DObjects(const Ray2D& ray2D, const Segment2D& segment2D) {
-    std::cout << __PRETTY_FUNCTION__ << '\n';
     Point2D intersection = ray2D.findIntersectionsWithLine2D(segment2D);
     std::vector<Point2D> intersections;
     if (segment2D.containsPoint2D(intersection)) intersections.push_back(intersection);

@@ -6,6 +6,7 @@
 #include <vector>
 #include "geometric_primitives/geom2D.h"
 
+
 enum NodeType {
     BASE_NODE,
     SENSING_OO_NODE,
@@ -23,6 +24,9 @@ enum NodeType {
 };
 
 class Node {
+friend class Edge;
+friend class MSTGraph;
+
 protected:
     int id_;
     double x_;

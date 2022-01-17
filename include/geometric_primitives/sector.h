@@ -13,7 +13,7 @@
 #include "geometric_primitives/circle.h"
 
 
-class Sector: public Circle {
+class Sector : public Circle {
 private:
     Point2D original_bisector_unit_point;
     double angle;

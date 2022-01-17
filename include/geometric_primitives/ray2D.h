@@ -8,7 +8,7 @@
 #include "geometric_primitives/line2D.h"
 
 
-class Ray2D: public Line2D {
+class Ray2D : public Line2D {
 private:
     Ray2D(const Line2D& line2D);
     Vector2D direction_vector;

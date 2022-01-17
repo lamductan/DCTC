@@ -7,7 +7,7 @@
 #include "geometric_primitives/point2D.h"
 
 
-class Vector2D: public Point2D {
+class Vector2D : public Point2D {
 public:
     using Point2D::Point2D;
     using Point2D::operator=;

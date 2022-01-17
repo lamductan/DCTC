@@ -35,6 +35,7 @@ set(HEADERS
     include/dctc/network_components/nodes/node.h
     include/dctc/network_components/nodes/DO_node.h
     include/dctc/network_components/nodes/DD_node.h
+    include/dctc/network_components/nodes/MST_node.h
     include/dctc/network_components/edges/edge.h
     include/dctc/network_components/graphs/graph.h
 
@@ -42,6 +43,8 @@ set(HEADERS
 
     include/dctc/algorithms/coverage/coverage_alg.h
     include/dctc/algorithms/connectivity/utils.h
+
+    include/dctc/algorithms/connectivity/Tran/MST_Node_Tran.h
 )
 
 set(SOURCES
@@ -68,6 +71,7 @@ set(SOURCES
     src/dctc/network_components/nodes/node.cpp
     src/dctc/network_components/nodes/DO_node.cpp
     src/dctc/network_components/nodes/DD_node.cpp
+    src/dctc/network_components/nodes/MST_node.cpp
     src/dctc/network_components/edges/edge.cpp
     src/dctc/network_components/graphs/graph.cpp
 
@@ -78,6 +82,8 @@ set(SOURCES
     src/dctc/algorithms/coverage/strip_coverage_alg.cpp
     src/dctc/algorithms/connectivity/utils.cpp
     src/dctc/algorithms/connectivity/convex_hull.cpp
+
+    src/dctc/algorithms/connectivity/Tran/MST_Node_Tran.cpp
 )
 
 add_library(${This} STATIC ${SOURCES} ${HEADERS})

@@ -7,7 +7,7 @@
 #include "geometric_primitives/geom2D.h"
 
 
-class DDNode: public Node {
+class DDNode : public Node {
 private:
     Sector sensing_sector_;
     Sector communication_antenna_;

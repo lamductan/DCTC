@@ -8,7 +8,7 @@
 #include "geometric_primitives/line2D.h"
 
 
-class Segment2D: public Line2D {
+class Segment2D : public Line2D {
 private:
     Point2D endpoint1;
     Point2D endpoint2;

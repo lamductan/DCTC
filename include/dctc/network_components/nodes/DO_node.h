@@ -6,7 +6,7 @@
 #include "geometric_primitives/geom2D.h"
 
 
-class DONode: public Node {
+class DONode : public Node {
 private:
     Sector sensing_sector_;
     Circle communication_antenna_;
