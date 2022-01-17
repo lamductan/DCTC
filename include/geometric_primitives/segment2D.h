@@ -24,16 +24,16 @@ public:
     std::pair<Point2D, Point2D> getEndpoints() const;
 
     Point2D getMidPoint() const;
-    bool passesThroughPoint2D(const Point2D& p) const;
+    virtual bool passesThroughPoint2D(const Point2D& p) const override;
     virtual bool containsPoint2D(const Point2D& p) const;
-    bool isIdentical(const Segment2D& other) const;
-    bool intersectsWithLine2D(const Line2D& line2D) const;
-    Point2D findIntersectionsWithLine2D(const Line2D& line2D) const;
+    virtual bool isIdentical(const Segment2D& other) const;
+    virtual bool intersectsWithLine2D(const Line2D& line2D) const override;
+    virtual Point2D findIntersectionsWithLine2D(const Line2D& line2D) const;
     bool intersectsWithSegment2D(const Segment2D& other) const;
     Point2D findIntersectionsWithSegment2D(const Segment2D& other) const;
     Line2D getPerpendicularBisector() const;
-    std::string toString() const override;
-    std::vector<Point2D> getPointsOnObject(int n_points) const;
+    virtual std::string toString() const override;
+    virtual std::vector<Point2D> getPointsOnObject(int n_points) const override;
 };
 
 #endif //GEOMETRIC_PRIMITIVES_SEGMENT2D_H_

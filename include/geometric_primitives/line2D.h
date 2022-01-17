@@ -33,12 +33,12 @@ public:
 
     double operator()(const Point2D& p) const;
     virtual bool passesThroughPoint2D(const Point2D& p) const;
-    bool containsPoint2D(const Point2D& p) const override;
+    virtual bool containsPoint2D(const Point2D& p) const override;
     bool hasParallelNormVectorWithLine2D(const Line2D& other) const;
     bool isParallelWithLine2D(const Line2D& other) const;
-    bool isIdentical(const Line2D& other) const;
-    bool intersectsWithLine2D(const Line2D& other) const;
-    Point2D findIntersectionsWithLine2D(const Line2D& other) const;
+    virtual bool isIdentical(const Line2D& other) const;
+    virtual bool intersectsWithLine2D(const Line2D& other) const;
+    virtual Point2D findIntersectionsWithLine2D(const Line2D& other) const;
     double distanceToPoint2D(const Point2D& point) const;
     double distanceToLine2D(const Line2D& other) const;
     virtual std::vector<Point2D> getPointsOnObject(int n_points) const;

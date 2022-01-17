@@ -87,7 +87,7 @@ bool Line2D::intersectsWithLine2D(const Line2D& other) const {
 }
 
 Point2D Line2D::findIntersectionsWithLine2D(const Line2D& other) const {
-    if (!intersectsWithLine2D(other)) return POINT_INFINITY;
+    if (!Line2D::intersectsWithLine2D(other)) return POINT_INFINITY;
     double a1 = coefs[0], b1 = coefs[1], c1 = coefs[2];
     double a2 = other.coefs[0], b2 = other.coefs[1], c2 = other.coefs[2];
     double D = (a1*b2 - a2*b1);

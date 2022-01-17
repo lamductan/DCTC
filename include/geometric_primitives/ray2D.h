@@ -23,15 +23,15 @@ public:
     Vector2D getDirectionVector() const; 
     Vector2D getUnitVector() const;
 
-    bool passesThroughPoint2D(const Point2D& p) const;
-    virtual bool containsPoint2D(const Point2D& p) const;
-    bool isIdentical(const Ray2D& other) const;
-    bool intersectsWithLine2D(const Line2D& line2D) const;
-    Point2D findIntersectionsWithLine2D(const Line2D& line2D) const;
+    virtual bool passesThroughPoint2D(const Point2D& p) const override;
+    virtual bool containsPoint2D(const Point2D& p) const override;
+    virtual bool isIdentical(const Ray2D& other) const;
+    virtual bool intersectsWithLine2D(const Line2D& line2D) const;
+    virtual Point2D findIntersectionsWithLine2D(const Line2D& line2D) const override;
     bool intersectsWithRay2D(const Ray2D& other) const;
     Point2D findIntersectionsWithRay2D(const Ray2D& other) const;
-    std::string toString() const override;
-    std::vector<Point2D> getPointsOnObject(int n_points) const;
+    virtual std::string toString() const override;
+    virtual std::vector<Point2D> getPointsOnObject(int n_points) const;
 };
 
 #endif //GEOMETRIC_PRIMITIVES_RAY2D_H_

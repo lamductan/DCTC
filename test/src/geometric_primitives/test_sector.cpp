@@ -33,7 +33,7 @@ TEST(TestSector, Test_1)
     std::cout << (Line2D) sector.getBoundarySegment1() << '\n';
     std::cout << (Line2D) sector.getBoundarySegment2() << '\n';
     Point2D I(13, 4);
-    ASSERT_TRUE(sector.containsPoint2D(I));
+    ASSERT_TRUE(sector.containsPoint2DWithInfRange(I));
 }
 
 TEST(TestSector, Test_SectorIntersectRay2D)

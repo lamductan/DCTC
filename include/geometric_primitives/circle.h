@@ -30,16 +30,16 @@ public:
     double getRadius() const;
     double operator()(const Point2D& p) const;
 
-    bool passesThroughPoint2D(const Point2D& p) const;
-    virtual bool containsPoint2D(const Point2D& p) const;
-    bool intersectsWithLine2D(const Line2D& line2D) const;
-    std::vector<Point2D> findIntersectionsWithLine2D(const Line2D& line2D) const;
-    bool intersectsWithRay2D(const Ray2D& ray2D) const;
-    std::vector<Point2D> findIntersectionsWithRay2D(const Ray2D& ray2D) const;
-    bool intersectsWithSegment2D(const Segment2D& segment2D) const;
-    std::vector<Point2D> findIntersectionsWithSegment2D(const Segment2D& segment2D) const;
-    bool intersectsWithCircle(const Circle& other) const;
-    std::vector<Point2D> findIntersectionsWithCircle(const Circle& other) const;
+    virtual bool passesThroughPoint2D(const Point2D& p) const;
+    virtual bool containsPoint2D(const Point2D& p) const override;
+    virtual bool intersectsWithLine2D(const Line2D& line2D) const;
+    virtual std::vector<Point2D> findIntersectionsWithLine2D(const Line2D& line2D) const;
+    virtual bool intersectsWithRay2D(const Ray2D& ray2D) const;
+    virtual std::vector<Point2D> findIntersectionsWithRay2D(const Ray2D& ray2D) const;
+    virtual bool intersectsWithSegment2D(const Segment2D& segment2D) const;
+    virtual std::vector<Point2D> findIntersectionsWithSegment2D(const Segment2D& segment2D) const;
+    virtual bool intersectsWithCircle(const Circle& other) const;
+    virtual std::vector<Point2D> findIntersectionsWithCircle(const Circle& other) const;
 
     virtual std::string toString() const override;
     friend std::ostream& operator<<(std::ostream& os, const Circle& circle);

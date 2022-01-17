@@ -41,7 +41,7 @@ bool Circle::passesThroughPoint2D(const Point2D& p) const {
 }
 
 bool Circle::containsPoint2D(const Point2D& p) const {
-    return operator()(p) <= 0;
+    return operator()(p) <= EPSILON;
 }
 
 bool Circle::intersectsWithLine2D(const Line2D& line2D) const {

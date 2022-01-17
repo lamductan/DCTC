@@ -18,7 +18,7 @@ public:
     double length() const;
     Vector2D getUnitVector() const;
     Vector2D getNormVector() const;
-    virtual std::string toString() const;
+    virtual std::string toString() const override;
     bool isZeroVector() const;
     bool hasSameDirectionWithVector2D(const Vector2D& other) const;
     bool hasOppositeDirectionWithVector2D(const Vector2D& other) const;
