@@ -58,6 +58,6 @@ std::vector<Node*> Instance::putCoverageSensors(CoverageAlgType coverageAlgType)
     return trivialCoverageAlg(this);
 }
 
-const MSTGraph& Instance::constructMSTGraphCoverageSensors(const std::vector<Node*>& coverage_sensors) {
-    return *(new MSTGraph(coverage_sensors));
+MSTGraph* Instance::constructMSTGraphCoverageSensors(const std::vector<Node*>& coverage_sensors) {
+    return new MSTGraph(coverage_sensors);
 }

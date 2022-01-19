@@ -12,20 +12,32 @@ protected:
     static int n_instances;
     int id_;
     Segment2D segment2D_;
-    Node* endpoint_1_;
-    Node* endpoint_2_;
+    int endpoint_id_1_;
+    int endpoint_id_2_;
+    Node* endpoint_1_ = nullptr;
+    Node* endpoint_2_ = nullptr;
     void init(Node* endpoint_1, Node* endpoint_2);
+    void init(int endpoint_id_1, int endpoint_id_2);
+    void setSegment2D();
     virtual std::string getStringContent() const;
 
 public:
     Edge();
     Edge(Node* endpoint_1, Node* endpoint_2);
+    Edge(int endpoint_id_1, int endpoint_id_2);
     int getId() const;
+    int getEndpointId1() const;
+    int getEndpointId2() const;
     Node* getEndpoint1() const;
     Node* getEndpoint2() const;
+    void setEndpoint1(Node* endpoint1);
+    void setEndpoint2(Node* endpoint2);
+    int getOtherEndpointId(int endpoint_id) const;
+    Node* getOtherEndpoint(Node* endpoint) const;
     double length() const;
     virtual std::string getEdgeTypeStr() const;
     std::string toString() const;
+    virtual ~Edge();
 
     friend std::ostream& operator<<(std::ostream& os, const Edge& edge);
 };

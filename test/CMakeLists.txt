@@ -13,15 +13,17 @@ set(TESTS
 
     #"src/random/test_generator.cpp"
 
+    "src/dctc/test_utils.cpp"
+
     #"src/dctc/network_components/nodes/test_node.cpp"
     #"src/dctc/network_components/nodes/test_DD_node.cpp"
     #"src/dctc/network_components/nodes/test_DO_node.cpp"
     #"src/dctc/network_components/edges/test_edge.cpp"
 
-    #"src/dctc/instance/test_instance.cpp"
+    "src/dctc/instance/test_instance.cpp"
 
     #"src/dctc/algorithms/connectivity/test_convex_hull.cpp"
-    "src/dctc/algorithms/connectivity/test_utils.cpp"
+    #"src/dctc/algorithms/connectivity/test_utils.cpp"
 )
 
 add_executable(tests ${TESTS})

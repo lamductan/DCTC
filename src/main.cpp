@@ -78,9 +78,9 @@ void test4() {
         node_type, r_s, r_c, theta_s, theta_c,
         deterministic);
     std::vector<Node*> coverage_sensors = instance.putCoverageSensors(TRIVIAL_COVERAGE_ALG);
-    const MSTGraph& MST_graph = Instance::constructMSTGraphCoverageSensors(coverage_sensors);
-    std::cout << MST_graph << '\n';
-    delete &MST_graph;
+    MSTGraph* MST_graph_ptr = Instance::constructMSTGraphCoverageSensors(coverage_sensors);
+    std::cout << *MST_graph_ptr << '\n';
+    delete MST_graph_ptr;
 }
 
 int main() {

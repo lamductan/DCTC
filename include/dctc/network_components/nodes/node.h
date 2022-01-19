@@ -45,11 +45,12 @@ public:
     int getId() const;
     double getX() const;
     double getY() const;
+    void setId(int id);
     Point2D getPoint2D() const;
     NodeType getNodeType() const;
     virtual std::string getNodeTypeStr() const;
     std::string toString() const;
-    virtual Node* deepCopy() const;
+    virtual Node* deepCopy(bool preserve_id=false) const;
     virtual Circle* getSensingSector() const;
     virtual Circle* getCommunicationAntenna() const;
 
@@ -58,6 +59,6 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Node& node);
 };
 
-std::vector<Node*> deepCopy(const std::vector<Node*>& nodes);
+std::vector<Node*> deepCopyNodes(const std::vector<Node*>& nodes, bool preserve_id=false);
 
 #endif //DCTC_NETWORK_COMPONENTS_NODE_H_

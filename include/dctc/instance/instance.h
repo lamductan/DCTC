@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "geometric_primitives/geom2D.h"
-#include "dctc/network_components/graphs/graph.h"
+#include "dctc/network_components/graphs/MST_graph.h"
 
 
 enum CoverageAlgType {
@@ -51,8 +51,7 @@ public:
     double getThetaC() const;
     std::vector<Point2D> getTargets() const;
     std::vector<Node*> putCoverageSensors(CoverageAlgType coverage_alg_type) const;
-    static const MSTGraph& constructMSTGraphCoverageSensors(const std::vector<Node*>& coverage_sensors);
-    //static CommunicationGraph constructCommunicationGraph(const MSTGraph& MST_graph, double r_c=-1);
+    static MSTGraph* constructMSTGraphCoverageSensors(const std::vector<Node*>& coverage_sensors);
 };
 
 #endif //DCTC_INSTANCE_INSTANCE_H_

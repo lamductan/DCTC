@@ -18,7 +18,7 @@ public:
     DONode(const Point2D& point2D, NodeType node_type, double r_s, double r_c, double theta_s);
     DONode(const DONode& other);
     virtual std::string getNodeTypeStr() const override;
-    virtual Node* deepCopy() const override;
+    virtual Node* deepCopy(bool preserve_id=false) const override;
     virtual Circle* getSensingSector() const override;
     virtual Circle* getCommunicationAntenna() const override;
 };

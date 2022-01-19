@@ -36,8 +36,9 @@ std::string DONode::getStringContent() const {
     return content;
 }
 
-Node* DONode::deepCopy() const {
+Node* DONode::deepCopy(bool preserve_id) const {
     Node* new_node_ptr = new DONode(*this);
+    if (preserve_id) new_node_ptr->setId(id_);
     return new_node_ptr;
 }
 

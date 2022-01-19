@@ -32,12 +32,15 @@ set(HEADERS
     include/data_structures/counter.h
     include/data_structures/union_find.h
 
+    include/dctc/utils.h
+    include/dctc/utils.tpp
+
     include/dctc/network_components/nodes/node.h
     include/dctc/network_components/nodes/DO_node.h
     include/dctc/network_components/nodes/DD_node.h
     include/dctc/network_components/nodes/MST_node.h
     include/dctc/network_components/edges/edge.h
-    include/dctc/network_components/graphs/graph.h
+    include/dctc/network_components/graphs/MST_graph.h
 
     include/dctc/instance/instance.h
 
@@ -73,7 +76,7 @@ set(SOURCES
     src/dctc/network_components/nodes/DD_node.cpp
     src/dctc/network_components/nodes/MST_node.cpp
     src/dctc/network_components/edges/edge.cpp
-    src/dctc/network_components/graphs/graph.cpp
+    src/dctc/network_components/graphs/MST_graph.cpp
 
     src/dctc/instance/instance.cpp
 

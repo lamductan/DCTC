@@ -38,7 +38,11 @@ double Node::getX() const {return x_;}
 
 double Node::getY() const {return y_;}
 
+void Node::setId(int id) {id_ = id;}
+
 Point2D Node::getPoint2D() const {return point2D_;}
+
+NodeType Node::getNodeType() const {return node_type_;}
 
 std::string Node::getStringContent() const {
     return point2D_.toString() + "," + std::to_string(id_) + "," + std::to_string(node_type_);
@@ -50,8 +54,9 @@ std::string Node::toString() const {
     return getNodeTypeStr() + "(" + getStringContent() + ")"; 
 }
 
-Node* Node::deepCopy() const {
+Node* Node::deepCopy(bool preserve_id) const {
     Node* new_node_ptr = new Node(*this);
+    if (preserve_id) new_node_ptr->id_ = id_;
     return new_node_ptr;
 }
 
@@ -60,16 +65,18 @@ std::ostream& operator<<(std::ostream& os, const Node& node) {
     return os;
 }
 
-std::vector<Node*> deepCopy(const std::vector<Node*>& nodes) {
-    std::vector<Node*> deep_copied_nodes;
-    for(Node* node : nodes) deep_copied_nodes.push_back(node->deepCopy());
-    return deep_copied_nodes;
-}
-
 Circle* Node::getSensingSector() const {return nullptr;}
 
 Circle* Node::getCommunicationAntenna() const {return nullptr;}
 
 Node::~Node() {
     std::cout << getNodeTypeStr() << "'s Destructor\n";
+}
+
+std::vector<Node*> deepCopyNodes(const std::vector<Node*>& nodes, bool preserve_id) {
+    std::vector<Node*> deep_copied_nodes;
+    for(Node* node : nodes) { 
+        deep_copied_nodes.push_back(node->deepCopy(preserve_id));
+    }
+    return deep_copied_nodes;
 }

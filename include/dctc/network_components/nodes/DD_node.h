@@ -19,7 +19,7 @@ public:
     DDNode(const Point2D& point2D, NodeType node_type, double r_s, double r_c, double theta_s, double theta_c);
     DDNode(const DDNode& other);
     virtual std::string getNodeTypeStr() const override;
-    virtual Node* deepCopy() const override;
+    virtual Node* deepCopy(bool reserve_id=false) const override;
     virtual Circle* getSensingSector() const override;
     virtual Circle* getCommunicationAntenna() const override;
 };
