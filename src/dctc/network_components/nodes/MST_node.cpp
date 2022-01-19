@@ -5,6 +5,8 @@
 #include "dctc/network_components/nodes/MST_node.h"
 
 
+MSTNode::MSTNode() {}
+
 void MSTNode::init(Node* node) {
     Node::init(node->getX(), node->getY(), node->getNodeType());
     id_ = node->getId();

@@ -6,13 +6,15 @@
 #include <utility>
 #include <unordered_map>
 
+#include "dctc/network_components/nodes/node_factory.h"
 #include "dctc/network_components/nodes/MST_node.h"
 #include "dctc/network_components/edges/edge.h"
 
 
 class MSTGraph {
-private:
+protected:
     int n_nodes_ = 0;
+    GraphNodeType graph_node_type_ = MST_GRAPH_NODE;
     std::vector<int> node_ids_;
     std::unordered_map<int, Node*> map_id_nodes_;
     double mst_weight_;
@@ -21,22 +23,23 @@ private:
     std::vector<std::pair<int, int>> MST_edges_by_id_;
     std::vector<Edge*> communication_edges_;
 
-    void init(const std::vector<Node*>& nodes);
-    void initMSTNodes(const std::vector<Node*>& nodes);
-    double buildMST();
+    void init(const std::vector<Node*>& nodes, GraphNodeType graph_node_type=MST_GRAPH_NODE);
 
 public:
     MSTGraph();
-    MSTGraph(const std::vector<Node*>& nodes);
+    MSTGraph(const std::vector<Node*>& nodes, GraphNodeType graph_node_type=MST_GRAPH_NODE);
     virtual std::string getGraphTypeStr() const;
     int getNNodes() const;
     std::unordered_map<int, Node*> getMapIdNodes() const;
     std::vector<Node*> getNodes() const;
 
+    double buildMST();
+    double buildMST(std::vector<Edge*>& graph_edges);
     std::vector<Edge*> getMSTEdges() const;
 
     std::vector<Edge*> getCommunicationEdges() const;
-    virtual MSTGraph* deepCopy() const;
+    virtual MSTGraph* cloneFrom(const MSTGraph* mst_graph, GraphNodeType graph_node_type=MST_GRAPH_NODE);
+    virtual MSTGraph* deepCopy(GraphNodeType graph_node_type=MST_GRAPH_NODE) const;
     virtual ~MSTGraph();
 
     friend std::ostream& operator<<(std::ostream& os, const MSTGraph& MST_graph);

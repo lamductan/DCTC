@@ -9,9 +9,10 @@
 
 MSTGraph::MSTGraph() {}
 
-void MSTGraph::init(const std::vector<Node*>& nodes) {
+void MSTGraph::init(const std::vector<Node*>& nodes, GraphNodeType graph_node_type) {
+    graph_node_type_ = graph_node_type;
     for(Node* node : nodes) {
-        MSTNode* mst_node = new MSTNode(node);
+        MSTNode* mst_node = (MSTNode*) NodeFactory::createNode(node, graph_node_type_);
         nodes_.push_back(mst_node);
         int id = mst_node->getId();
         map_id_nodes_[id] = mst_node;
@@ -20,19 +21,8 @@ void MSTGraph::init(const std::vector<Node*>& nodes) {
     n_nodes_ = nodes.size();
 }
 
-void MSTGraph::initMSTNodes(const std::vector<Node*>& nodes) {
-    for(Node* node : nodes) {
-        MSTNode* mst_node = new MSTNode((MSTNode*) node);
-        nodes_.push_back(mst_node);
-        int id = mst_node->getId();
-        map_id_nodes_[id] = mst_node;
-        node_ids_.push_back(id);
-    }
-    n_nodes_ = nodes.size();
-}
-
-MSTGraph::MSTGraph(const std::vector<Node*>& nodes) {
-    init(nodes);
+MSTGraph::MSTGraph(const std::vector<Node*>& nodes, GraphNodeType graph_node_type) {
+    init(nodes, graph_node_type);
     mst_weight_ = buildMST();
 }
 
@@ -47,23 +37,25 @@ std::vector<Edge*> MSTGraph::getMSTEdges() const {return MST_edges_;}
 std::vector<Edge*> MSTGraph::getCommunicationEdges() const {return communication_edges_;}
 
 double MSTGraph::buildMST() {
-    UnionFind union_find(Counter::get());
-    std::vector<Edge*> complete_edges_;
-
+    std::vector<Edge*> edges;
     for(int i : node_ids_) {
         for(int j : node_ids_) {
             if (j <= i) continue;
             Edge* edge = new Edge(nodes_[i], nodes_[j]);
-            complete_edges_.push_back(edge);
+            edges.push_back(edge);
         }
     }
+    return buildMST(edges);
+}
 
+double MSTGraph::buildMST(std::vector<Edge*>& edges) {
+    UnionFind union_find(Counter::get());
     double mst_weight = 0;
     int n_mst_edges = 0;
-    std::sort(complete_edges_.begin(), complete_edges_.end(),
+    std::sort(edges.begin(), edges.end(),
               [](Edge* a, Edge* b) {return a->length() < b->length();});
 
-    for(Edge* edge : complete_edges_) {
+    for(Edge* edge : edges) {
         if (n_mst_edges < n_nodes_ - 1) {
             int fr = edge->getEndpoint1()->getId();
             int to = edge->getEndpoint2()->getId();
@@ -89,22 +81,25 @@ double MSTGraph::buildMST() {
     return mst_weight;
 }
 
-MSTGraph* MSTGraph::deepCopy() const {
-    MSTGraph* copied_mst_graph = new MSTGraph();
-    copied_mst_graph->initMSTNodes(nodes_);
-    copied_mst_graph->mst_weight_ = mst_weight_;
-    copied_mst_graph->MST_edges_by_id_ = MST_edges_by_id_;
-    std::vector<int> keys = getMapKeys<int, Node*>(copied_mst_graph->map_id_nodes_);
+MSTGraph* MSTGraph::cloneFrom(const MSTGraph* mst_graph, GraphNodeType graph_node_type) {
+    init(mst_graph->nodes_, graph_node_type);
+    mst_weight_ = mst_graph->mst_weight_;
+    MST_edges_by_id_ = mst_graph->MST_edges_by_id_;
     for(std::pair<int, int> edge_by_id : MST_edges_by_id_) {
-        MSTNode* endpoint1 = (MSTNode*) copied_mst_graph->map_id_nodes_[edge_by_id.first];
-        MSTNode* endpoint2 = (MSTNode*) copied_mst_graph->map_id_nodes_[edge_by_id.second];
+        MSTNode* endpoint1 = (MSTNode*) map_id_nodes_[edge_by_id.first];
+        MSTNode* endpoint2 = (MSTNode*) map_id_nodes_[edge_by_id.second];
         Edge* edge = new Edge(endpoint1, endpoint2);
-        copied_mst_graph->MST_edges_.push_back(edge);
+        MST_edges_.push_back(edge);
         endpoint1->addMSTEdge(edge);
         endpoint2->addMSTEdge(edge);
     }
     // Add copy communication edges later if needed
-    return copied_mst_graph;
+    return this;
+}
+
+MSTGraph* MSTGraph::deepCopy(GraphNodeType graph_node_type) const {
+    MSTGraph* copied_mst_graph = new MSTGraph();
+    return copied_mst_graph->cloneFrom(this, graph_node_type);
 }
 
 MSTGraph::~MSTGraph() {

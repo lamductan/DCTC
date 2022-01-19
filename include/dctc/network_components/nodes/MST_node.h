@@ -22,6 +22,7 @@ protected:
     virtual std::string getStringContent() const override;
 
 public:
+    MSTNode();
     MSTNode(Node* node);
     MSTNode(MSTNode* node);
     virtual std::string getNodeTypeStr() const;
@@ -30,12 +31,12 @@ public:
     bool isLeaf() const;
     void setIsLeaf(bool is_leaf);
 
-    virtual void addMSTEdge(Edge* edge);
+    void addMSTEdge(Edge* edge);
     std::unordered_map<Node*, Edge*> getMSTEdgesMap() const;
     std::vector<Node*> getMSTEdgeAdjNodes() const;
     std::vector<Edge*> getMSTEdges() const;
 
-    virtual void addCommunicationEdge(Edge* edge);
+    void addCommunicationEdge(Edge* edge);
     std::unordered_map<Node*, Edge*> getCommunicationEdgesMap() const;
     std::vector<Node*> getCommunicationEdgeAdjNodes() const;
     std::vector<Edge*> getCommunicationEdges() const;
