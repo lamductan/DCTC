@@ -80,7 +80,7 @@ std::string Edge::toString() const {
 }
 
 Edge::~Edge() {
-    std::cout << getEdgeTypeStr() << "'s Destructor\n";
+    //std::cout << getEdgeTypeStr() << "'s Destructor\n";
 }
 
 std::ostream& operator<<(std::ostream& os, const Edge& edge) {

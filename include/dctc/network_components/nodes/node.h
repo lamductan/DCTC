@@ -53,6 +53,7 @@ public:
     virtual Node* deepCopy(bool preserve_id=false) const;
     virtual Circle* getSensingSector() const;
     virtual Circle* getCommunicationAntenna() const;
+    bool canCoverOtherNodeByCommunicationAntenna(Node* other) const;
 
     virtual ~Node();
 

@@ -44,6 +44,10 @@ bool Circle::containsPoint2D(const Point2D& p) const {
     return operator()(p) <= EPSILON;
 }
 
+bool Circle::containsPoint2DWithInfRange(const Point2D& p) const {
+    return true;
+}
+
 bool Circle::intersectsWithLine2D(const Line2D& line2D) const {
     int line_largest_absolute_value_coef_pos = line2D.getLargestAbsoluteValueCoefPos();
     std::vector<double> line_coefs = line2D.getCoefs();

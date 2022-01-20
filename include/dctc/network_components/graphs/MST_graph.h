@@ -37,7 +37,9 @@ public:
     double buildMST(std::vector<Edge*>& graph_edges);
     std::vector<Edge*> getMSTEdges() const;
 
+    Edge* addCommunicationEdge(MSTNode* a, MSTNode* b);
     std::vector<Edge*> getCommunicationEdges() const;
+
     virtual MSTGraph* cloneFrom(const MSTGraph* mst_graph, GraphNodeType graph_node_type=MST_GRAPH_NODE);
     virtual MSTGraph* deepCopy(GraphNodeType graph_node_type=MST_GRAPH_NODE) const;
     virtual ~MSTGraph();

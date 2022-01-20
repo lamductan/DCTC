@@ -25,7 +25,7 @@ public:
     MSTNode();
     MSTNode(Node* node);
     MSTNode(MSTNode* node);
-    virtual std::string getNodeTypeStr() const;
+    virtual std::string getNodeTypeStr() const override;
     virtual Circle* getSensingSector() const;
     virtual Circle* getCommunicationAntenna() const;
     bool isLeaf() const;

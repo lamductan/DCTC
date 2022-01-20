@@ -51,7 +51,7 @@ public:
 
     virtual bool passesThroughPoint2D(const Point2D& p) const override;
     virtual bool containsPoint2D(const Point2D& p) const override;
-    virtual bool containsPoint2DWithInfRange(const Point2D& p) const;
+    virtual bool containsPoint2DWithInfRange(const Point2D& p) const override;
     std::vector<Point2D> findIntersectionsSectorWithLine2D(const Line2D& line2D) const;
     std::vector<Point2D> findIntersectionsSectorWithRay2D(const Ray2D& ray2D) const;
     std::vector<Point2D> findIntersectionsSectorWithSegment2D(const Segment2D& segment2D) const;

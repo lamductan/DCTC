@@ -32,6 +32,7 @@ public:
 
     virtual bool passesThroughPoint2D(const Point2D& p) const;
     virtual bool containsPoint2D(const Point2D& p) const override;
+    virtual bool containsPoint2DWithInfRange(const Point2D& p) const;
     virtual bool intersectsWithLine2D(const Line2D& line2D) const;
     virtual std::vector<Point2D> findIntersectionsWithLine2D(const Line2D& line2D) const;
     virtual bool intersectsWithRay2D(const Ray2D& ray2D) const;

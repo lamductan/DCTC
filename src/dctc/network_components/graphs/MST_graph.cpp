@@ -34,6 +34,15 @@ std::vector<Node*> MSTGraph::getNodes() const {return nodes_;}
 
 std::vector<Edge*> MSTGraph::getMSTEdges() const {return MST_edges_;}
 
+Edge* MSTGraph::addCommunicationEdge(MSTNode* a, MSTNode* b) {
+    //std::cout << communication_edges_.size() << ": Add communication edge (" << a->getId() << "," << b->getId() << ")\n";
+    Edge* edge = new Edge(a, b);
+    a->addCommunicationEdge(edge);
+    b->addCommunicationEdge(edge);
+    communication_edges_.push_back(edge);
+    return edge;
+}
+
 std::vector<Edge*> MSTGraph::getCommunicationEdges() const {return communication_edges_;}
 
 double MSTGraph::buildMST() {
@@ -103,7 +112,7 @@ MSTGraph* MSTGraph::deepCopy(GraphNodeType graph_node_type) const {
 }
 
 MSTGraph::~MSTGraph() {
-    std::cout << getGraphTypeStr() << "'s Destructor\n";
+    //std::cout << getGraphTypeStr() << "'s Destructor\n";
     for(Edge* edge : MST_edges_) delete edge;
     for(Edge* edge : communication_edges_) delete edge;
     for(Node* node : nodes_) delete node;

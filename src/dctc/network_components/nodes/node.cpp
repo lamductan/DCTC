@@ -69,8 +69,15 @@ Circle* Node::getSensingSector() const {return nullptr;}
 
 Circle* Node::getCommunicationAntenna() const {return nullptr;}
 
+bool Node::canCoverOtherNodeByCommunicationAntenna(Node* other) const {
+    Circle* communication_antenna = getCommunicationAntenna();
+    if (communication_antenna == nullptr) return false;
+    Point2D other_point2D = other->getPoint2D();
+    return communication_antenna->containsPoint2DWithInfRange(other_point2D);
+}
+
 Node::~Node() {
-    std::cout << getNodeTypeStr() << "'s Destructor\n";
+    //std::cout << getNodeTypeStr() << "'s Destructor\n";
 }
 
 std::vector<Node*> deepCopyNodes(const std::vector<Node*>& nodes, bool preserve_id) {

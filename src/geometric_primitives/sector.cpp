@@ -86,7 +86,7 @@ bool Sector::containsPoint2D(const Point2D& p) const {
 bool Sector::containsPoint2DWithInfRange(const Point2D& p) const {
     Vector2D v(center, p);
     double criterion = v.dot(bisector_unit_vector) - v.length()*cos(half_angle);
-    //std::cout << "Check inside sector: " << p << ' ' << criterion << '\n';
+    //std::cout << "Check inside sector: " << *this << ", " << p << ' ' << criterion << '\n';
     return criterion >= -EPSILON;
 }
 

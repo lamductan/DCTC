@@ -45,6 +45,7 @@ std::vector<Node*> orientFourNodesPI_2CoverPlane(std::vector<Node*> nodes) {
             Node* t = nodes[i];
             if (t != nA && t != nB && t != nC) {
                 nD = t;
+                pD = nD->getPoint2D();
                 break;
             }
         }
@@ -60,22 +61,36 @@ std::vector<Node*> orientFourNodesPI_2CoverPlane(std::vector<Node*> nodes) {
             if (computeGeometricAngle(pO, pA, pB) <= PI_2 && computeGeometricAngle(pO, pB, pA) <= PI_2)
                 break;
         }
-        std::cout << pO << ' ' << pA << ' ' << pB << ' ' << pC << ' ' << pD << '\n';
         sector_A = (Sector*) nA->getCommunicationAntenna();
         sector_B = (Sector*) nB->getCommunicationAntenna();
         orientation_angle_A = sector_A->orientBoundaryPassingThroughPointAndCoverAnotherPoint(pB, pC, false);
+        assert(orientation_angle_A != -1);
         orientation_angle_B = sector_B->orientBoundaryPassingThroughPointAndCoverAnotherPoint(pA, pD, false);
+        assert(orientation_angle_B != -1);
     }
+
     sector_C = (Sector*) nC->getCommunicationAntenna();
     sector_D = (Sector*) nD->getCommunicationAntenna();
     sector_C->orientWithAngle(computeOppositeAngle(orientation_angle_A));
     sector_D->orientWithAngle(computeOppositeAngle(orientation_angle_B));
-    return {nA, nB, nC, nD};
+    if (!sector_C->containsPoint2DWithInfRange(sector_D->getCenter())
+        && !sector_D->containsPoint2DWithInfRange(sector_C->getCenter()))
+    {
+        std::swap(nC, nD);
+        sector_C = (Sector*) nC->getCommunicationAntenna();
+        sector_D = (Sector*) nD->getCommunicationAntenna();
+        sector_C->orientWithAngle(computeOppositeAngle(orientation_angle_A));
+        sector_D->orientWithAngle(computeOppositeAngle(orientation_angle_B));
+    }
+
+    std::vector<Node*> nodes_after_orientation{nA, nB, nC, nD};
+    assert(canNodesCoverPlane(nodes_after_orientation));
+    return nodes_after_orientation;
 }
 
 bool canNodesCoverPoint2D(const std::vector<Node*>& nodes, const Point2D& point2D) {
     for(const Node* node : nodes) 
-        if (node->getCommunicationAntenna()->containsPoint2D(point2D)) return true;
+        if (node->getCommunicationAntenna()->containsPoint2DWithInfRange(point2D)) return true;
     return false;
 }
 

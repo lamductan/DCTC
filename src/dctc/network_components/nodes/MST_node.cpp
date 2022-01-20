@@ -76,7 +76,7 @@ Node* MSTNode::deepCopy(bool preserve_id) const {
 }
 
 MSTNode::~MSTNode() {
-    std::cout << getNodeTypeStr() << "'s Destructor\n";
+    //std::cout << getNodeTypeStr() << "'s Destructor\n";
     delete node_;
 }
 

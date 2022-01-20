@@ -34,13 +34,19 @@ private:
     double theta_s_;
     double theta_c_;
 
+    void init(
+        int n_targets, double min_range, double max_range, 
+        NodeType node_type, double r_s, double r_c, double theta_s, double theta_c,
+        bool deterministic=false);
     void gen_targets();
 
 public:
+    Instance();
     Instance(
         int n_targets, double min_range, double max_range, 
         NodeType node_type, double r_s, double r_c, double theta_s, double theta_c,
         bool deterministic=false);
+    Instance(const Instance& other);
     double getMinRange() const;
     double getMaxRange() const;
     bool getDeterministic() const;
