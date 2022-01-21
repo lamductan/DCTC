@@ -107,6 +107,10 @@ std::string MSTNode::getStringContent() const {
     return s;
 }
 
+void MSTNode::setRequiredThetaC(double required_theta_c) {
+    required_theta_c_ = required_theta_c;
+}
+
 MSTNode::~MSTNode() {
     //std::cout << getNodeTypeStr() << "'s Destructor\n";
     delete node_;

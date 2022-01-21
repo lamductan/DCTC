@@ -69,6 +69,14 @@ Circle* Node::getSensingSector() const {return nullptr;}
 
 Circle* Node::getCommunicationAntenna() const {return nullptr;}
 
+double Node::getRS() const {return getSensingSector()->getRadius();}
+
+double Node::getThetaS() const {return getSensingSector()->getAngle();}
+
+double Node::getRC() const {return getCommunicationAntenna()->getRadius();}
+
+double Node::getThetaC() const {return getCommunicationAntenna()->getAngle();}
+
 bool Node::canCoverOtherNodeByCommunicationAntenna(Node* other) const {
     Circle* communication_antenna = getCommunicationAntenna();
     if (communication_antenna == nullptr) return false;

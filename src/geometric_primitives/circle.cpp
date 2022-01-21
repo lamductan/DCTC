@@ -28,6 +28,8 @@ Point2D Circle::getCenter() const {return center;}
 
 double Circle::getRadius() const {return radius;}
 
+double Circle::getAngle() const {return TWO_PI;}
+
 void Circle::setRadius(double radius) {this->radius = radius;}
 
 double Circle::operator()(const Point2D& p) const {

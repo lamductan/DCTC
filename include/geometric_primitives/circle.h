@@ -28,6 +28,7 @@ public:
     virtual void setRadius(double radius);
     Point2D getCenter() const;
     double getRadius() const;
+    virtual double getAngle() const;
     double operator()(const Point2D& p) const;
 
     virtual bool passesThroughPoint2D(const Point2D& p) const;

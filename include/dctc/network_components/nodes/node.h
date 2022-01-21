@@ -51,8 +51,13 @@ public:
     virtual std::string getNodeTypeStr() const;
     std::string toString() const;
     virtual Node* deepCopy(bool preserve_id=false) const;
+
     virtual Circle* getSensingSector() const;
     virtual Circle* getCommunicationAntenna() const;
+    double getRS() const;
+    double getThetaS() const;
+    double getRC() const;
+    double getThetaC() const;
     bool canCoverOtherNodeByCommunicationAntenna(Node* other) const;
 
     virtual ~Node();

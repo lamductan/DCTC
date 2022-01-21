@@ -23,10 +23,12 @@ enum CommunicationAlgType {
 
 class Instance {
 private:
+    bool deterministic_;
+    long unsigned int seed_;
+
     int n_targets_;
     double min_range_;
     double max_range_;
-    bool deterministic_;
     std::vector<Point2D> targets_;
     NodeType node_type_;
     double r_s_;
@@ -37,7 +39,7 @@ private:
     void init(
         int n_targets, double min_range, double max_range, 
         NodeType node_type, double r_s, double r_c, double theta_s, double theta_c,
-        bool deterministic=false);
+        bool deterministic=false, long unsigned int seed=1);
     void gen_targets();
 
 public:
@@ -45,7 +47,7 @@ public:
     Instance(
         int n_targets, double min_range, double max_range, 
         NodeType node_type, double r_s, double r_c, double theta_s, double theta_c,
-        bool deterministic=false);
+        bool deterministic=false, long unsigned int seed=1);
     Instance(const Instance& other);
     double getMinRange() const;
     double getMaxRange() const;

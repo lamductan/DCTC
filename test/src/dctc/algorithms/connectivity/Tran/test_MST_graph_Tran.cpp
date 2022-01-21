@@ -4,14 +4,17 @@
 
 #include "dctc/instance/instance.h"
 #include "dctc/algorithms/connectivity/Tran/MST_graph_Tran.h"
+#include "dctc/algorithms/connectivity/communication_checker.h"
 
 
 class TestMSTGraphTran : public ::testing::Test {
 protected:
     bool deterministic = true;
-    int n_targets = 20;
+    long unsigned int seed = 1642737472;
+
+    int n_targets = 500;
     double min_range = 0;
-    double max_range = 100;
+    double max_range = 10000;
     NodeType node_type = SENSING_DD_NODE;
     double r_s = 2.0;
     double r_c = 1.0;
@@ -25,7 +28,7 @@ protected:
         instance = Instance(
             n_targets, min_range, max_range,
             node_type, r_s, r_c, theta_s, theta_c,
-            deterministic);
+            deterministic, seed);
         coverage_sensors = instance.putCoverageSensors(TRIVIAL_COVERAGE_ALG);
         MST_graph_ptr = Instance::constructMSTGraphCoverageSensors(coverage_sensors);
         std::cout << "Done MST_graph_ptr" << '\n';
@@ -49,14 +52,16 @@ TEST_F(TestMSTGraphTran, Test1)
     delete MST_graph_Tran_ptr;
 
     std::cout << "\nresult_MST_graph_Tran_ptr:" << '\n';
-    std::cout << *result_MST_graph_Tran_ptr << '\n';
+    //std::cout << *result_MST_graph_Tran_ptr << '\n';
     delete result_MST_graph_Tran_ptr;
 }
 
 TEST(TestMSTGraphTran1, TestRandomNondeterministic)
 {
-    int n_tests = 20;
+    int n_tests = 100;
     bool deterministic = false;
+    long unsigned int seed = 1;
+
     int n_targets = 500;
     double min_range = 0;
     double max_range = 10000;
@@ -70,11 +75,11 @@ TEST(TestMSTGraphTran1, TestRandomNondeterministic)
     std::vector<Node*> coverage_sensors; 
 
     for(int i = 0; i < n_tests; ++i) {
-        std::cout << "Test " << i << '\n';
+        std::cout << "\nTest " << i << '\n';
         instance = Instance(
             n_targets, min_range, max_range,
             node_type, r_s, r_c, theta_s, theta_c,
-            deterministic);
+            deterministic, seed);
         coverage_sensors = instance.putCoverageSensors(TRIVIAL_COVERAGE_ALG);
         MST_graph_ptr = Instance::constructMSTGraphCoverageSensors(coverage_sensors);
         std::cout << "Done MST_graph_ptr" << '\n';

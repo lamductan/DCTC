@@ -39,7 +39,7 @@ public:
     void orientWithAngle(double orientation_angle);
     Point2D getOriginalBisectorUnitPoint() const;
     Point2D getBisectorUnitPoint() const;
-    double getAngle() const;
+    virtual double getAngle() const override;
     double getOrientationAngle() const;
     Point2D getEndpoint1() const;
     Point2D getEndpoint2() const;

@@ -25,6 +25,8 @@ protected:
     std::set<std::pair<int, int>> group_neighbor_relations_;
     MSTNodeTran* root_;
 
+    MSTNode* findBestNodeToConnect(MSTNode* node, const std::vector<Node*>& candidates) const;
+
 public:
     MSTGraphTran(const MSTGraph* MST_graph);
 

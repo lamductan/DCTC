@@ -28,6 +28,8 @@ protected:
     MSTNode* parent_in_rooted_MST_ = nullptr;
     Edge* edge_to_parent_in_rooted_MST_;
 
+    double required_theta_c_ = TWO_PI;
+
     void init(Node* node);
     void init(MSTNode* node);
     virtual std::string getStringContent() const override;
@@ -55,6 +57,8 @@ public:
     std::unordered_map<Node*, Edge*> getCommunicationEdgesMap() const;
     std::vector<Node*> getCommunicationEdgeAdjNodes() const;
     std::vector<Edge*> getCommunicationEdges() const;
+
+    void setRequiredThetaC(double required_theta_c);
 
     /** 
      * This method can only be used if users are well aware of the following information.

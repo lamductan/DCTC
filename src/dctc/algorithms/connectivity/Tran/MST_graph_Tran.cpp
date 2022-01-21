@@ -6,6 +6,7 @@
 #include "dctc/utils.h"
 #include "dctc/algorithms/connectivity/utils.h"
 #include "dctc/algorithms/connectivity/Tran/MST_graph_Tran.h"
+#include "dctc/algorithms/connectivity/communication_checker.h"
 
 
 MSTGraphTran::MSTGraphTran(const MSTGraph* MST_graph) {
@@ -122,6 +123,20 @@ void MSTGraphTran::findGroupNeighborRelations() {
         std::pair<int, int> pair_group = {j, par_group_id};
         group_neighbor_relations_.insert(pair_group);
     }
+
+    std::vector<int> groups_adj_remained_nodes;
+    for(MSTNode* remained_node : remained_nodes_) {
+        for(MSTNode* adj_node : remained_node->getMSTEdgeAdjNodes()) {
+            MSTNodeTran* adj_node_1 = (MSTNodeTran*) adj_node;
+            if (adj_node_1->in_group_) groups_adj_remained_nodes.push_back(adj_node_1->group_->group_id_);
+        }
+    }
+    for(int i : groups_adj_remained_nodes) {
+        for(int j : groups_adj_remained_nodes) {
+            if (i <= j) continue;
+            group_neighbor_relations_.insert({i, j});
+        }
+    }
 }
 
 void MSTGraphTran::printGroup() {
@@ -163,17 +178,11 @@ void MSTGraphTran::establishCommunicationGraph() {
         addCommunicationEdge((MSTNode*) b, (MSTNode*) d);
         //Connect non-core nodes to core nodes
         for(MSTNodeTran* non_core_node : group->non_core_nodes_) {
-            Point2D non_core_node_position = non_core_node->getPoint2D();
-            for(Node* core_node : core_nodes_after_orientation) {
-                if (dynamic_cast<Sector*>(core_node->getCommunicationAntenna())->containsPoint2DWithInfRange(
-                    non_core_node_position))
-                {
-                    Point2D core_node_position = core_node->getPoint2D();
-                    dynamic_cast<Sector*>(non_core_node->getCommunicationAntenna())->orientToCoverPoint2D(
-                        core_node_position);
-                    addCommunicationEdge((MSTNode*) core_node, non_core_node);
-                }
-            }
+            MSTNode* core_node_to_connect = findBestNodeToConnect(non_core_node, group->core_nodes_);
+            assert(core_node_to_connect != nullptr);
+            dynamic_cast<Sector*>(non_core_node->getCommunicationAntenna())->orientToCoverPoint2D(
+                core_node_to_connect->getPoint2D(), false);
+            addCommunicationEdge(non_core_node, core_node_to_connect);
         }
     }
 
@@ -188,15 +197,15 @@ void MSTGraphTran::establishCommunicationGraph() {
         bool done_connect_i_j = false;
         for(Node* core_node_i : group_i->core_nodes_) {
             for(Node* core_node_j : group_j->core_nodes_) {
+                if (core_node_i->getId() == 413 && core_node_j->getId() == 403) std::cout << i << ' ' << j << '\n';
+                if (core_node_i->getId() == 403 && core_node_j->getId() == 413) std::cout << i << ' ' << j << '\n';
                 if (core_node_i->canCoverOtherNodeByCommunicationAntenna(core_node_j)
                     && core_node_j->canCoverOtherNodeByCommunicationAntenna(core_node_i))
                 {
                     addCommunicationEdge((MSTNode*) core_node_i, (MSTNode*) core_node_j);
                     done_connect_i_j = true;
-                    break;
                 }
             }
-            if (done_connect_i_j) break;
         }
         assert(done_connect_i_j);
     }
@@ -204,24 +213,31 @@ void MSTGraphTran::establishCommunicationGraph() {
     //orient and connect remain nodes
     std::cout << "\nOrient and connect remain nodes\n";
     for(MSTNode* remained_node : remained_nodes_) {
-        Node* node_to_connect = nullptr;
-        double min_distance = INT_MAX;
-        Point2D node_position = remained_node->getPoint2D();
-        for(Node* node : nodes_) {
-            if (node == remained_node) continue;
-            MSTNodeTran* mst_node = (MSTNodeTran*) node;
-            if (!mst_node->in_group_) continue;
-            double distance = computeEuclidDistance(node_position, mst_node->getPoint2D());
-            if (distance < min_distance) {
-                min_distance = distance;
-                node_to_connect = mst_node;
-            }
-        }
+        MSTNode* node_to_connect = findBestNodeToConnect(remained_node, nodes_);
         assert(node_to_connect != nullptr);
+        assert(dynamic_cast<Sector*>(node_to_connect->getCommunicationAntenna())->containsPoint2DWithInfRange(remained_node->getPoint2D()));
         dynamic_cast<Sector*>(remained_node->getCommunicationAntenna())->orientToCoverPoint2D(
-            node_to_connect->getPoint2D());
+            node_to_connect->getPoint2D(), false);
         addCommunicationEdge((MSTNode*) remained_node, (MSTNode*) node_to_connect);
     }
+}
+
+MSTNode* MSTGraphTran::findBestNodeToConnect(MSTNode* node, const std::vector<Node*>& candidates) const {
+    MSTNode* node_to_connect = nullptr;
+    double min_distance = INT_MAX;
+    Point2D node_position = node->getPoint2D();
+    for(Node* candidate : candidates) {
+        if (candidate == node) continue;
+        MSTNodeTran* mst_candidate = (MSTNodeTran*) candidate;
+        if (!mst_candidate->in_group_) continue;
+        if (!mst_candidate->canCoverOtherNodeByCommunicationAntenna(node)) continue;
+        double distance = computeEuclidDistance(node_position, mst_candidate->getPoint2D());
+        if (distance < min_distance) {
+            min_distance = distance;
+            node_to_connect = mst_candidate;
+        }
+    }
+    return node_to_connect;
 }
 
 MSTGraph* MSTGraphTran::doAllSteps() {
@@ -245,10 +261,17 @@ MSTGraph* MSTGraphTran::doAllSteps() {
     //Step 5: Establish communication graph
     establishCommunicationGraph();
     //std::cout << * (MSTGraph*) this << '\n';
+    assert(CommunicationChecker::checkConnectivity1(this));
 
     //Step 6: Return MST of the communication graph
     MSTGraph* result_MST_graph = new MSTGraph(nodes_, MST_GRAPH_NODE, false);
     result_MST_graph->buildMST(communication_edges_, false);
+    //std::cout << "result_MST_graph:\n";
+    //std::cout << *result_MST_graph << '\n';
+
+    //Check result
+    assert(CommunicationChecker::checkConnectivity(result_MST_graph));
+    assert(CommunicationChecker::checkAngle(result_MST_graph));
 
     time_t end_time = time(NULL);
     std::cout << "Done " << __PRETTY_FUNCTION__ << " in " << end_time - start_time << "s\n";

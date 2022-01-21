@@ -9,6 +9,8 @@
 #include "dctc/network_components/nodes/node.h"
 #include "dctc/network_components/graphs/MST_graph.h"
 
+#include "dctc/algorithms/connectivity/communication_checker.h"
+
 
 MSTGraph::MSTGraph() {}
 
@@ -71,6 +73,10 @@ Edge* MSTGraph::addCommunicationEdge(MSTNode* a, MSTNode* b) {
     Edge* edge = new Edge(a, b);
     a->addCommunicationEdge(edge);
     b->addCommunicationEdge(edge);
+    if (!CommunicationChecker::checkAngleOneNode1(a)) std::cout << "failed angle " << *a << ' ' << *b << '\n';
+    if (!CommunicationChecker::checkAngleOneNode1(b)) std::cout << "failed angle " << *b << ' ' << *a << '\n';
+    assert(CommunicationChecker::checkAngleOneNode1(a));
+    assert(CommunicationChecker::checkAngleOneNode1(b));
     communication_edges_.push_back(edge);
     return edge;
 }

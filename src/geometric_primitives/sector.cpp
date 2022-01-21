@@ -220,13 +220,13 @@ double Sector::orientToCoverPoint2D(const Point2D& p, bool consider_distance) {
 
 double Sector::findPossibleOrientAngleToCoverPoints2D(const std::vector<Point2D>& points, bool consider_distance) const {
     std::vector<double> angles;
+    int n = points.size();
     for(const Point2D& point : points) {
         if (consider_distance && computeEuclidDistance(center, point) > radius) return false;
         double angle_with_original_unit_vector = computeAngle(original_bisector_unit_point, center, point);
         angles.push_back(angle_with_original_unit_vector);
     }
     sort(angles.begin(), angles.end());
-    int n = angles.size();
     for(int i = 0; i < n; ++i) {
         angles.push_back(angles[i] + TWO_PI);
     }

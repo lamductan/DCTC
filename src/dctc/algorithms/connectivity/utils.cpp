@@ -89,6 +89,12 @@ std::vector<Node*> orientFourNodesPI_2CoverPlane(std::vector<Node*> nodes) {
     if (!canNodesCoverPlane(nodes_after_orientation)) {
         print_vector_ptr<Node>(nodes_after_orientation, '\n');
     }
+    assert(nA->canCoverOtherNodeByCommunicationAntenna(nB));
+    assert(nA->canCoverOtherNodeByCommunicationAntenna(nC));
+    assert(nB->canCoverOtherNodeByCommunicationAntenna(nA));
+    assert(nB->canCoverOtherNodeByCommunicationAntenna(nD));
+    assert(nC->canCoverOtherNodeByCommunicationAntenna(nA));
+    assert(nD->canCoverOtherNodeByCommunicationAntenna(nB));
     assert(canNodesCoverPlane(nodes_after_orientation));
     return nodes_after_orientation;
 }
