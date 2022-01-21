@@ -7,7 +7,7 @@
 #include <set>
 
 
-const double EPSILON = 1e-9;
+const double EPSILON = 1e-6;
 const int DECIMAL_DIGITS = 2;
 const double PI = acos(-1);
 const double TWO_PI = PI*2;

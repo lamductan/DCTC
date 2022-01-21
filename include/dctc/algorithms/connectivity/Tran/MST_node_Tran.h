@@ -23,13 +23,6 @@ class MSTNodeTran : public MSTNode {
 friend class MSTGraphTran;
 protected:
     GroupTran* group_ = nullptr;
-    int level_in_rooted_mst_;
-    std::unordered_map<MSTNodeTran*, Edge*> MST_children_edges_map_;
-    std::vector<MSTNodeTran*> MST_children_nodes_;
-    std::vector<Edge*> MST_children_edges_;
-
-    MSTNodeTran* parent_in_rooted_MST_ = nullptr;
-    Edge* edge_to_parent_in_rooted_MST_;
     bool removed_ = false;
     bool in_group_ = false;
 
@@ -38,9 +31,6 @@ protected:
 public:
     MSTNodeTran(MSTNode* node);
     virtual std::string getNodeTypeStr() const override;
-    std::vector<MSTNodeTran*> getMSTChildrenNodes() const;
-    std::vector<Edge*> getMSTChildrenEdges() const;
-    std::unordered_map<MSTNodeTran*, Edge*> getMSTChildrenEdgesMap() const;
     virtual ~MSTNodeTran();
 };
 

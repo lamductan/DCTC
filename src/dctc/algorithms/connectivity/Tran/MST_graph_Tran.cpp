@@ -1,5 +1,7 @@
 #include <cassert>
+#include <ctime>
 #include <algorithm>
+#include <iomanip>
 
 #include "dctc/utils.h"
 #include "dctc/algorithms/connectivity/utils.h"
@@ -12,7 +14,7 @@ MSTGraphTran::MSTGraphTran(const MSTGraph* MST_graph) {
 
 MSTNodeTran* MSTGraphTran::findRootNode() {
     for(Node* node : nodes_) {
-        std::vector<Node*> adj_nodes = dynamic_cast<MSTNode*>(node)->getMSTEdgeAdjNodes();
+        std::vector<MSTNode*> adj_nodes = dynamic_cast<MSTNode*>(node)->getMSTEdgeAdjNodes();
         int n_adj_nodes = adj_nodes.size();
         int n_adj_leaf_nodes = 0;
         for(Node* adj_node : adj_nodes)
@@ -22,30 +24,6 @@ MSTNodeTran* MSTGraphTran::findRootNode() {
             return root_ = (MSTNodeTran*) node;
     }
     return nullptr;
-}
-
-MSTNodeTran* MSTGraphTran::rootTree(MSTNodeTran* root_node) {
-    std::unordered_map<MSTNodeTran*, bool> vis;
-    dfs1(root_node, nullptr, 0, vis);
-    return nullptr;
-}
-
-void MSTGraphTran::dfs1(MSTNodeTran* u, MSTNodeTran* par, int level, std::unordered_map<MSTNodeTran*, bool>& vis) {
-    if (u == nullptr) return;
-    if (vis[u]) return;
-    vis[u] = true;
-    max_level_ = std::max(max_level_, level);
-    u->level_in_rooted_mst_ = level;
-    u->parent_in_rooted_MST_ = par;
-    u->edge_to_parent_in_rooted_MST_ = u->mst_edges_[par];
-    for(auto edge : u->mst_edges_) {
-        MSTNodeTran* v = (MSTNodeTran*) edge.first;
-        if (v == par) continue;
-        u->MST_children_edges_map_[v] = edge.second;
-        dfs1(v, u, level + 1, vis);
-    }
-    u->MST_children_nodes_ = getMapKeys<MSTNodeTran*, Edge*>(u->MST_children_edges_map_);
-    u->MST_children_edges_ = getMapValues<MSTNodeTran*, Edge*>(u->MST_children_edges_map_);
 }
 
 void MSTGraphTran::partition() {
@@ -63,7 +41,7 @@ void MSTGraphTran::partition() {
             // try parent, grandparent and greatparent 's subtree
             for(int i = 0; i < 3; ++i) {
                 if (cur == nullptr) break;
-                MSTNodeTran* par = cur->parent_in_rooted_MST_;
+                MSTNodeTran* par = (MSTNodeTran*) cur->parent_in_rooted_MST_;
                 if (par == nullptr) break;
                 std::vector<MSTNodeTran*> remained_nodes_in_subtree_of_par = getRemainedNodesInSubtree(par);
                 if (remained_nodes_in_subtree_of_par.size() >= 4) {
@@ -92,8 +70,9 @@ std::vector<MSTNodeTran*> MSTGraphTran::getRemainedNodesInSubtree(MSTNodeTran* u
 void MSTGraphTran::dfs2(MSTNodeTran* u, std::vector<MSTNodeTran*>& remained_nodes_in_subtree) const {
     if (u == nullptr) return;
     remained_nodes_in_subtree.push_back(u);
-    for(MSTNodeTran* child : u->MST_children_nodes_) {
-        if (!child->removed_) dfs2(child, remained_nodes_in_subtree);
+    for(MSTNode* child : u->MST_children_nodes_) {
+        MSTNodeTran* mst_node_Tran_child = (MSTNodeTran*) child;
+        if (!mst_node_Tran_child->removed_) dfs2(mst_node_Tran_child, remained_nodes_in_subtree);
     }
 }
 
@@ -133,7 +112,7 @@ void MSTGraphTran::findGroupNeighborRelations() {
     for(int i = 0; i < groups_.size(); ++i) {
         GroupTran* group_i = groups_[i];
         MSTNodeTran* group_i_root = group_i->group_root_;
-        MSTNodeTran* group_i_root_par = group_i_root->parent_in_rooted_MST_;
+        MSTNodeTran* group_i_root_par = (MSTNodeTran*) group_i_root->parent_in_rooted_MST_;
         if (group_i_root_par == nullptr) continue;
         GroupTran* group_i_root_par_group = group_i_root_par->group_;
         if (group_i_root_par_group == nullptr) continue;
@@ -245,16 +224,36 @@ void MSTGraphTran::establishCommunicationGraph() {
     }
 }
 
-void MSTGraphTran::doAllSteps() {
+MSTGraph* MSTGraphTran::doAllSteps() {
+    time_t start_time = time(NULL);
+
+    //Step 1: Find root node
     root_ = findRootNode();
-    std::cout << "MSTNodeTran root = " << *root_ << '\n';
+    //std::cout << "MSTNodeTran root = " << *root_ << '\n';
+
+    //Step 2: Root tree
     rootTree(root_);
-    //std::cout << * (MSTGraph*) this << '\n';
+    //std::cout << *(MSTGraph*) this << '\n';
+
+    //Step 3: Partition
     partition();
+
+    //Step 4: Find group neighbor relations
     findGroupNeighborRelations();
     //printGroup();
+
+    //Step 5: Establish communication graph
     establishCommunicationGraph();
     //std::cout << * (MSTGraph*) this << '\n';
+
+    //Step 6: Return MST of the communication graph
+    MSTGraph* result_MST_graph = new MSTGraph(nodes_, MST_GRAPH_NODE, false);
+    result_MST_graph->buildMST(communication_edges_, false);
+
+    time_t end_time = time(NULL);
+    std::cout << "Done " << __PRETTY_FUNCTION__ << " in " << end_time - start_time << "s\n";
+
+    return result_MST_graph;
 }
 
 MSTGraphTran::~MSTGraphTran() {

@@ -2,6 +2,7 @@
 #include <algorithm>
 
 #include "geometric_primitives/geom2D.h"
+#include "dctc/utils.h"
 #include "dctc/algorithms/connectivity/utils.h"
 
 
@@ -53,6 +54,7 @@ std::vector<Node*> orientFourNodesPI_2CoverPlane(std::vector<Node*> nodes) {
     else if (m == 4) {
         Point2D pO = Segment2D(convex_hull[0]->getPoint2D(), convex_hull[2]->getPoint2D())
             .findIntersectionsWithSegment2D(Segment2D(convex_hull[1]->getPoint2D(), convex_hull[3]->getPoint2D()));
+        assert(!pO.isPointInfinity());
         for(int i = 0; i < 4; ++i) {
             nA = convex_hull[i], nB = convex_hull[(i + 1) % 4];
             nC = convex_hull[(i + 2) % 4], nD = convex_hull[(i + 3) % 4];
@@ -84,6 +86,9 @@ std::vector<Node*> orientFourNodesPI_2CoverPlane(std::vector<Node*> nodes) {
     }
 
     std::vector<Node*> nodes_after_orientation{nA, nB, nC, nD};
+    if (!canNodesCoverPlane(nodes_after_orientation)) {
+        print_vector_ptr<Node>(nodes_after_orientation, '\n');
+    }
     assert(canNodesCoverPlane(nodes_after_orientation));
     return nodes_after_orientation;
 }

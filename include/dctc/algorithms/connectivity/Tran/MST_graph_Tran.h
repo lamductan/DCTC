@@ -12,7 +12,6 @@ class MSTGraphTran : public MSTGraph {
 protected:
     std::unordered_map<int, std::unordered_set<MSTNodeTran*>> leaves_at_levels_;
 
-    void dfs1(MSTNodeTran* u, MSTNodeTran* par, int level, std::unordered_map<MSTNodeTran*, bool>& vis);
     std::vector<MSTNodeTran*> getRemainedNodesInSubtree(MSTNodeTran* u) const;
     void dfs2(MSTNodeTran* u, std::vector<MSTNodeTran*>& remained_nodes_in_subtree) const;
     void removeNode(MSTNodeTran* node, bool in_group);
@@ -25,17 +24,15 @@ protected:
     std::unordered_map<int, GroupTran*> map_id_groups_;
     std::set<std::pair<int, int>> group_neighbor_relations_;
     MSTNodeTran* root_;
-    int max_level_ = 0;
 
 public:
     MSTGraphTran(const MSTGraph* MST_graph);
 
     MSTNodeTran* findRootNode();
-    MSTNodeTran* rootTree(MSTNodeTran* root);
     void partition();
     void findGroupNeighborRelations();
     void establishCommunicationGraph();
-    void doAllSteps();
+    MSTGraph* doAllSteps();
 
     virtual ~MSTGraphTran();
     friend std::ostream& operator<<(std::ostream& os, const MSTGraphTran& MST_graph);

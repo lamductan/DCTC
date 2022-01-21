@@ -48,6 +48,7 @@ set(HEADERS
 
     include/dctc/algorithms/coverage/coverage_alg.h
     include/dctc/algorithms/connectivity/utils.h
+    include/dctc/algorithms/connectivity/orientation_checker.h
 
     include/dctc/algorithms/connectivity/Tran/MST_node_Tran.h
     include/dctc/algorithms/connectivity/Tran/MST_graph_Tran.h
@@ -90,6 +91,7 @@ set(SOURCES
     src/dctc/algorithms/coverage/strip_coverage_alg.cpp
     src/dctc/algorithms/connectivity/utils.cpp
     src/dctc/algorithms/connectivity/convex_hull.cpp
+    src/dctc/algorithms/connectivity/orientation_checker.cpp
 
     src/dctc/algorithms/connectivity/Tran/MST_node_Tran.cpp
     src/dctc/algorithms/connectivity/Tran/MST_graph_Tran.cpp

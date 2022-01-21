@@ -10,12 +10,23 @@
 #include "dctc/network_components/edges/edge.h"
 
 
+class MSTGraph;
+
 class MSTNode : public Node {
+friend class MSTGraph;
 protected:
     Node* node_;
     bool is_leaf_ = false;
-    std::unordered_map<Node*, Edge*> mst_edges_;
+    std::unordered_map<MSTNode*, Edge*> mst_edges_;
     std::unordered_map<Node*, Edge*> communication_edges_;
+
+    int level_in_rooted_mst_;
+    std::unordered_map<MSTNode*, Edge*> MST_children_edges_map_;
+    std::vector<MSTNode*> MST_children_nodes_;
+    std::vector<Edge*> MST_children_edges_;
+
+    MSTNode* parent_in_rooted_MST_ = nullptr;
+    Edge* edge_to_parent_in_rooted_MST_;
 
     void init(Node* node);
     void init(MSTNode* node);
@@ -32,9 +43,13 @@ public:
     void setIsLeaf(bool is_leaf);
 
     void addMSTEdge(Edge* edge);
-    std::unordered_map<Node*, Edge*> getMSTEdgesMap() const;
-    std::vector<Node*> getMSTEdgeAdjNodes() const;
+    std::unordered_map<MSTNode*, Edge*> getMSTEdgesMap() const;
+    std::vector<MSTNode*> getMSTEdgeAdjNodes() const;
     std::vector<Edge*> getMSTEdges() const;
+
+    std::vector<MSTNode*> getMSTChildrenNodes() const;
+    std::vector<Edge*> getMSTChildrenEdges() const;
+    std::unordered_map<MSTNode*, Edge*> getMSTChildrenEdgesMap() const;
 
     void addCommunicationEdge(Edge* edge);
     std::unordered_map<Node*, Edge*> getCommunicationEdgesMap() const;

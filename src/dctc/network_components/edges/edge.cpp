@@ -72,7 +72,7 @@ double Edge::length() const {return segment2D_.length();}
 std::string Edge::getEdgeTypeStr() const {return "Edge";}
 
 std::string Edge::getStringContent() const {
-    return std::to_string(id_) + ",\n     " + endpoint_1_->toString() + ",\n     " + endpoint_2_->toString();
+    return std::to_string(id_) + "(" + std::to_string(endpoint_1_->getId()) + "," + std::to_string(endpoint_2_->getId()) + ")";
 }
 
 std::string Edge::toString() const {
