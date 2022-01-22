@@ -180,9 +180,7 @@ void MSTGraphTran::establishCommunicationGraph() {
         for(MSTNodeTran* non_core_node : group->non_core_nodes_) {
             MSTNode* core_node_to_connect = findBestNodeToConnect(non_core_node, group->core_nodes_);
             assert(core_node_to_connect != nullptr);
-            dynamic_cast<Sector*>(non_core_node->getCommunicationAntenna())->orientToCoverPoint2D(
-                core_node_to_connect->getPoint2D(), false);
-            addCommunicationEdge(non_core_node, core_node_to_connect);
+            orientAndConnect(non_core_node, core_node_to_connect);
         }
     }
 
@@ -197,8 +195,6 @@ void MSTGraphTran::establishCommunicationGraph() {
         bool done_connect_i_j = false;
         for(Node* core_node_i : group_i->core_nodes_) {
             for(Node* core_node_j : group_j->core_nodes_) {
-                if (core_node_i->getId() == 413 && core_node_j->getId() == 403) std::cout << i << ' ' << j << '\n';
-                if (core_node_i->getId() == 403 && core_node_j->getId() == 413) std::cout << i << ' ' << j << '\n';
                 if (core_node_i->canCoverOtherNodeByCommunicationAntenna(core_node_j)
                     && core_node_j->canCoverOtherNodeByCommunicationAntenna(core_node_i))
                 {
@@ -216,9 +212,7 @@ void MSTGraphTran::establishCommunicationGraph() {
         MSTNode* node_to_connect = findBestNodeToConnect(remained_node, nodes_);
         assert(node_to_connect != nullptr);
         assert(dynamic_cast<Sector*>(node_to_connect->getCommunicationAntenna())->containsPoint2DWithInfRange(remained_node->getPoint2D()));
-        dynamic_cast<Sector*>(remained_node->getCommunicationAntenna())->orientToCoverPoint2D(
-            node_to_connect->getPoint2D(), false);
-        addCommunicationEdge((MSTNode*) remained_node, (MSTNode*) node_to_connect);
+        orientAndConnect(remained_node, (MSTNode*) node_to_connect);
     }
 }
 
@@ -238,6 +232,12 @@ MSTNode* MSTGraphTran::findBestNodeToConnect(MSTNode* node, const std::vector<No
         }
     }
     return node_to_connect;
+}
+
+Edge* MSTGraphTran::orientAndConnect(MSTNode* node_to_orient, MSTNode* node_to_connect) {
+    dynamic_cast<Sector*>(node_to_orient->getCommunicationAntenna())->orientToCoverPoint2D(
+        node_to_connect->getPoint2D(), false);
+    return addCommunicationEdge(node_to_orient, node_to_connect);
 }
 
 MSTGraph* MSTGraphTran::doAllSteps() {
@@ -275,6 +275,7 @@ MSTGraph* MSTGraphTran::doAllSteps() {
 
     time_t end_time = time(NULL);
     std::cout << "Done " << __PRETTY_FUNCTION__ << " in " << end_time - start_time << "s\n";
+    std::cout << "Result: OK. Returned MST Graph satisfies both connectivity and angle requirements.\n";
 
     return result_MST_graph;
 }

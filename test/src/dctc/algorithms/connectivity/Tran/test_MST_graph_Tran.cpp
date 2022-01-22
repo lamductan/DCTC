@@ -58,7 +58,7 @@ TEST_F(TestMSTGraphTran, Test1)
 
 TEST(TestMSTGraphTran1, TestRandomNondeterministic)
 {
-    int n_tests = 100;
+    int n_tests = 10;
     bool deterministic = false;
     long unsigned int seed = 1;
 

@@ -32,6 +32,7 @@ protected:
 public:
     MSTGraph();
     MSTGraph(const std::vector<Node*>& nodes, GraphNodeType graph_node_type=MST_GRAPH_NODE, bool build_MST=true);
+    GraphNodeType getGraphNodeType() const;
     virtual std::string getGraphTypeStr() const;
     int getNNodes() const;
     std::unordered_map<int, Node*> getMapIdNodes() const;

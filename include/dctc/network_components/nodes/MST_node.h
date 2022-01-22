@@ -36,6 +36,7 @@ protected:
 
 public:
     MSTNode();
+    MSTNode(const Point2D& point2D, NodeType node_type);
     MSTNode(Node* node);
     MSTNode(MSTNode* node);
     virtual std::string getNodeTypeStr() const override;

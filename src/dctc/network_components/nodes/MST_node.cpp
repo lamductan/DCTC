@@ -23,6 +23,11 @@ MSTNode::MSTNode(Node* node) {
     init(node);
 }
 
+MSTNode::MSTNode(const Point2D& point2D, NodeType node_type) {
+    Node node(point2D, node_type);
+    init(&node);
+}
+
 MSTNode::MSTNode(MSTNode* node) {
     init(node);
 }

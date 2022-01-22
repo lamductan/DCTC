@@ -8,7 +8,6 @@
 #include "dctc/utils.h"
 #include "dctc/network_components/nodes/node.h"
 #include "dctc/network_components/graphs/MST_graph.h"
-
 #include "dctc/algorithms/connectivity/communication_checker.h"
 
 
@@ -30,6 +29,8 @@ MSTGraph::MSTGraph(const std::vector<Node*>& nodes, GraphNodeType graph_node_typ
     init(nodes, graph_node_type);
     if (build_MST) mst_weight_ = buildMST();
 }
+
+GraphNodeType MSTGraph::getGraphNodeType() const {return graph_node_type_;}
 
 std::string MSTGraph::getGraphTypeStr() const {return "MSTGraph";}
 
@@ -88,7 +89,7 @@ double MSTGraph::buildMST() {
     for(int i : node_ids_) {
         for(int j : node_ids_) {
             if (j <= i) continue;
-            Edge* edge = new Edge(nodes_[i], nodes_[j]);
+            Edge* edge = new Edge(map_id_nodes_[i], map_id_nodes_[j]);
             edges.push_back(edge);
         }
     }
@@ -111,10 +112,10 @@ double MSTGraph::buildMST(std::vector<Edge*>& edges, bool delete_edge) {
             union_find.join(fr, to);
             mst_weight += edge->length();
             ++n_mst_edges;
-            Edge* mst_edge = new Edge(nodes_[fr], nodes_[to]);
+            Edge* mst_edge = new Edge(map_id_nodes_[fr], map_id_nodes_[to]);
 
-            assert(nodes_[fr] != nullptr);
-            assert(nodes_[to] != nullptr);
+            assert(map_id_nodes_[fr] != nullptr);
+            assert(map_id_nodes_[to] != nullptr);
 
             MST_edges_.push_back(mst_edge);
             MSTNode* endpoint1 = (MSTNode*) mst_edge->getEndpoint1();
@@ -151,8 +152,6 @@ MSTGraph* MSTGraph::cloneFrom(const MSTGraph* mst_graph, GraphNodeType graph_nod
         MST_edges_.push_back(edge);
         endpoint1->addMSTEdge(edge);
         endpoint2->addMSTEdge(edge);
-        assert(endpoint1 != nullptr);
-        assert(endpoint2 != nullptr);
     }
     // Add copy communication edges later if needed
     return this;

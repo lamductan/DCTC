@@ -67,6 +67,8 @@ Node* Edge::getOtherEndpoint(Node* endpoint) const {
     return (endpoint_1_ == endpoint) ? endpoint_2_ : endpoint_1_;
 }
 
+Segment2D Edge::getSegment2D() const {return segment2D_;}
+
 double Edge::length() const {return segment2D_.length();}
 
 std::string Edge::getEdgeTypeStr() const {return "Edge";}
