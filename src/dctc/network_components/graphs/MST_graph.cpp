@@ -192,6 +192,12 @@ MSTGraph* MSTGraph::deepCopy(GraphNodeType graph_node_type) const {
     return copied_mst_graph->cloneFrom(this, graph_node_type);
 }
 
+Edge* MSTGraph::orientAndConnect(MSTNode* node_to_orient, MSTNode* node_to_connect) {
+    dynamic_cast<Sector*>(node_to_orient->getCommunicationAntenna())->orientToCoverPoint2D(
+        node_to_connect->getPoint2D(), false);
+    return addCommunicationEdge(node_to_orient, node_to_connect);
+}
+
 MSTGraph::~MSTGraph() {
     //std::cout << getGraphTypeStr() << "'s Destructor\n";
     for(Edge* edge : MST_edges_) delete edge;

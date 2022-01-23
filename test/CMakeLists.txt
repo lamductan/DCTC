@@ -25,10 +25,13 @@ set(TESTS
     #"src/dctc/algorithms/connectivity/test_convex_hull.cpp"
     #"src/dctc/algorithms/connectivity/test_utils.cpp"
     #"src/dctc/algorithms/connectivity/Tran/test_MST_graph_Tran.cpp"
+    #"src/dctc/algorithms/connectivity/Aschner/test_MST_graph_Aschner.cpp"
 
-    "src/dctc/algorithms/connectivity/relays/test_relays_utils.cpp"
-    "src/dctc/algorithms/connectivity/relays/test_simple_relays_alg.cpp"
-    "src/dctc/algorithms/connectivity/relays/test_relays_MST_graph_Tran.cpp"
+    #"src/dctc/algorithms/connectivity/relays/test_relays_utils.cpp"
+    #"src/dctc/algorithms/connectivity/relays/test_simple_relays_alg.cpp"
+    #"src/dctc/algorithms/connectivity/relays/test_relays_MST_graph_Tran.cpp"
+    #"src/dctc/algorithms/connectivity/relays/test_relays_MST_graph_Aschner.cpp"
+    "src/dctc/algorithms/connectivity/relays/test_relays_MST_graph_Aschner_and_Tran.cpp"
 )
 
 add_executable(tests ${TESTS})

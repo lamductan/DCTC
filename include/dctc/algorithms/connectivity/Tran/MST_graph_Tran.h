@@ -26,7 +26,6 @@ protected:
     MSTNodeTran* root_;
 
     MSTNode* findBestNodeToConnect(MSTNode* node, const std::vector<Node*>& candidates) const;
-    Edge* orientAndConnect(MSTNode* node_to_orient, MSTNode* node_to_connect);
 
 public:
     MSTGraphTran(const MSTGraph* MST_graph);

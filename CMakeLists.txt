@@ -52,6 +52,7 @@ set(HEADERS
 
     include/dctc/algorithms/connectivity/Tran/MST_node_Tran.h
     include/dctc/algorithms/connectivity/Tran/MST_graph_Tran.h
+    include/dctc/algorithms/connectivity/Aschner/MST_graph_Aschner.h
 
     include/dctc/algorithms/connectivity/relays/relays_utils.h
     include/dctc/algorithms/connectivity/relays/relays_MST_graph.h
@@ -99,6 +100,7 @@ set(SOURCES
 
     src/dctc/algorithms/connectivity/Tran/MST_node_Tran.cpp
     src/dctc/algorithms/connectivity/Tran/MST_graph_Tran.cpp
+    src/dctc/algorithms/connectivity/Aschner/MST_graph_Aschner.cpp
 
     src/dctc/algorithms/connectivity/relays/relays_utils.cpp
     src/dctc/algorithms/connectivity/relays/relays_MST_graph.cpp

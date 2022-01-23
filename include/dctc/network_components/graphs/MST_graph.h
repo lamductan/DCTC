@@ -49,6 +49,7 @@ public:
     MSTNode* rootTree(MSTNode* root);
 
     Edge* addCommunicationEdge(MSTNode* a, MSTNode* b);
+    Edge* orientAndConnect(MSTNode* node_to_orient, MSTNode* node_to_connect);
     std::vector<Edge*> getCommunicationEdges() const;
 
     virtual MSTGraph* cloneFrom(const MSTGraph* mst_graph, GraphNodeType graph_node_type=MST_GRAPH_NODE);

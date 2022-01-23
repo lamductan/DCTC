@@ -22,7 +22,7 @@ RelaysMSTGraph::RelaysMSTGraph(const std::vector<Node*>& nodes, GraphNodeType gr
         }
     }
     assert(CommunicationChecker::checkConnectivityAngleAndRange(this));
-    std::cout << "Result: OK. Returned Relays MST Graph satisfies connectivity , angle and range requirements.\n";
+    std::cout << "Result: OK. Returned Relays MST Graph satisfies connectivity, angle and range requirements.\n";
     //std::cout << "beta = " << beta_ << '\n';
 }
 
