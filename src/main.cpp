@@ -7,6 +7,7 @@
 #include <vector>
 #include <thread>
 
+#include "utils.h"
 #include "dctc/utils.h"
 #include "geometric_primitives/geom2D.h"
 #include "dctc/instance/instance.h"
@@ -29,8 +30,8 @@ void test1() {
     std::vector<Point2D> points1{C, D, E, F, G, H, I, J, K};
     std::vector<char> point_names1{'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'};
     for(int i = 0; i < points1.size(); ++i) {
-        double angle = computeAngle(B, A, points1[i]);
-        double geometric_angle = computeGeometricAngle(B, A, points1[i]);
+        long double angle = computeAngle(B, A, points1[i]);
+        long double geometric_angle = computeGeometricAngle(B, A, points1[i]);
         std::cout << "angle BA" << point_names1[i] << " = " 
             << rad2deg(angle) << ' ' << rad2deg(geometric_angle) << ' ' << computeCCW(B, A, points1[i]) << '\n';
     }
@@ -40,8 +41,8 @@ void test1() {
     std::vector<Point2D> points2{E, D, C, B, K, J, I, H, F};
     std::vector<char> point_names2{'E', 'D', 'C', 'B', 'K', 'J', 'I', 'H', 'F'};
     for(int i = 0; i < points2.size(); ++i) {
-        double angle = computeAngle(G, A, points2[i]);
-        double geometric_angle = computeGeometricAngle(G, A, points2[i]);
+        long double angle = computeAngle(G, A, points2[i]);
+        long double geometric_angle = computeGeometricAngle(G, A, points2[i]);
         std::cout << "angle GA" << point_names2[i] << " = "
             << rad2deg(angle) << ' ' << rad2deg(geometric_angle) << ' ' << computeCCW(G, A, points2[i]) << '\n';
     }
@@ -65,13 +66,13 @@ void test3() {
 void test4() {
     bool deterministic = true;
     int n_targets = 5;
-    double min_range = 0;
-    double max_range = 10;
+    long double min_range = 0;
+    long double max_range = 10;
     NodeType node_type = SENSING_DD_NODE;
-    double r_s = 2.0;
-    double r_c = 1.0;
-    double theta_s = PI_3;
-    double theta_c = PI_2;
+    long double r_s = 2.0;
+    long double r_c = 1.0;
+    long double theta_s = PI_3;
+    long double theta_c = PI_2;
 
     Instance instance(
         n_targets, min_range, max_range,
@@ -84,6 +85,6 @@ void test4() {
 }
 
 int main() {
-    test4();
+    std::cout << PROJECT_ROOT_PATH << '\n';
     return 0;
 }

@@ -16,9 +16,9 @@
 class Sector : public Circle {
 private:
     Point2D original_bisector_unit_point;
-    double angle;
-    double half_angle;
-    double orientation_angle;
+    long double angle;
+    long double half_angle;
+    long double orientation_angle;
     Point2D bisector_unit_point;
     Vector2D bisector_unit_vector;
     Ray2D bisector_ray;
@@ -28,19 +28,19 @@ private:
     Segment2D boundary1;
     Segment2D boundary2;
     
-    void init(const Point2D& center, double radius, double angle, double orientation_angle=0);
+    void init(const Point2D& center, long double radius, long double angle, long double orientation_angle=0);
     void computeMidpointAndEndpoints();
     std::pair<Point2D, Point2D> getPointsInsideSector(const std::pair<Point2D, Point2D>& pair_points) const;
 
 public:
     Sector();
-    Sector(const Point2D& center, double radius, double angle, double orientation_angle=0);
-    virtual void setRadius(double radius) override;
-    void orientWithAngle(double orientation_angle);
+    Sector(const Point2D& center, long double radius, long double angle, long double orientation_angle=0);
+    virtual void setRadius(long double radius) override;
+    void orientWithAngle(long double orientation_angle);
     Point2D getOriginalBisectorUnitPoint() const;
     Point2D getBisectorUnitPoint() const;
-    virtual double getAngle() const override;
-    double getOrientationAngle() const;
+    virtual long double getAngle() const override;
+    long double getOrientationAngle() const;
     Point2D getEndpoint1() const;
     Point2D getEndpoint2() const;
     Point2D getMidPoint() const;
@@ -76,12 +76,12 @@ public:
     bool sectorIntersectsWithSector(const Sector& other) const;
     std::vector<Point2D> findIntersectionsSectorWithSector(const Sector& other) const;
 
-    double findPossibleOrientAngleToCoverPoints2D(const std::vector<Point2D>& points, bool consider_distance=true) const;
+    long double findPossibleOrientAngleToCoverPoints2D(const std::vector<Point2D>& points, bool consider_distance=true) const;
     bool canOrientToCoverPoint2D(const Point2D& p, bool consider_distance=true) const;
-    double orientToCoverPoint2D(const Point2D& p, bool consider_distance=true);
+    long double orientToCoverPoint2D(const Point2D& p, bool consider_distance=true);
     bool canOrientToCoverPoints2D(const std::vector<Point2D>& points, bool consider_distance=true) const;
-    double orientToCoverPoints2D(const std::vector<Point2D>& points, bool consider_distance=true);
-    double orientBoundaryPassingThroughPointAndCoverAnotherPoint(
+    long double orientToCoverPoints2D(const std::vector<Point2D>& points, bool consider_distance=true);
+    long double orientBoundaryPassingThroughPointAndCoverAnotherPoint(
         const Point2D& a, const Point2D& b, bool consider_distance=true);
 
     virtual std::string toString() const override;

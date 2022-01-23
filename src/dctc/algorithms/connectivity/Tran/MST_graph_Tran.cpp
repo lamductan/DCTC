@@ -219,14 +219,14 @@ void MSTGraphTran::establishCommunicationGraph() {
 
 MSTNode* MSTGraphTran::findBestNodeToConnect(MSTNode* node, const std::vector<Node*>& candidates) const {
     MSTNode* node_to_connect = nullptr;
-    double min_distance = INT_MAX;
+    long double min_distance = INT_MAX;
     Point2D node_position = node->getPoint2D();
     for(Node* candidate : candidates) {
         if (candidate == node) continue;
         MSTNodeTran* mst_candidate = (MSTNodeTran*) candidate;
         if (!mst_candidate->in_group_) continue;
         if (!mst_candidate->canCoverOtherNodeByCommunicationAntenna(node)) continue;
-        double distance = computeEuclidDistance(node_position, mst_candidate->getPoint2D());
+        long double distance = computeEuclidDistance(node_position, mst_candidate->getPoint2D());
         if (distance < min_distance) {
             min_distance = distance;
             node_to_connect = mst_candidate;

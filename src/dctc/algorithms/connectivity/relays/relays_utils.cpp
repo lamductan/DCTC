@@ -6,15 +6,15 @@
 #include "dctc/algorithms/connectivity/relays/relays_utils.h"
 
 
-std::pair<Point2D, Point2D> calculateRelaysType1Positions(const Segment2D& segment2D, double r_c) {
-    double half_r_c = r_c/2;
+std::pair<Point2D, Point2D> calculateRelaysType1Positions(const Segment2D& segment2D, long double r_c) {
+    long double half_r_c = r_c/2;
     Point2D relay_type_1_1 = getPointOnSegmentAtDistanceFromEndpoint1(segment2D, half_r_c);
     Point2D relay_type_1_2 = getPointOnSegmentAtDistanceFromEndpoint2(segment2D, half_r_c);
     return {relay_type_1_1, relay_type_1_2};
 }
 
 std::vector<Point2D> calculateRelaysType2Positions_LongEdge(
-    const Segment2D& segment2D, const std::pair<Point2D, Point2D>& relays_type_1_pos, double r_c
+    const Segment2D& segment2D, const std::pair<Point2D, Point2D>& relays_type_1_pos, long double r_c
 ) {
     int d = ceil(segment2D.length() / r_c);
     assert(d > 1);
@@ -34,8 +34,8 @@ std::vector<Point2D> calculateRelaysType2Positions_LongEdge(
 }
 
 std::vector<Point2D> calculateShortEdgeRelaysPos_TwoNonFree(const Segment2D& segment2D) {
-    double r = segment2D.length();
-    double r1 = r*0.2;
+    long double r = segment2D.length();
+    long double r1 = r*0.2L;
     Point2D P0_prime = getPointOnSegmentAtDistanceFromEndpoint1(segment2D, r1);
     Point2D P0 = segment2D.getEndpoint1()*2 - P0_prime;
     Point2D P2_prime = getPointOnSegmentAtDistanceFromEndpoint2(segment2D, r1);
@@ -45,28 +45,28 @@ std::vector<Point2D> calculateShortEdgeRelaysPos_TwoNonFree(const Segment2D& seg
     return {P0, P1, P2};
 }
 
-Node* createRelayNode(const Point2D& pos, NodeType node_type, double r_c, double theta_c) {
+Node* createRelayNode(const Point2D& pos, NodeType node_type, long double r_c, long double theta_c) {
     return createRelayNode(pos, node_type, r_c, theta_c, r_c, theta_c);
 }
 
-Node* createRelayNode(const Point2D& pos, NodeType node_type, double r_s, double theta_s, double r_c, double theta_c) {
+Node* createRelayNode(const Point2D& pos, NodeType node_type, long double r_s, long double theta_s, long double r_c, long double theta_c) {
     Node* node = new DDNode(pos.getX(), pos.getY(), node_type, r_s, r_c, theta_s, theta_c);
     return new MSTNode(node, false);
 }
 
-double orientNodeToBisectorCoverPoint2D(Node* node, const Point2D& point) {
+long double orientNodeToBisectorCoverPoint2D(Node* node, const Point2D& point) {
     return dynamic_cast<Sector*>(node->getCommunicationAntenna())->orientToCoverPoint2D(point, false);
 }
 
-double orientNodeToCoverPoints2D(Node* node, const std::vector<Point2D>& points) {
+long double orientNodeToCoverPoints2D(Node* node, const std::vector<Point2D>& points) {
     return dynamic_cast<Sector*>(node->getCommunicationAntenna())->orientToCoverPoints2D(points, false);
 }
 
-double orientNodeToBisectorCoverNode(Node* node_to_orient, Node* node_to_cover) {
+long double orientNodeToBisectorCoverNode(Node* node_to_orient, Node* node_to_cover) {
     return orientNodeToBisectorCoverPoint2D(node_to_cover, node_to_cover->getPoint2D());
 }
 
-double orientNodeToCoverNodes(Node* node_to_orient, const std::vector<Node*>& nodes_to_cover) {
+long double orientNodeToCoverNodes(Node* node_to_orient, const std::vector<Node*>& nodes_to_cover) {
     std::vector<Point2D> points_to_cover;
     for(const Node* node_to_cover : nodes_to_cover) points_to_cover.push_back(node_to_cover->getPoint2D());
     return orientNodeToCoverPoints2D(node_to_orient, points_to_cover);

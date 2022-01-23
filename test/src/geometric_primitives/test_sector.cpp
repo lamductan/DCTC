@@ -9,14 +9,14 @@
 std::set<Point2D> getRoundPoint2DSet(const std::vector<Point2D>& points) {
     std::set<Point2D> st;
     for(const Point2D& point : points) {
-        double x = round_double(point.getX());
-        double y = round_double(point.getY());
+        long double x = round_double(point.getX());
+        long double y = round_double(point.getY());
         st.insert(Point2D(x, y));
     }
     return st;
 }
 
-bool almost_eq(std::set<Point2D>& s1, std::set<Point2D>& s2, double allowed_diff) {
+bool almost_eq(std::set<Point2D>& s1, std::set<Point2D>& s2, long double allowed_diff) {
     if (s1.size() != s2.size()) return false; 
     for(auto it1 = s1.begin(), it2 = s2.begin(); it1 != s1.end() && it2 != s2.end(); ++it1, ++it2) {
         if (!almost_eq(*it1, *it2, allowed_diff)) return false;
@@ -179,7 +179,7 @@ TEST(TestSector, Test_OrientToCoverPoint2D_1)
     std::vector<Point2D> points{Point2D(5.33, 9.64), Point2D(3.15, 5.86), Point2D(11.87, 6.89)};
     for(const Point2D& point : points) {
         ASSERT_TRUE(sector.canOrientToCoverPoint2D(point));
-        double orientation_angle = sector.orientToCoverPoint2D(point);
+        long double orientation_angle = sector.orientToCoverPoint2D(point);
         std::cout << orientation_angle << ' ';
         ASSERT_TRUE(sector.containsPoint2D(point));
     }
@@ -192,7 +192,7 @@ TEST(TestSector, Test_OrientToCoverPoint2D_2)
     std::vector<Point2D> points{Point2D(5.33, 9.64), Point2D(3.15, 5.86), Point2D(11.87, 6.89)};
     for(const Point2D& point : points) {
         ASSERT_TRUE(sector.canOrientToCoverPoint2D(point));
-        double orientation_angle = sector.orientToCoverPoint2D(point);
+        long double orientation_angle = sector.orientToCoverPoint2D(point);
         std::cout << orientation_angle << ' ';
         ASSERT_TRUE(sector.containsPoint2D(point));
     }
@@ -204,7 +204,7 @@ TEST(TestSector, Test_OrientToCoverPoints2D_1)
     Sector sector(Point2D(7, 7), 5, 2.0*(PI/6 + 2));
     std::vector<Point2D> points{Point2D(5.33, 9.64), Point2D(3.15, 5.86), Point2D(11.68, 7.3)};
     ASSERT_TRUE(sector.canOrientToCoverPoints2D(points));
-    double orientation_angle = sector.orientToCoverPoints2D(points);
+    long double orientation_angle = sector.orientToCoverPoints2D(points);
     std::cout << orientation_angle << '\n';
     ASSERT_TRUE(sector.containsPoints2D(points));
 }
@@ -214,7 +214,7 @@ TEST(TestSector, Test_OrientToCoverPoints2D_2)
     Sector sector(Point2D(7, 7), 5, 2.0*(PI/6 + 0.3));
     std::vector<Point2D> points{Point2D(11.48, 7.91), Point2D(8.85, 10.2), Point2D(11.21, 4.71)};
     ASSERT_TRUE(sector.canOrientToCoverPoints2D(points));
-    double orientation_angle = sector.orientToCoverPoints2D(points);
+    long double orientation_angle = sector.orientToCoverPoints2D(points);
     std::cout << orientation_angle << '\n';
     ASSERT_TRUE(sector.containsPoints2D(points));
 }
@@ -234,7 +234,7 @@ TEST(TestSector, Test_OrientBoundary)
     ASSERT_TRUE(sector.orientBoundaryPassingThroughPointAndCoverAnotherPoint(a, b));
     ASSERT_TRUE(sector.getBoundarySegment1().containsPoint2D(a) || sector.getBoundarySegment2().containsPoint2D(a));
     ASSERT_TRUE(sector.containsPoint2D(b));
-    double orientation_angle = sector.getOrientationAngle();
+    long double orientation_angle = sector.getOrientationAngle();
     std::cout << orientation_angle << '\n';
     ASSERT_TRUE(orientation_angle >= 5.6 && orientation_angle <= 5.7);
 }

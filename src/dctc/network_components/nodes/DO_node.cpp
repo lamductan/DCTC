@@ -3,7 +3,7 @@
 #include "geometric_primitives/geom2D.h"
 
 
-void DONode::init(double x, double y, NodeType node_type, double r_s, double r_c, double theta_s) {
+void DONode::init(long double x, long double y, NodeType node_type, long double r_s, long double r_c, long double theta_s) {
     Node::init(x, y, node_type);
     sensing_sector_ = Sector(point2D_, r_s, theta_s);
     communication_antenna_ = Circle(point2D_, r_c);
@@ -19,11 +19,11 @@ DONode::DONode(const DONode& other) {
     communication_antenna_ = other.communication_antenna_;
 }
 
-DONode::DONode(double x, double y, NodeType node_type, double r_s, double r_c, double theta_s) {
+DONode::DONode(long double x, long double y, NodeType node_type, long double r_s, long double r_c, long double theta_s) {
     init(x, y, node_type, r_s, r_c, theta_s);
 }
 
-DONode::DONode(const Point2D& point2D, NodeType node_type, double r_s, double r_c, double theta_s) {
+DONode::DONode(const Point2D& point2D, NodeType node_type, long double r_s, long double r_c, long double theta_s) {
     init(point2D.getX(), point2D.getY(), node_type, r_s, r_c, theta_s);
 }
 

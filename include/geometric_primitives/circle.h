@@ -17,19 +17,19 @@
 class Circle : public Geometric2DObject {
 protected:
     Point2D center;
-    double radius;
-    double radius_squared;
+    long double radius;
+    long double radius_squared;
 
-    void init(const Point2D& center, double radius);
+    void init(const Point2D& center, long double radius);
 
 public:
     Circle();
-    Circle(const Point2D& center, double radius);
-    virtual void setRadius(double radius);
+    Circle(const Point2D& center, long double radius);
+    virtual void setRadius(long double radius);
     Point2D getCenter() const;
-    double getRadius() const;
-    virtual double getAngle() const;
-    double operator()(const Point2D& p) const;
+    long double getRadius() const;
+    virtual long double getAngle() const;
+    long double operator()(const Point2D& p) const;
 
     virtual bool passesThroughPoint2D(const Point2D& p) const;
     virtual bool containsPoint2D(const Point2D& p) const override;

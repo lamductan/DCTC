@@ -27,7 +27,7 @@ std::vector<Node*> findConvexHull(std::vector<Node*> nodes) {
     if (n == 0) return convex_hull;
 
     // Find the bottommost point
-    double ymin = nodes[0]->getY(), min = 0;
+    long double ymin = nodes[0]->getY(), min = 0;
     for (int i = 1; i < n; i++) {
         int y = nodes[i]->getY();
         if ((y < ymin) || (ymin == y && nodes[i]->getX() < nodes[min]->getX()))

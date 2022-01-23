@@ -54,7 +54,7 @@ bool CommunicationChecker::checkAngle(const MSTGraph* MST_graph) {
 }
 
 bool CommunicationChecker::checkAngleOneNode(MSTNode* node) {
-    double theta_c = node->getThetaC();
+    long double theta_c = node->getThetaC();
     Point2D node_position = node->getPoint2D();
     Point2D original_bisector_unit_point = node_position + Point2D(1, 0);
 
@@ -63,10 +63,10 @@ bool CommunicationChecker::checkAngleOneNode(MSTNode* node) {
         adj_node_points.push_back(adj_node->getPoint2D());
     }
 
-    std::vector<double> angles;
+    std::vector<long double> angles;
     int n = adj_node_points.size();
     for(const Point2D& point : adj_node_points) {
-        double angle_with_original_unit_vector = computeAngle(original_bisector_unit_point, node_position, point);
+        long double angle_with_original_unit_vector = computeAngle(original_bisector_unit_point, node_position, point);
         angles.push_back(angle_with_original_unit_vector);
     }
     sort(angles.begin(), angles.end());
@@ -74,17 +74,21 @@ bool CommunicationChecker::checkAngleOneNode(MSTNode* node) {
         angles.push_back(angles[i] + TWO_PI);
     }
 
-    double required_theta_c = TWO_PI;
+    long double required_theta_c = TWO_PI;
     for(int i = 0; i < n; ++i) {
         required_theta_c = std::min(required_theta_c, angles[i + n - 1] - angles[i]);
     }
     node->setRequiredThetaC(required_theta_c);
 
+    if (required_theta_c > theta_c + EPSILON) {
+        std::cout << "required_theta_c - PI/2 = " << required_theta_c - PI/2 << '\n';
+    }
+
     return required_theta_c <= theta_c + EPSILON;
 }
 
 bool CommunicationChecker::checkAngleOneNode1(MSTNode* node) {
-    double theta_c = node->getThetaC();
+    long double theta_c = node->getThetaC();
     Point2D node_position = node->getPoint2D();
     Point2D original_bisector_unit_point = node_position + Point2D(1, 0);
 
@@ -93,10 +97,10 @@ bool CommunicationChecker::checkAngleOneNode1(MSTNode* node) {
         adj_node_points.push_back(adj_node->getPoint2D());
     }
 
-    std::vector<double> angles;
+    std::vector<long double> angles;
     int n = adj_node_points.size();
     for(const Point2D& point : adj_node_points) {
-        double angle_with_original_unit_vector = computeAngle(original_bisector_unit_point, node_position, point);
+        long double angle_with_original_unit_vector = computeAngle(original_bisector_unit_point, node_position, point);
         angles.push_back(angle_with_original_unit_vector);
     }
     sort(angles.begin(), angles.end());
@@ -104,11 +108,15 @@ bool CommunicationChecker::checkAngleOneNode1(MSTNode* node) {
         angles.push_back(angles[i] + TWO_PI);
     }
 
-    double required_theta_c = TWO_PI;
+    long double required_theta_c = TWO_PI;
     for(int i = 0; i < n; ++i) {
         required_theta_c = std::min(required_theta_c, angles[i + n - 1] - angles[i]);
     }
     node->setRequiredThetaC(required_theta_c);
+
+    if (required_theta_c > theta_c + EPSILON) {
+        std::cout << "required_theta_c - PI/2 = " << required_theta_c - PI/2 << '\n';
+    }
 
     return required_theta_c <= theta_c + EPSILON;
 }
@@ -120,7 +128,7 @@ bool CommunicationChecker::checkRange(const MSTGraph* MST_graph) {
 }
 
 bool CommunicationChecker::checkRangeOneNode(MSTNode* node) {
-    double r_c = node->getRC();
+    long double r_c = node->getRC();
     for(Edge* edge : node->getMSTEdges()) {
         if (edge->length() - EPSILON > r_c) return false;
     }

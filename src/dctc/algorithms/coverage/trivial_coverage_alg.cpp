@@ -4,10 +4,10 @@
 
 std::vector<Node*> trivialCoverageAlg(const Instance* instance) {
     NodeType node_type = instance->getNodeType();
-    double r_s = instance->getRS();
-    double r_c = instance->getRC();
-    double theta_s = instance->getThetaS();
-    double theta_c = instance->getThetaC();
+    long double r_s = instance->getRS();
+    long double r_c = instance->getRC();
+    long double theta_s = instance->getThetaS();
+    long double theta_c = instance->getThetaC();
     const std::vector<Point2D>& targets = instance->getTargets();
 
     std::vector<Node*> nodes;

@@ -13,13 +13,13 @@ protected:
     long unsigned int seed = 1;
 
     int n_targets = 20;
-    double min_range = 0;
-    double max_range = 100;
+    long double min_range = 0;
+    long double max_range = 100;
     NodeType node_type = SENSING_DD_NODE;
-    double r_s = 2.0;
-    double r_c = 1.0;
-    double theta_s = PI_3;
-    double theta_c = PI_2;
+    long double r_s = 2.0;
+    long double r_c = 1.0;
+    long double theta_s = PI_3;
+    long double theta_c = PI_2;
     Instance instance;
     MSTGraph* MST_graph_ptr;
     std::vector<Node*> coverage_sensors; 
@@ -66,13 +66,13 @@ TEST(TestMSTGraphAschner1, TestRandomNondeterministic)
     long unsigned int seed = 1;
 
     int n_targets = 500;
-    double min_range = 0;
-    double max_range = 10000;
+    long double min_range = 0;
+    long double max_range = 10000;
     NodeType node_type = SENSING_DD_NODE;
-    double r_s = 2.0;
-    double r_c = 1.0;
-    double theta_s = PI_3;
-    double theta_c = PI_2;
+    long double r_s = 2.0;
+    long double r_c = 1.0;
+    long double theta_s = PI_3;
+    long double theta_c = PI_2;
     Instance instance;
     MSTGraph* MST_graph_ptr;
     std::vector<Node*> coverage_sensors; 

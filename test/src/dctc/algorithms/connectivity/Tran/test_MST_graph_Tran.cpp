@@ -10,16 +10,16 @@
 class TestMSTGraphTran : public ::testing::Test {
 protected:
     bool deterministic = true;
-    long unsigned int seed = 1642737472;
+    long unsigned int seed = 1642918493;
 
-    int n_targets = 500;
-    double min_range = 0;
-    double max_range = 10000;
+    int n_targets = 200;
+    long double min_range = 0;
+    long double max_range = 1000;
     NodeType node_type = SENSING_DD_NODE;
-    double r_s = 2.0;
-    double r_c = 1.0;
-    double theta_s = PI_3;
-    double theta_c = PI_2;
+    long double r_s = 50;
+    long double r_c = 50;
+    long double theta_s = PI_3;
+    long double theta_c = PI_2;
     Instance instance;
     MSTGraph* MST_graph_ptr;
     std::vector<Node*> coverage_sensors; 
@@ -62,14 +62,14 @@ TEST(TestMSTGraphTran1, TestRandomNondeterministic)
     bool deterministic = false;
     long unsigned int seed = 1;
 
-    int n_targets = 500;
-    double min_range = 0;
-    double max_range = 10000;
+    int n_targets = 200;
+    long double min_range = 0;
+    long double max_range = 1000;
     NodeType node_type = SENSING_DD_NODE;
-    double r_s = 2.0;
-    double r_c = 1.0;
-    double theta_s = PI_3;
-    double theta_c = PI_2;
+    long double r_s = 2.0;
+    long double r_c = 1.0;
+    long double theta_s = PI_3;
+    long double theta_c = PI_2;
     Instance instance;
     MSTGraph* MST_graph_ptr;
     std::vector<Node*> coverage_sensors; 

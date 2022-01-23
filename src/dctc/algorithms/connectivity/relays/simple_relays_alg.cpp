@@ -6,7 +6,7 @@
 #include "dctc/algorithms/connectivity/relays/simple_relays_alg.h"
 
 
-SimpleRelaysAlg::SimpleRelaysAlg(MSTGraph* MST_graph, double r_c, double theta_c) {
+SimpleRelaysAlg::SimpleRelaysAlg(MSTGraph* MST_graph, long double r_c, long double theta_c) {
     MST_graph_ = MST_graph;
     MST_edges_ = MST_graph_->getMSTEdges();
     r_c_ = r_c;
@@ -30,7 +30,7 @@ bool SimpleRelaysAlg::isLongOrMediumEdge(Edge* edge) const {return edge->length(
 bool SimpleRelaysAlg::isLongEdge(Edge* edge) const {return edge->length() > r_c_*2;}
 
 bool SimpleRelaysAlg::isMediumEdge(Edge* edge) const {
-    double length = edge->length();
+    long double length = edge->length();
     return length > r_c_ && length <= r_c_*2;
 }
 
@@ -123,9 +123,9 @@ SteinerizeLongOrMediumEdgeResult_LEF SimpleRelaysAlg::steinerizeMediumEdge(Edge*
 
 GraphNodeType SimpleRelaysAlg::getGraphNodeType() const {return graph_node_type_;}
 
-double SimpleRelaysAlg::getThetaC() const {return theta_c_;}
+long double SimpleRelaysAlg::getThetaC() const {return theta_c_;}
 
-double SimpleRelaysAlg::getRC() const {return r_c_;}
+long double SimpleRelaysAlg::getRC() const {return r_c_;}
 
 int SimpleRelaysAlg::getNumTerminals() const {return terminals_.size();}
 

@@ -1,7 +1,7 @@
 # CMakeLists.txt for DCTC
 
 cmake_minimum_required(VERSION 3.8)
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 project(DCTC)
 
@@ -11,7 +11,9 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
 set(HEADERS
+    include/utils.h
     include/dctc/utils.h
+
     include/equations/quadratic_equation.h
     include/geometric_primitives/geom_common.h
     include/geometric_primitives/point2D.h
@@ -28,6 +30,7 @@ set(HEADERS
     include/geometric_primitives/geom2D.h
 
     include/random/generator.h
+    include/logger/logger.h
     
     include/data_structures/counter.h
     include/data_structures/union_find.h
@@ -76,6 +79,7 @@ set(SOURCES
     src/geometric_primitives/convex_hull.cpp
 
     src/random/generator.cpp
+    src/logger/logger.cpp
 
     src/data_structures/counter.cpp
     src/data_structures/union_find.cpp

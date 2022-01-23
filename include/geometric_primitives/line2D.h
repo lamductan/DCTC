@@ -11,7 +11,7 @@
 
 class Line2D : public Geometric2DObject {
 protected:
-    std::vector<double> coefs;
+    std::vector<long double> coefs;
     Point2D point0;
     Vector2D norm_vector;
     int largest_absolute_value_coef_pos;
@@ -23,15 +23,15 @@ public:
 
     Line2D(const Point2D& point0=Point2D(0, 0), const Vector2D& norm_vector=Vector2D(1, 0));
     Line2D(const Line2D& other);
-    static Line2D fromCoefficients(const std::vector<double>& coefs);
+    static Line2D fromCoefficients(const std::vector<long double>& coefs);
     static Line2D fromTwoPoints(const Point2D& p1, const Point2D& p2);
 
-    std::vector<double> getCoefs() const;
+    std::vector<long double> getCoefs() const;
     Point2D getPoint0() const;
     Vector2D getNormVector() const;
     int getLargestAbsoluteValueCoefPos() const;
 
-    double operator()(const Point2D& p) const;
+    long double operator()(const Point2D& p) const;
     virtual bool passesThroughPoint2D(const Point2D& p) const;
     virtual bool containsPoint2D(const Point2D& p) const override;
     bool hasParallelNormVectorWithLine2D(const Line2D& other) const;
@@ -39,8 +39,8 @@ public:
     virtual bool isIdentical(const Line2D& other) const;
     virtual bool intersectsWithLine2D(const Line2D& other) const;
     virtual Point2D findIntersectionsWithLine2D(const Line2D& other) const;
-    double distanceToPoint2D(const Point2D& point) const;
-    double distanceToLine2D(const Line2D& other) const;
+    long double distanceToPoint2D(const Point2D& point) const;
+    long double distanceToLine2D(const Line2D& other) const;
     virtual std::vector<Point2D> getPointsOnObject(int n_points) const;
 
     virtual std::string toString() const override;

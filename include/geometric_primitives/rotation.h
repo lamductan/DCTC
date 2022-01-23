@@ -4,7 +4,7 @@
 
 #include "geometric_primitives/point2D.h"
 
-Point2D rotate(const Point2D& A, double angle);
-Point2D rotate(const Point2D& A, const Point2D& O, double angle);
+Point2D rotate(const Point2D& A, long double angle);
+Point2D rotate(const Point2D& A, const Point2D& O, long double angle);
 
 #endif //GEOMETRIC_PRIMITIVES_ROTATION_H_

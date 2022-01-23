@@ -19,11 +19,11 @@ Sector::Sector() {
     init(Point2D(0, 0), 1, PI_2, 0);
 }
 
-Sector::Sector(const Point2D& center, double radius, double angle, double orientation_angle) {
+Sector::Sector(const Point2D& center, long double radius, long double angle, long double orientation_angle) {
     init(center, radius, angle, orientation_angle);
 }
 
-void Sector::init(const Point2D& center, double radius, double angle, double orientation_angle) {
+void Sector::init(const Point2D& center, long double radius, long double angle, long double orientation_angle) {
     Circle::init(center, radius);
     original_bisector_unit_point = center + Point2D(1, 0);
     this->angle = standardize_angle(angle);
@@ -39,7 +39,7 @@ void Sector::computeMidpointAndEndpoints() {
     boundary2 = Segment2D(center, endpoint2);
 }
 
-void Sector::orientWithAngle(double orientation_angle) {
+void Sector::orientWithAngle(long double orientation_angle) {
     orientation_angle = standardize_angle(orientation_angle);
     this->orientation_angle = orientation_angle;
     bisector_unit_point = rotate(original_bisector_unit_point, center, orientation_angle);
@@ -48,7 +48,7 @@ void Sector::orientWithAngle(double orientation_angle) {
     computeMidpointAndEndpoints();
 }
 
-void Sector::setRadius(double radius) {
+void Sector::setRadius(long double radius) {
     this->radius = radius;
     computeMidpointAndEndpoints();
 }
@@ -57,9 +57,9 @@ Point2D Sector::getOriginalBisectorUnitPoint() const {return original_bisector_u
 
 Point2D Sector::getBisectorUnitPoint() const {return bisector_unit_point;}
 
-double Sector::getAngle() const {return angle;}
+long double Sector::getAngle() const {return angle;}
 
-double Sector::getOrientationAngle() const {return orientation_angle;}
+long double Sector::getOrientationAngle() const {return orientation_angle;}
 
 Point2D Sector::getEndpoint1() const {return endpoint1;}
 
@@ -85,7 +85,7 @@ bool Sector::containsPoint2D(const Point2D& p) const {
 
 bool Sector::containsPoint2DWithInfRange(const Point2D& p) const {
     Vector2D v(center, p);
-    double criterion = v.dot(bisector_unit_vector) - v.length()*cos(half_angle);
+    long double criterion = v.dot(bisector_unit_vector) - v.length()*cosl(half_angle);
     //std::cout << "Check inside sector: " << *this << ", " << p << ' ' << criterion << '\n';
     return criterion >= -EPSILON;
 }
@@ -211,19 +211,19 @@ bool Sector::canOrientToCoverPoint2D(const Point2D& p, bool consider_distance) c
     return true;
 }
 
-double Sector::orientToCoverPoint2D(const Point2D& p, bool consider_distance) {
+long double Sector::orientToCoverPoint2D(const Point2D& p, bool consider_distance) {
     if (!canOrientToCoverPoint2D(p, consider_distance)) return -1;
-    double orient_angle = computeAngle(original_bisector_unit_point, center, p);
+    long double orient_angle = computeAngle(original_bisector_unit_point, center, p);
     orientWithAngle(orient_angle);
     return orient_angle;
 }
 
-double Sector::findPossibleOrientAngleToCoverPoints2D(const std::vector<Point2D>& points, bool consider_distance) const {
-    std::vector<double> angles;
+long double Sector::findPossibleOrientAngleToCoverPoints2D(const std::vector<Point2D>& points, bool consider_distance) const {
+    std::vector<long double> angles;
     int n = points.size();
     for(const Point2D& point : points) {
         if (consider_distance && computeEuclidDistance(center, point) > radius) return false;
-        double angle_with_original_unit_vector = computeAngle(original_bisector_unit_point, center, point);
+        long double angle_with_original_unit_vector = computeAngle(original_bisector_unit_point, center, point);
         angles.push_back(angle_with_original_unit_vector);
     }
     sort(angles.begin(), angles.end());
@@ -242,26 +242,26 @@ bool Sector::canOrientToCoverPoints2D(const std::vector<Point2D>& points, bool c
     return findPossibleOrientAngleToCoverPoints2D(points, consider_distance) != -1;
 }
 
-double Sector::orientToCoverPoints2D(const std::vector<Point2D>& points, bool consider_distance) {
-    double orient_angle = findPossibleOrientAngleToCoverPoints2D(points, consider_distance);
+long double Sector::orientToCoverPoints2D(const std::vector<Point2D>& points, bool consider_distance) {
+    long double orient_angle = findPossibleOrientAngleToCoverPoints2D(points, consider_distance);
     if (orient_angle == -1) return -1;
     orientWithAngle(orient_angle);
     return orient_angle;
 }
 
-double Sector::orientBoundaryPassingThroughPointAndCoverAnotherPoint(
+long double Sector::orientBoundaryPassingThroughPointAndCoverAnotherPoint(
     const Point2D& a, const Point2D& b, bool consider_distance
 ) {
-    double angle_AOB = computeGeometricAngle(a, center, b);
+    long double angle_AOB = computeGeometricAngle(a, center, b);
     if (angle_AOB > angle) return -1;
-    double required_radius = std::max(computeEuclidDistance(center, a), computeEuclidDistance(center, b));
+    long double required_radius = std::max(computeEuclidDistance(center, a), computeEuclidDistance(center, b));
     if (consider_distance && radius < required_radius) return -1;
-    double old_radius = (!consider_distance && radius < required_radius) ? radius : -1;
+    long double old_radius = (!consider_distance && radius < required_radius) ? radius : -1;
     if (old_radius != -1) setRadius(required_radius);
-    double angle_xOA = computeAngle(original_bisector_unit_point, center, a);
-    double candidate_orientation_angle_1 = standardize_angle(angle_xOA - half_angle);
-    double candidate_orientation_angle_2 = standardize_angle(angle_xOA + half_angle);
-    for(double candidate_orientation_angle : {candidate_orientation_angle_1, candidate_orientation_angle_2}) {
+    long double angle_xOA = computeAngle(original_bisector_unit_point, center, a);
+    long double candidate_orientation_angle_1 = standardize_angle(angle_xOA - half_angle);
+    long double candidate_orientation_angle_2 = standardize_angle(angle_xOA + half_angle);
+    for(long double candidate_orientation_angle : {candidate_orientation_angle_1, candidate_orientation_angle_2}) {
         orientWithAngle(candidate_orientation_angle);
         if (containsPoint2D(b)) break;
     }
@@ -271,7 +271,7 @@ double Sector::orientBoundaryPassingThroughPointAndCoverAnotherPoint(
 
 std::string Sector::toString() const {
     char s[100];
-    snprintf(s, 100, "Sector(%s,%.2f,%.2f,%.2f)",
+    snprintf(s, 100, "Sector(%s,%.2Le,%.2Le,%.2Le)",
         center.toString().c_str(), radius, rad2deg(angle), rad2deg(orientation_angle));
     std::string str = s;
     return str;

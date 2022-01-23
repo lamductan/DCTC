@@ -14,8 +14,8 @@ public:
     using Point2D::operator==;
     Vector2D(const Point2D& p);
     Vector2D(const Point2D& a, const Point2D& b);
-    double computeNorm() const;
-    double length() const;
+    long double computeNorm() const;
+    long double length() const;
     Vector2D getUnitVector() const;
     Vector2D getNormVector() const;
     virtual std::string toString() const override;
@@ -25,7 +25,7 @@ public:
     bool isParallelWithVector2D(const Vector2D& other) const;
 };
 
-std::vector<double> Vector2DToVector(const Vector2D& vector2D);
-Vector2D VectorToVector2D(const std::vector<double>& v);
+std::vector<long double> Vector2DToVector(const Vector2D& vector2D);
+Vector2D VectorToVector2D(const std::vector<long double>& v);
 
 #endif //GEOMETRIC_PRIMITIVES_VECTOR2D_H_

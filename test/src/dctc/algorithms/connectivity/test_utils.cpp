@@ -10,10 +10,10 @@
 class OrientFourNodesPI_2CoverPlaneTest : public ::testing::Test {
 protected:
     NodeType node_type = SENSING_DD_NODE;
-    double r_s = 100;
-    double r_c = 100;
-    double theta_s = PI_3;
-    double theta_c = PI_2;
+    long double r_s = 100;
+    long double r_c = 100;
+    long double theta_s = PI_3;
+    long double theta_c = PI_2;
 
 public:
     static void clear_vector_nodes(const std::vector<Node*>& nodes) {

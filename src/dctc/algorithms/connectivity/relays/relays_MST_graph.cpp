@@ -4,7 +4,7 @@
 #include "dctc/algorithms/connectivity/relays/relays_MST_graph.h"
 #include "dctc/algorithms/connectivity/communication_checker.h"
 
-RelaysMSTGraph::RelaysMSTGraph(const std::vector<Node*>& nodes, GraphNodeType graph_node_type, double r_c, double theta_c,
+RelaysMSTGraph::RelaysMSTGraph(const std::vector<Node*>& nodes, GraphNodeType graph_node_type, long double r_c, long double theta_c,
                                std::vector<Edge*>& communication_edges, int n_total_nodes_omni)
 : MSTGraph(nodes, graph_node_type, false)
 {
@@ -28,9 +28,9 @@ RelaysMSTGraph::RelaysMSTGraph(const std::vector<Node*>& nodes, GraphNodeType gr
 
 GraphNodeType RelaysMSTGraph::getGraphNodeType() const {return graph_node_type_;}
 
-double RelaysMSTGraph::getThetaC() const {return theta_c_;}
+long double RelaysMSTGraph::getThetaC() const {return theta_c_;}
 
-double RelaysMSTGraph::getRC() const {return r_c_;}
+long double RelaysMSTGraph::getRC() const {return r_c_;}
 
 int RelaysMSTGraph::getNumTerminals() const {return terminals_.size();}
 
@@ -46,4 +46,4 @@ std::vector<Node*> RelaysMSTGraph::getRelayNodes() const {return relays_;}
 
 std::vector<Node*> RelaysMSTGraph::getAllNodes() const {return nodes_;}
 
-double RelaysMSTGraph::getBeta() const {return beta_;}
+long double RelaysMSTGraph::getBeta() const {return beta_;}

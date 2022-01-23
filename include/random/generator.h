@@ -16,10 +16,10 @@ public:
 
 class DoubleGenerator: public Generator {
 private:
-    std::uniform_real_distribution<double> dis;
+    std::uniform_real_distribution<long double> dis;
 public:
-    DoubleGenerator(double min_range, double max_range, bool deterministic=false, long unsigned int seed=1);
-    double next();
+    DoubleGenerator(long double min_range, long double max_range, bool deterministic=false, long unsigned int seed=1);
+    long double next();
 };
 
 class IntGenerator: public Generator {

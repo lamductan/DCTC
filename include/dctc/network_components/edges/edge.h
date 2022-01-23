@@ -35,7 +35,7 @@ public:
     int getOtherEndpointId(int endpoint_id) const;
     Node* getOtherEndpoint(Node* endpoint) const;
     Segment2D getSegment2D() const;
-    double length() const;
+    long double length() const;
     virtual std::string getEdgeTypeStr() const;
     std::string toString() const;
     virtual ~Edge();

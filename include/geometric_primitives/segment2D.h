@@ -18,7 +18,7 @@ public:
     Segment2D();
     Segment2D(const Point2D& p1, const Point2D& p2);
     static Segment2D fromTwoPoints(const Point2D& p1, const Point2D& p2);
-    double length() const;
+    long double length() const;
     Point2D getEndpoint1() const;
     Point2D getEndpoint2() const;
     std::pair<Point2D, Point2D> getEndpoints() const;

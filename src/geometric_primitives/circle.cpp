@@ -14,28 +14,28 @@ Circle::Circle() {
     init(Point2D(0, 0), 1);
 }
 
-Circle::Circle(const Point2D& center, double radius) {
+Circle::Circle(const Point2D& center, long double radius) {
     init(center, radius);
 }
 
-void Circle::init(const Point2D& center, double radius) {
+void Circle::init(const Point2D& center, long double radius) {
     this->center = center;
     this->radius = radius;
-    radius_squared = pow(radius, 2);
+    radius_squared = powl(radius, 2);
 }
 
 Point2D Circle::getCenter() const {return center;}
 
-double Circle::getRadius() const {return radius;}
+long double Circle::getRadius() const {return radius;}
 
-double Circle::getAngle() const {return TWO_PI;}
+long double Circle::getAngle() const {return TWO_PI;}
 
-void Circle::setRadius(double radius) {this->radius = radius;}
+void Circle::setRadius(long double radius) {this->radius = radius;}
 
-double Circle::operator()(const Point2D& p) const {
-    double dx = p.getX() - center.getX();
-    double dy = p.getY() - center.getY();
-    return pow(dx, 2) + pow(dy, 2) - pow(radius, 2);
+long double Circle::operator()(const Point2D& p) const {
+    long double dx = p.getX() - center.getX();
+    long double dy = p.getY() - center.getY();
+    return powl(dx, 2) + powl(dy, 2) - powl(radius, 2);
 }
 
 bool Circle::passesThroughPoint2D(const Point2D& p) const {
@@ -52,32 +52,32 @@ bool Circle::containsPoint2DWithInfRange(const Point2D& p) const {
 
 bool Circle::intersectsWithLine2D(const Line2D& line2D) const {
     int line_largest_absolute_value_coef_pos = line2D.getLargestAbsoluteValueCoefPos();
-    std::vector<double> line_coefs = line2D.getCoefs();
-    double a = line_coefs[0], b = line_coefs[1], c = line_coefs[2];
-    double ox = center.getX();
-    double oy = center.getY();
+    std::vector<long double> line_coefs = line2D.getCoefs();
+    long double a = line_coefs[0], b = line_coefs[1], c = line_coefs[2];
+    long double ox = center.getX();
+    long double oy = center.getY();
     if (line_largest_absolute_value_coef_pos == 0) {
-        std::vector<double> line_1_coefs{b, a, c};
+        std::vector<long double> line_1_coefs{b, a, c};
         Line2D line2D_1 = line2D.fromCoefficients(line_1_coefs);
         Point2D center_1(oy, ox);
         Circle circle_1(center_1, radius);
         return circle_1.intersectsWithLine2D(line2D_1);
     }
-    double eq_a = pow(a/b, 2) + 1;
-    double eq_b = 2.0*(a/b*(c/b + oy) - ox);
-    double eq_c = pow(ox, 2) + pow(c/b + oy, 2) - pow(radius, 2);
+    long double eq_a = powl(a/b, 2) + 1;
+    long double eq_b = 2.0*(a/b*(c/b + oy) - ox);
+    long double eq_c = powl(ox, 2) + powl(c/b + oy, 2) - powl(radius, 2);
     QuadraticEquation quadratic_equation(eq_a, eq_b, eq_c);
     return quadratic_equation.getNumberOfSolutions() > 0;    
 }
 
 std::vector<Point2D> Circle::findIntersectionsWithLine2D(const Line2D& line2D) const {
     int line_largest_absolute_value_coef_pos = line2D.getLargestAbsoluteValueCoefPos();
-    std::vector<double> line_coefs = line2D.getCoefs();
-    double a = line_coefs[0], b = line_coefs[1], c = line_coefs[2];
-    double ox = center.getX();
-    double oy = center.getY();
-    if (line_largest_absolute_value_coef_pos == 0 && (fabs(a) - fabs(b) > EPSILON)) {
-        std::vector<double> line_1_coefs{b, a, c};
+    std::vector<long double> line_coefs = line2D.getCoefs();
+    long double a = line_coefs[0], b = line_coefs[1], c = line_coefs[2];
+    long double ox = center.getX();
+    long double oy = center.getY();
+    if (line_largest_absolute_value_coef_pos == 0 && (fabsl(a) - fabsl(b) > EPSILON)) {
+        std::vector<long double> line_1_coefs{b, a, c};
         Line2D line2D_1 = line2D.fromCoefficients(line_1_coefs);
         Point2D center_1(oy, ox);
         Circle circle_1(center_1, radius);
@@ -93,16 +93,16 @@ std::vector<Point2D> Circle::findIntersectionsWithLine2D(const Line2D& line2D) c
         if (intersection1.getX() > intersection2.getX()) std::swap(intersection1, intersection2);
         return {intersection1, intersection2};
     }
-    double eq_a = pow(a/b, 2) + 1;
-    double eq_b = 2.0*(a/b*(c/b + oy) - ox);
-    double eq_c = pow(ox, 2) + pow(c/b + oy, 2) - pow(radius, 2);
+    long double eq_a = powl(a/b, 2) + 1;
+    long double eq_b = 2.0*(a/b*(c/b + oy) - ox);
+    long double eq_c = powl(ox, 2) + powl(c/b + oy, 2) - powl(radius, 2);
     QuadraticEquation quadratic_equation(eq_a, eq_b, eq_c);
 
     int n_intersections = quadratic_equation.getNumberOfSolutions();
     if (n_intersections == 0)
         return {};
 
-    std::pair<double, double> xs = quadratic_equation.solve();
+    std::pair<long double, long double> xs = quadratic_equation.solve();
     Point2D intersection1(xs.first, (-c - a*xs.first)/b);
     if (n_intersections == 1) {
         return {intersection1};
@@ -140,16 +140,16 @@ bool Circle::intersectsWithCircle(const Circle& other) const {
 }
 
 std::vector<Point2D> Circle::findIntersectionsWithCircle(const Circle& other) const {
-    double a1 = center.getX(), b1 = center.getY(), c1 = radius;
-    double a2 = other.center.getX(), b2 = other.center.getY(), c2 = other.radius;
-    Line2D radical_line = Line2D::fromCoefficients(std::vector<double>{
+    long double a1 = center.getX(), b1 = center.getY(), c1 = radius;
+    long double a2 = other.center.getX(), b2 = other.center.getY(), c2 = other.radius;
+    Line2D radical_line = Line2D::fromCoefficients(std::vector<long double>{
         2.0*(a1 - a2), 2.0*(b1 - b2), (a2*a2 - a1*a1 + b2*b2 - b1*b1 - c2*c2 + c1*c1)});
     return findIntersectionsWithLine2D(radical_line);
 }
 
 std::string Circle::toString() const {
     char s[100];
-    snprintf(s, 100, "Circle(%s,%.2f)", center.toString().c_str(), radius);
+    snprintf(s, 100, "Circle(%s,%.2Le)", center.toString().c_str(), radius);
     std::string str = s;
     return str;
 }

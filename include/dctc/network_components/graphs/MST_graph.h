@@ -18,7 +18,7 @@ protected:
     std::vector<int> node_ids_;
     std::unordered_map<int, Node*> map_id_nodes_;
 
-    double mst_weight_;
+    long double mst_weight_;
     std::vector<Node*> nodes_;
     std::vector<Edge*> MST_edges_;
     std::vector<std::pair<int, int>> MST_edges_by_id_;
@@ -38,13 +38,13 @@ public:
     std::unordered_map<int, Node*> getMapIdNodes() const;
     std::vector<Node*> getNodes() const;
 
-    double buildMST();
-    double buildMST(std::vector<Edge*>& graph_edges);
+    long double buildMST();
+    long double buildMST(std::vector<Edge*>& graph_edges);
     std::vector<Edge*> getMSTEdges() const;
-    double getMinimumMSTEdgeLength() const;
-    double getMaximumMSTEdgeLength() const;
-    double getMinimumCommunicationEdgeLength() const;
-    double getMaximumCommunicationEdgeLength() const;
+    long double getMinimumMSTEdgeLength() const;
+    long double getMaximumMSTEdgeLength() const;
+    long double getMinimumCommunicationEdgeLength() const;
+    long double getMaximumCommunicationEdgeLength() const;
 
     MSTNode* rootTree(MSTNode* root);
 

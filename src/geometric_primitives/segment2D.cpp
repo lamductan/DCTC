@@ -29,7 +29,7 @@ Segment2D Segment2D::fromTwoPoints(const Point2D& p1, const Point2D& p2) {
     return segment2D;
 }
 
-double Segment2D::length() const {
+long double Segment2D::length() const {
     return endpoint1.computeEuclidDistance(endpoint2);
 }
 
@@ -85,18 +85,18 @@ Line2D Segment2D::getPerpendicularBisector() const {
 std::vector<Point2D> Segment2D::getPointsOnObject(int n_points) const {
     if (n_points <= 0) return std::vector<Point2D>();
     std::vector<Point2D> points(n_points, Point2D(0, 0));
-    double a = coefs[0], b = coefs[1], c = coefs[2];
+    long double a = coefs[0], b = coefs[1], c = coefs[2];
     if (largest_absolute_value_coef_pos == 1) {
-        double delta_x = (endpoint2.getX() - endpoint1.getX())/n_points;
+        long double delta_x = (endpoint2.getX() - endpoint1.getX())/n_points;
         for(int i = 0; i < n_points; ++i) {
-            double new_x = endpoint1.getX() + delta_x*i;
+            long double new_x = endpoint1.getX() + delta_x*i;
             points[i].setX(new_x);
             points[i].setY((-c - a*new_x) / b);
         }
     } else {
-        double delta_y = (endpoint2.getY() - endpoint1.getY())/n_points;
+        long double delta_y = (endpoint2.getY() - endpoint1.getY())/n_points;
         for(int i = 0; i < n_points; ++i) {
-            double new_y = endpoint1.getY() + delta_y*i;
+            long double new_y = endpoint1.getY() + delta_y*i;
             points[i].setY(new_y);
             points[i].setX((-c - b*new_y) / a);
         }

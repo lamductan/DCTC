@@ -11,12 +11,12 @@ class DDNode : public Node {
 private:
     Sector sensing_sector_;
     Sector communication_antenna_;
-    void init(double x, double y, NodeType node_type, double r_s, double r_c, double theta_s, double theta_c);
+    void init(long double x, long double y, NodeType node_type, long double r_s, long double r_c, long double theta_s, long double theta_c);
     virtual std::string getStringContent() const override;
 public:
     DDNode();
-    DDNode(double x, double y, NodeType node_type, double r_s, double r_c, double theta_s, double theta_c);
-    DDNode(const Point2D& point2D, NodeType node_type, double r_s, double r_c, double theta_s, double theta_c);
+    DDNode(long double x, long double y, NodeType node_type, long double r_s, long double r_c, long double theta_s, long double theta_c);
+    DDNode(const Point2D& point2D, NodeType node_type, long double r_s, long double r_c, long double theta_s, long double theta_c);
     DDNode(const DDNode& other);
     virtual std::string getNodeTypeStr() const override;
     virtual Node* deepCopy(bool reserve_id=false) const override;

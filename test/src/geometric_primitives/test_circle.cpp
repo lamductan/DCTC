@@ -14,7 +14,7 @@
 
 TEST(TestCircle, TestCircle_1)
 {
-    Circle circle(Point2D(1, 2), sqrt(5));
+    Circle circle(Point2D(1, 2), sqrtl(5));
     std::cout << circle << '\n';
     Point2D p1(3, 3);
     ASSERT_TRUE(circle.passesThroughPoint2D(p1));
@@ -26,8 +26,8 @@ TEST(TestCircle, TestCircle_1)
 
 TEST(TestCircle, TestCircle_IntersectionWithLine2D_1)
 {
-    Line2D line2D = Line2D::fromCoefficients(std::vector<double>{1, -2, 3});
-    Circle circle(Point2D(1, 2), sqrt(5));
+    Line2D line2D = Line2D::fromCoefficients(std::vector<long double>{1, -2, 3});
+    Circle circle(Point2D(1, 2), sqrtl(5));
     ASSERT_TRUE(circle.intersectsWithLine2D(line2D));
     std::vector<Point2D> intersections = circle.findIntersectionsWithLine2D(line2D);
     ASSERT_EQ(intersections.size(), 2);
@@ -37,8 +37,8 @@ TEST(TestCircle, TestCircle_IntersectionWithLine2D_1)
 
 TEST(TestCircle, TestCircle_IntersectionWithLine2D_2)
 {
-    Line2D line2D = Line2D::fromCoefficients(std::vector<double>{1, 0, -4});
-    Circle circle(Point2D(1, 2), sqrt(5));
+    Line2D line2D = Line2D::fromCoefficients(std::vector<long double>{1, 0, -4});
+    Circle circle(Point2D(1, 2), sqrtl(5));
     ASSERT_FALSE(circle.intersectsWithLine2D(line2D));
     std::vector<Point2D> intersections = circle.findIntersectionsWithLine2D(line2D);
     ASSERT_EQ(intersections.size(), 0);
@@ -46,8 +46,8 @@ TEST(TestCircle, TestCircle_IntersectionWithLine2D_2)
 
 TEST(TestCircle, TestCircle_IntersectionWithLine2D_3)
 {
-    Line2D line2D = Line2D::fromCoefficients(std::vector<double>{1, 0, -1});
-    Circle circle(Point2D(0, 0), sqrt(1));
+    Line2D line2D = Line2D::fromCoefficients(std::vector<long double>{1, 0, -1});
+    Circle circle(Point2D(0, 0), sqrtl(1));
     ASSERT_TRUE(circle.intersectsWithLine2D(line2D));
     std::vector<Point2D> intersections = circle.findIntersectionsWithLine2D(line2D);
     ASSERT_EQ(intersections.size(), 1);

@@ -6,7 +6,7 @@
 
 TEST(TestGeomUtils, TestGeomUtils1)
 {
-    double x = 0.1;
-    double y = 0.1 + 1e-10;
+    long double x = 0.1;
+    long double y = 0.1 + 1e-10;
     ASSERT_TRUE(approx(x, y));
 }

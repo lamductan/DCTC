@@ -21,8 +21,8 @@ Point2D nextToTop(std::stack<Point2D> &S) {
 // 1 --> Clockwise
 // 2 --> Counterclockwise
 int orientation(const Point2D& p, const Point2D& q, const Point2D& r) {
-    double val = computeCCW(q, p , r);
-    if (fabs(val) <= EPSILON) return 0;  // collinear
+    long double val = computeCCW(q, p , r);
+    if (fabsl(val) <= EPSILON) return 0;  // collinear
     return (val > 0) ? 1 : 2; // clock or counterclock wise
 }
 
@@ -32,7 +32,7 @@ std::vector<Point2D> findConvexHull(std::vector<Point2D> points) {
     if (n == 0) return convex_hull;
 
     // Find the bottommost point
-    double ymin = points[0].getY(), min = 0;
+    long double ymin = points[0].getY(), min = 0;
     for (int i = 1; i < n; i++) {
         int y = points[i].getY();
         if ((y < ymin) || (ymin == y && points[i].getX() < points[min].getX()))

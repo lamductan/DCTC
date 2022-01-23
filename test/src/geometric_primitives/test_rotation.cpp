@@ -8,20 +8,20 @@
 
 TEST(TestRotation, TestRotation1)
 {
-    Point2D A(1.0, sqrt(2));
-    Point2D O(sqrt(5), sqrt(0.5));
-    double angle = 0.235;
+    Point2D A(1.0, sqrtl(2));
+    Point2D O(sqrtl(5), sqrtl(0.5));
+    long double angle = 0.235;
     Point2D R = rotate(A, O, angle);
-    double angle1 = computeAngle(A, O, R);
-    ASSERT_DOUBLE_EQ(angle, angle1); 
+    long double angle1 = computeAngle(A, O, R);
+    ASSERT_long double_EQ(angle, angle1); 
 }
 
 TEST(TestRotation, TestRotation2)
 {
-    Point2D A(1.0, sqrt(2));
-    Point2D O(sqrt(5), sqrt(0.5));
-    double angle = TWO_PI;
+    Point2D A(1.0, sqrtl(2));
+    Point2D O(sqrtl(5), sqrtl(0.5));
+    long double angle = TWO_PI;
     Point2D R = rotate(A, O, angle);
-    double angle1 = computeAngle(A, O, R);
-    ASSERT_DOUBLE_EQ(standardize_angle(angle), angle1); 
+    long double angle1 = computeAngle(A, O, R);
+    ASSERT_long double_EQ(standardize_angle(angle), angle1); 
 }

@@ -40,29 +40,29 @@ std::vector<Node*> MSTGraph::getNodes() const {return nodes_;}
 
 std::vector<Edge*> MSTGraph::getMSTEdges() const {return MST_edges_;}
 
-double MSTGraph::getMinimumMSTEdgeLength() const {
-    double min_MST_edge_length = INT_MAX;
+long double MSTGraph::getMinimumMSTEdgeLength() const {
+    long double min_MST_edge_length = INT_MAX;
     for(Edge* edge : MST_edges_)
         min_MST_edge_length = std::min(min_MST_edge_length, edge->length());
     return min_MST_edge_length;
 }
 
-double MSTGraph::getMaximumMSTEdgeLength() const {
-    double max_MST_edge_length = 0;
+long double MSTGraph::getMaximumMSTEdgeLength() const {
+    long double max_MST_edge_length = 0;
     for(Edge* edge : MST_edges_)
         max_MST_edge_length = std::max(max_MST_edge_length, edge->length());
     return max_MST_edge_length;
 }
 
-double MSTGraph::getMinimumCommunicationEdgeLength() const {
-    double min_communication_edge_length = INT_MAX;
+long double MSTGraph::getMinimumCommunicationEdgeLength() const {
+    long double min_communication_edge_length = INT_MAX;
     for(Edge* edge : communication_edges_)
         min_communication_edge_length = std::min(min_communication_edge_length, edge->length());
     return min_communication_edge_length;
 }
 
-double MSTGraph::getMaximumCommunicationEdgeLength() const {
-    double max_communication_edge_length = 0;
+long double MSTGraph::getMaximumCommunicationEdgeLength() const {
+    long double max_communication_edge_length = 0;
     for(Edge* edge : communication_edges_)
         max_communication_edge_length = std::max(max_communication_edge_length, edge->length());
     return max_communication_edge_length;
@@ -111,7 +111,7 @@ Edge* MSTGraph::addCommunicationEdge(MSTNode* a, MSTNode* b) {
 
 std::vector<Edge*> MSTGraph::getCommunicationEdges() const {return communication_edges_;}
 
-double MSTGraph::buildMST() {
+long double MSTGraph::buildMST() {
     std::vector<Edge*> edges;
     for(int i : node_ids_) {
         for(int j : node_ids_) {
@@ -125,10 +125,10 @@ double MSTGraph::buildMST() {
     return mst_weight_;
 }
 
-double MSTGraph::buildMST(std::vector<Edge*>& edges) {
+long double MSTGraph::buildMST(std::vector<Edge*>& edges) {
     time_t start_time = time(NULL);
     UnionFind union_find(Counter::get());
-    double mst_weight = 0;
+    long double mst_weight = 0;
     int n_mst_edges = 0;
     std::sort(edges.begin(), edges.end(),
               [](Edge* a, Edge* b) {return a->length() < b->length();});

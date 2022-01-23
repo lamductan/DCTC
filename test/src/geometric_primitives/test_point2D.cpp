@@ -34,7 +34,7 @@ TEST(TestPoint2D, TestPoint2D_Subtract)
 TEST(TestPoint2D, TestPoint2D_Multiply1)
 {
     Point2D p1 = Point2D(1, 3);
-    double t = 2;
+    long double t = 2;
     Point2D p2 = Point2D(2, 6);
     Point2D p = p1 * t;
     ASSERT_TRUE(approx(p.getX(), p2.getX()) && approx(p.getY(), p2.getY()));
@@ -43,7 +43,7 @@ TEST(TestPoint2D, TestPoint2D_Multiply1)
 TEST(TestPoint2D, TestPoint2D_Multiply2)
 {
     Point2D p1 = Point2D(1, 3);
-    double t = 2;
+    long double t = 2;
     Point2D p2 = Point2D(2, 6);
     Point2D p = t * p1;
     ASSERT_TRUE(approx(p.getX(), p2.getX()) && approx(p.getY(), p2.getY()));
@@ -52,7 +52,7 @@ TEST(TestPoint2D, TestPoint2D_Multiply2)
 TEST(TestPoint2D, TestPoint2D_Division)
 {
     Point2D p1 = Point2D(2, 6);
-    double t = 2;
+    long double t = 2;
     Point2D p2 = Point2D(1, 3);
     Point2D p = p1 / t;
     ASSERT_TRUE(approx(p.getX(), p2.getX()) && approx(p.getY(), p2.getY()));
@@ -62,22 +62,22 @@ TEST(TestPoint2D, TestPoint2D_Dot)
 {
     Point2D p1 = Point2D(2, 6);
     Point2D p2 = Point2D(1, 3);
-    double t = p1.dot(p2);
-    ASSERT_DOUBLE_EQ(t, 20);
+    long double t = p1.dot(p2);
+    ASSERT_long double_EQ(t, 20);
 }
 
 TEST(TestPoint2D, TestPoint2D_Cross)
 {
     Point2D p1 = Point2D(2, 6);
     Point2D p2 = Point2D(1, 3);
-    double t = p1.cross(p2);
-    ASSERT_DOUBLE_EQ(t, 0);
+    long double t = p1.cross(p2);
+    ASSERT_long double_EQ(t, 0);
 }
 
 TEST(TestPoint2D, TestPoint2D_Distance)
 {
     Point2D p1 = Point2D(0, 3);
     Point2D p2 = Point2D(-4, 0);
-    double dis = p1.computeEuclidDistance(p2);
-    ASSERT_DOUBLE_EQ(dis, 5.0);
+    long double dis = p1.computeEuclidDistance(p2);
+    ASSERT_long double_EQ(dis, 5.0);
 }

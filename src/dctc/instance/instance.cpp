@@ -9,8 +9,8 @@
 Instance::Instance() {}
 
 void Instance::init(
-    int n_targets, double min_range, double max_range,
-    NodeType node_type, double r_s, double r_c, double theta_s, double theta_c,
+    int n_targets, long double min_range, long double max_range,
+    NodeType node_type, long double r_s, long double r_c, long double theta_s, long double theta_c,
     bool deterministic, long unsigned int seed, bool regen_targets)
 {
     deterministic_ = deterministic;
@@ -30,8 +30,8 @@ void Instance::init(
 }
 
 Instance::Instance(
-    int n_targets, double min_range, double max_range,
-    NodeType node_type, double r_s, double r_c, double theta_s, double theta_c,
+    int n_targets, long double min_range, long double max_range,
+    NodeType node_type, long double r_s, long double r_c, long double theta_s, long double theta_c,
     bool deterministic, long unsigned int seed, bool regen_targets)
 {
     init(
@@ -57,21 +57,21 @@ Instance::Instance(const Instance& other) {
     targets_ = other.targets_;
 }
 
-double Instance::getMinRange() const {return min_range_;}
+long double Instance::getMinRange() const {return min_range_;}
 
-double Instance::getMaxRange() const {return max_range_;}
+long double Instance::getMaxRange() const {return max_range_;}
 
 bool Instance::getDeterministic() const {return deterministic_;}
 
 NodeType Instance::getNodeType() const {return node_type_;}
 
-double Instance::getRS() const {return r_s_;}
+long double Instance::getRS() const {return r_s_;}
 
-double Instance::getRC() const {return r_c_;}
+long double Instance::getRC() const {return r_c_;}
 
-double Instance::getThetaS() const {return theta_s_;}
+long double Instance::getThetaS() const {return theta_s_;}
 
-double Instance::getThetaC() const {return theta_c_;}
+long double Instance::getThetaC() const {return theta_c_;}
 
 std::vector<Point2D> Instance::getTargets() const {return targets_;}
 

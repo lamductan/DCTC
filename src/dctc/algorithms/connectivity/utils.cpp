@@ -13,8 +13,8 @@ std::vector<Node*> orientFourNodesPI_2CoverPlane(std::vector<Node*> nodes) {
     Node *nA, *nB, *nC, *nD;
     Point2D pA, pB, pC, pD;
     Sector *sector_A, *sector_B, *sector_C, *sector_D;
-    double orientation_angle_A = 0.0;
-    double orientation_angle_B = 0.0;
+    long double orientation_angle_A = 0.0;
+    long double orientation_angle_B = 0.0;
 
     int m = convex_hull.size();
     if (m < 3) {
@@ -91,6 +91,9 @@ std::vector<Node*> orientFourNodesPI_2CoverPlane(std::vector<Node*> nodes) {
     }
     assert(nA->canCoverOtherNodeByCommunicationAntenna(nB));
     assert(nA->canCoverOtherNodeByCommunicationAntenna(nC));
+    if (!nB->canCoverOtherNodeByCommunicationAntenna(nA)) {
+        print_vector_ptr<Node>(nodes_after_orientation, '\n');
+    }
     assert(nB->canCoverOtherNodeByCommunicationAntenna(nA));
     assert(nB->canCoverOtherNodeByCommunicationAntenna(nD));
     assert(nC->canCoverOtherNodeByCommunicationAntenna(nA));
@@ -106,11 +109,11 @@ bool canNodesCoverPoint2D(const std::vector<Node*>& nodes, const Point2D& point2
 }
 
 bool canNodesCoverPlane(const std::vector<Node*>& nodes) {
-    double min_x = INT_MAX, max_x = INT_MIN;
-    double min_y = INT_MAX, max_y = INT_MIN;
+    long double min_x = INT_MAX, max_x = INT_MIN;
+    long double min_y = INT_MAX, max_y = INT_MIN;
     for(const Node* node : nodes) {
-        double x = node->getX();
-        double y = node->getY();
+        long double x = node->getX();
+        long double y = node->getY();
         if (x < min_x) min_x = x;
         else if (x > max_x) max_x = x;
         if (y < min_y) min_y = y;

@@ -25,9 +25,9 @@ Ray2D Ray2D::fromPointAndDirectionVector(const Point2D& p, const Vector2D& direc
     Vector2D norm_vector = direction_vector.getNormVector();
     Line2D line2D(p, norm_vector);
     Ray2D ray2D(line2D);
-    std::vector<double> v = Vector2DToVector(direction_vector);
+    std::vector<long double> v = Vector2DToVector(direction_vector);
     int largest_absolute_value_coef_pos = findLargestAbsoluteValueCoefPos(v);
-    ray2D.direction_vector = direction_vector/fabs(v[largest_absolute_value_coef_pos]);
+    ray2D.direction_vector = direction_vector/fabsl(v[largest_absolute_value_coef_pos]);
     return ray2D;
 }
 
@@ -86,16 +86,16 @@ Point2D Ray2D::findIntersectionsWithRay2D(const Ray2D& other) const {
 std::vector<Point2D> Ray2D::getPointsOnObject(int n_points) const {
     if (n_points <= 0) return std::vector<Point2D>();
     std::vector<Point2D> points(n_points, Point2D(0, 0));
-    double a = coefs[0], b = coefs[1], c = coefs[2];
+    long double a = coefs[0], b = coefs[1], c = coefs[2];
     if (largest_absolute_value_coef_pos == 1) {
         for(int i = 0; i < n_points; ++i) {
-            double new_x = point0.getX() + i;
+            long double new_x = point0.getX() + i;
             points[i].setX(new_x);
             points[i].setY((-c - a*new_x) / b);
         }
     } else {
         for(int i = 0; i < n_points; ++i) {
-            double new_y = point0.getY() + i;
+            long double new_y = point0.getY() + i;
             points[i].setY(new_y);
             points[i].setX((-c - b*new_y) / a);
         }

@@ -3,7 +3,7 @@
 #include "geometric_primitives/geom2D.h"
 
 
-void DDNode::init(double x, double y, NodeType node_type, double r_s, double r_c, double theta_s, double theta_c) {
+void DDNode::init(long double x, long double y, NodeType node_type, long double r_s, long double r_c, long double theta_s, long double theta_c) {
     Node::init(x, y, node_type);
     sensing_sector_ = Sector(point2D_, r_s, theta_s);
     communication_antenna_ = Sector(point2D_, r_c, theta_c);
@@ -13,11 +13,11 @@ DDNode::DDNode() {
     init(0, 0, SENSING_DD_NODE, 1.0, 1.0, PI_2, PI_3);
 }
 
-DDNode::DDNode(double x, double y, NodeType node_type, double r_s, double r_c, double theta_s, double theta_c) {
+DDNode::DDNode(long double x, long double y, NodeType node_type, long double r_s, long double r_c, long double theta_s, long double theta_c) {
     init(x, y, node_type, r_s, r_c, theta_s, theta_c);
 }
 
-DDNode::DDNode(const Point2D& point2D, NodeType node_type, double r_s, double r_c, double theta_s, double theta_c) {
+DDNode::DDNode(const Point2D& point2D, NodeType node_type, long double r_s, long double r_c, long double theta_s, long double theta_c) {
     init(point2D.getX(), point2D.getY(), node_type, r_s, r_c, theta_s, theta_c);
 }
 

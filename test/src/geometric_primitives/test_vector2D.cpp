@@ -15,7 +15,7 @@ TEST(TestVector2D, TestVector2D_1)
 
 TEST(TestVector2D, TestVector2D_2)
 {
-    std::vector<double> v{3.0, 4.0};
+    std::vector<long double> v{3.0, 4.0};
     Vector2D vector2D = VectorToVector2D(v);
     std::cout << vector2D.toString() << std::endl;
     ASSERT_TRUE(true);

@@ -5,7 +5,7 @@
 
 
 void Generator::init(bool deterministic, long unsigned int seed) {
-    if (!deterministic) {
+    if (!deterministic && seed == 1) {
         seed = static_cast<long unsigned int>(time(NULL));
     }
     std::cout << "seed = " << seed << '\n';
@@ -14,12 +14,12 @@ void Generator::init(bool deterministic, long unsigned int seed) {
 
 long unsigned int Generator::getSeed() const {return seed;}
 
-DoubleGenerator::DoubleGenerator(double min_range, double max_range, bool deterministic, long unsigned int seed) {
+DoubleGenerator::DoubleGenerator(long double min_range, long double max_range, bool deterministic, long unsigned int seed) {
     init(deterministic, seed);
-    dis = std::uniform_real_distribution<double>(min_range, max_range);
+    dis = std::uniform_real_distribution<long double>(min_range, max_range);
 }
 
-double DoubleGenerator::next() {return dis(eng);}
+long double DoubleGenerator::next() {return dis(eng);}
 
 IntGenerator::IntGenerator(int min_range, int max_range, bool deterministic, long unsigned int seed) {
     init(deterministic, seed);

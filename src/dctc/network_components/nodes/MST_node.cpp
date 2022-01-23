@@ -115,7 +115,7 @@ std::string MSTNode::getStringContent() const {
     return s;
 }
 
-void MSTNode::setRequiredThetaC(double required_theta_c) {
+void MSTNode::setRequiredThetaC(long double required_theta_c) {
     required_theta_c_ = required_theta_c;
 }
 

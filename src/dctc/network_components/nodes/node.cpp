@@ -5,7 +5,7 @@
 #include "dctc/network_components/nodes/node.h"
 
 
-void Node::init(double x, double y, NodeType node_type) {
+void Node::init(long double x, long double y, NodeType node_type) {
     x_ = x;
     y_ = y;
     node_type_ = node_type;
@@ -17,7 +17,7 @@ Node::Node() {
     id_ = Counter::increase();
 }
 
-Node::Node(double x, double y, NodeType node_type) {
+Node::Node(long double x, long double y, NodeType node_type) {
     init(x, y, node_type);
     id_ = Counter::increase();
 }
@@ -34,9 +34,9 @@ Node::Node(const Node& other) {
 
 int Node::getId() const {return id_;}
 
-double Node::getX() const {return x_;}
+long double Node::getX() const {return x_;}
 
-double Node::getY() const {return y_;}
+long double Node::getY() const {return y_;}
 
 void Node::setId(int id) {id_ = id;}
 
@@ -69,13 +69,13 @@ Circle* Node::getSensingSector() const {return nullptr;}
 
 Circle* Node::getCommunicationAntenna() const {return nullptr;}
 
-double Node::getRS() const {return getSensingSector()->getRadius();}
+long double Node::getRS() const {return getSensingSector()->getRadius();}
 
-double Node::getThetaS() const {return getSensingSector()->getAngle();}
+long double Node::getThetaS() const {return getSensingSector()->getAngle();}
 
-double Node::getRC() const {return getCommunicationAntenna()->getRadius();}
+long double Node::getRC() const {return getCommunicationAntenna()->getRadius();}
 
-double Node::getThetaC() const {return getCommunicationAntenna()->getAngle();}
+long double Node::getThetaC() const {return getCommunicationAntenna()->getAngle();}
 
 bool Node::canCoverOtherNodeByCommunicationAntenna(Node* other) const {
     Circle* communication_antenna = getCommunicationAntenna();

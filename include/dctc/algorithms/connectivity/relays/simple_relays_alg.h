@@ -17,8 +17,8 @@ protected:
     MSTGraph* MST_graph_;
     std::vector<Edge*> MST_edges_;
     GraphNodeType graph_node_type_;
-    double r_c_;
-    double theta_c_;
+    long double r_c_;
+    long double theta_c_;
     int n_total_nodes_omni_;
     std::vector<Node*> terminals_;
     std::vector<Node*> relays_;
@@ -26,7 +26,7 @@ protected:
     std::vector<Edge*> communication_edges_;
 
 public:
-    SimpleRelaysAlg(MSTGraph* MST_graph, double r_c, double theta_c);
+    SimpleRelaysAlg(MSTGraph* MST_graph, long double r_c, long double theta_c);
 
     virtual RelaysMSTGraph* solve();
     bool isShortEdge(Edge* edge) const;
@@ -43,8 +43,8 @@ public:
     SteinerizeLongOrMediumEdgeResult_LEF steinerizeMediumEdge(Edge* medium_edge) const;
 
     GraphNodeType getGraphNodeType() const;
-    double getThetaC() const;
-    double getRC() const;
+    long double getThetaC() const;
+    long double getRC() const;
     int getNumTerminals() const;
     int getNumRelays() const;
     int getNumTotalNodes() const;
@@ -53,7 +53,7 @@ public:
     std::vector<Node*> getRelayNodes() const;
     std::vector<Node*> getAllNodes() const;
     std::vector<Edge*> getCommunicationEdges() const;
-    double getBeta() const;
+    long double getBeta() const;
     virtual ~SimpleRelaysAlg();
 };
 

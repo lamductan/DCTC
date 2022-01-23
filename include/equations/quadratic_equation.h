@@ -7,13 +7,13 @@
 
 class QuadraticEquation {
 private:
-    double a, b, c;
-    double delta;
+    long double a, b, c;
+    long double delta;
 
 public:
-    QuadraticEquation(double a, double b, double c);
+    QuadraticEquation(long double a, long double b, long double c);
     int getNumberOfSolutions() const;
-    std::pair<double, double> solve() const;
+    std::pair<long double, long double> solve() const;
 };
 
 #endif //EQUATIONS_QUADRATIC_EQUATION_H_

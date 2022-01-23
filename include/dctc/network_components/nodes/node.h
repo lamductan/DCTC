@@ -30,22 +30,22 @@ friend class MSTGraph;
 
 protected:
     int id_;
-    double x_;
-    double y_;
+    long double x_;
+    long double y_;
     Point2D point2D_;
     NodeType node_type_;
     
-    void init(double x, double y, NodeType node_type);
+    void init(long double x, long double y, NodeType node_type);
     virtual std::string getStringContent() const;
 
 public:
     Node();
-    Node(double x, double y, NodeType node_type);
+    Node(long double x, long double y, NodeType node_type);
     Node(const Point2D& point2D, NodeType node_type);
     Node(const Node& other);
     int getId() const;
-    double getX() const;
-    double getY() const;
+    long double getX() const;
+    long double getY() const;
     void setId(int id);
     Point2D getPoint2D() const;
     NodeType getNodeType() const;
@@ -55,10 +55,10 @@ public:
 
     virtual Circle* getSensingSector() const;
     virtual Circle* getCommunicationAntenna() const;
-    double getRS() const;
-    double getThetaS() const;
-    double getRC() const;
-    double getThetaC() const;
+    long double getRS() const;
+    long double getThetaS() const;
+    long double getRC() const;
+    long double getThetaC() const;
     bool canCoverOtherNodeByCommunicationAntenna(Node* other) const;
 
     virtual ~Node();

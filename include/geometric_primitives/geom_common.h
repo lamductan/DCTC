@@ -7,21 +7,21 @@
 #include <set>
 
 
-const double EPSILON = 1e-6;
+const long double EPSILON = 1e-6L;
 const int DECIMAL_DIGITS = 2;
-const double PI = acos(-1);
-const double TWO_PI = PI*2;
-const double PI_2 = acos(0);
-const double PI_4 = PI_2/2;
-const double PI_3 = acos(1.0/2.0);
-const double PI_2_3 = acos(-1.0/2.0);
+const long double PI = acosl(-1L);
+const long double TWO_PI = PI*2.0L;
+const long double PI_2 = acosl(0L);
+const long double PI_4 = PI_2/2.0L;
+const long double PI_3 = acosl(1.0L/2.0L);
+const long double PI_2_3 = acosl(-1.0L/2.0L);
 
-bool approx(double x, double y); 
-int findLargestAbsoluteValueCoefPos(const std::vector<double>& vDouble);
-double rad2deg(double rad);
-double deg2rad(double deg);
-double computeGeometricAngle(double angle);
-double standardize_angle(double angle);
+bool approx(long double x, long double y); 
+int findLargestAbsoluteValueCoefPos(const std::vector<long double>& vDouble);
+long double rad2deg(long double rad);
+long double deg2rad(long double deg);
+long double computeGeometricAngle(long double angle);
+long double standardize_angle(long double angle);
 
 template<typename T>
 void print_vector(const std::vector<T>& v, char last_char=0, std::ostream& os=std::cout) {
@@ -55,7 +55,7 @@ std::vector<T> &operator+=(std::vector<T> &A, const std::vector<T> &B) {
     return A;                                      // here A could be named AB
 }
 
-double round_double(double var);
-bool almost_eq(double a, double b, double allowed_diff);
+long double round_double(long double var);
+bool almost_eq(long double a, long double b, long double allowed_diff);
 
 #endif //GEOMETRIC_PRIMITIVES_GEOM_COMMON_H_

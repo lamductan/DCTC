@@ -28,7 +28,7 @@ protected:
     MSTNode* parent_in_rooted_MST_ = nullptr;
     Edge* edge_to_parent_in_rooted_MST_;
 
-    double required_theta_c_ = TWO_PI;
+    long double required_theta_c_ = TWO_PI;
 
     void init(Node* node, bool deep_copy=true);
     void init(MSTNode* node, bool deep_copy=true);
@@ -59,7 +59,7 @@ public:
     std::vector<Node*> getCommunicationEdgeAdjNodes() const;
     std::vector<Edge*> getCommunicationEdges() const;
 
-    void setRequiredThetaC(double required_theta_c);
+    void setRequiredThetaC(long double required_theta_c);
 
     /** 
      * This method can only be used if users are well aware of the following information.

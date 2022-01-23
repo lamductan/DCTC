@@ -12,24 +12,24 @@
 #include "geometric_primitives/circle.h"
 
 
-double computeCCW(const Point2D& a, const Point2D& b, const Point2D& c);
-double computeCCW(const Vector2D& a, const Vector2D& b);
-double computeAngle(const Vector2D& a, const Vector2D& b);
-double computeAngle(const Point2D& b, const Point2D& a, const Point2D& c); //compute \angle BAC
+long double computeCCW(const Point2D& a, const Point2D& b, const Point2D& c);
+long double computeCCW(const Vector2D& a, const Vector2D& b);
+long double computeAngle(const Vector2D& a, const Vector2D& b);
+long double computeAngle(const Point2D& b, const Point2D& a, const Point2D& c); //compute \angle BAC
 Ray2D getBisectorOfAngle(const Point2D& b, const Point2D& a, const Point2D& c);
 
-double computeGeometricAngle(const Vector2D& a, const Vector2D& b);
-double computeGeometricAngle(const Point2D& b, const Point2D& a, const Point2D& c); //compute \angle BAC
-double computeAngle(const Ray2D& r1, const Ray2D& r2);
-double computeAngle(const Ray2D& r, const Vector2D& v);
-double computeAngle(const Vector2D& v, const Ray2D& r);
-double computeAngle(const Line2D& l1, const Line2D& l2);
+long double computeGeometricAngle(const Vector2D& a, const Vector2D& b);
+long double computeGeometricAngle(const Point2D& b, const Point2D& a, const Point2D& c); //compute \angle BAC
+long double computeAngle(const Ray2D& r1, const Ray2D& r2);
+long double computeAngle(const Ray2D& r, const Vector2D& v);
+long double computeAngle(const Vector2D& v, const Ray2D& r);
+long double computeAngle(const Line2D& l1, const Line2D& l2);
 
-double computeOppositeAngle(double angle);
+long double computeOppositeAngle(long double angle);
 
-Point2D getPointOnRayAtDistance(const Ray2D& ray2D, double distance);
-Point2D getPointOnSegmentAtDistanceFromEndpoint1(const Segment2D& segment2D, double distance);
-Point2D getPointOnSegmentAtDistanceFromEndpoint2(const Segment2D& segment2D, double distance);
+Point2D getPointOnRayAtDistance(const Ray2D& ray2D, long double distance);
+Point2D getPointOnSegmentAtDistanceFromEndpoint1(const Segment2D& segment2D, long double distance);
+Point2D getPointOnSegmentAtDistanceFromEndpoint2(const Segment2D& segment2D, long double distance);
 
 Line2D getLine2DParallelLineAndPassingThroughPoint(const Line2D& line2D, const Point2D& p);
 Line2D getLine2DPerpendicularLineAndPassingThroughPoint(const Line2D& line2D, const Point2D& p);

@@ -9,13 +9,13 @@ TEST(TestInstance, TestInstance_1)
 {
     bool deterministic = true;
     int n_targets = 5;
-    double min_range = 0;
-    double max_range = 10;
+    long double min_range = 0;
+    long double max_range = 10;
     NodeType node_type = SENSING_DD_NODE;
-    double r_s = 2.0;
-    double r_c = 1.0;
-    double theta_s = PI_3;
-    double theta_c = PI_2;
+    long double r_s = 2.0;
+    long double r_c = 1.0;
+    long double theta_s = PI_3;
+    long double theta_c = PI_2;
 
     Instance instance(
         n_targets, min_range, max_range,

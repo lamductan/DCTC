@@ -8,8 +8,8 @@
 
 class RelaysUtilsTest : public ::testing::Test {
 protected:
-    double r_c = 1;
-    double theta_c = PI_2;
+    long double r_c = 1;
+    long double theta_c = PI_2;
     Point2D V = Point2D(0.5, 1);
     Point2D W = Point2D(4.5, 1);
     Segment2D segment2D = Segment2D(V, W);
