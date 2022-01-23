@@ -28,4 +28,13 @@ void print_vector_ptr(const std::vector<T*>& v, char last_char, std::ostream& os
     if (last_char) os << last_char;
 }
 
+template<typename T>
+void print_vector_ptr_new_line(const std::vector<T*>& v, char last_char, std::ostream& os) {
+    std::string tab = "    ";
+    os << "[\n";
+    for(const T* t : v) os << tab << *t << ",\n";
+    os << "]";
+    if (last_char) os << last_char;
+}
+
 #endif // DCTC_UTILS_TPP_

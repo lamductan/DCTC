@@ -4,11 +4,11 @@
 #include "dctc/algorithms/connectivity/Tran/MST_node_Tran.h"
 
 
-Node* NodeFactory::createNode(Node* node, GraphNodeType graph_node_type) {
+Node* NodeFactory::createNode(Node* node, GraphNodeType graph_node_type, bool deep_copy) {
     if (graph_node_type == BASE_GRAPH_NODE) {
         return new Node(*node);
     } else if (graph_node_type == MST_GRAPH_NODE) {
-        return new MSTNode((MSTNode*) node);
+        return new MSTNode((MSTNode*) node, deep_copy);
     } else if (graph_node_type == MST_GRAPH_NODE_TRAN) {
         return new MSTNodeTran((MSTNode*) node);
     }

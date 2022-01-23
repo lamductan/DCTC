@@ -25,6 +25,7 @@ class Instance {
 private:
     bool deterministic_;
     long unsigned int seed_;
+    bool regen_targets_;
 
     int n_targets_;
     double min_range_;
@@ -39,7 +40,7 @@ private:
     void init(
         int n_targets, double min_range, double max_range, 
         NodeType node_type, double r_s, double r_c, double theta_s, double theta_c,
-        bool deterministic=false, long unsigned int seed=1);
+        bool deterministic=false, long unsigned int seed=1, bool regen_targets=true);
     void gen_targets();
 
 public:
@@ -47,7 +48,7 @@ public:
     Instance(
         int n_targets, double min_range, double max_range, 
         NodeType node_type, double r_s, double r_c, double theta_s, double theta_c,
-        bool deterministic=false, long unsigned int seed=1);
+        bool deterministic=false, long unsigned int seed=1, bool regen_targets=true);
     Instance(const Instance& other);
     double getMinRange() const;
     double getMaxRange() const;
@@ -58,6 +59,7 @@ public:
     double getThetaS() const;
     double getThetaC() const;
     std::vector<Point2D> getTargets() const;
+    void setTargets(const std::vector<Point2D>& targets);
     std::vector<Node*> putCoverageSensors(CoverageAlgType coverage_alg_type) const;
     static MSTGraph* constructMSTGraphCoverageSensors(const std::vector<Node*>& coverage_sensors);
 };

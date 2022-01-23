@@ -1,17 +1,18 @@
 #include <cassert>
 
+#include "dctc/utils.h"
 #include "dctc/algorithms/connectivity/relays/relays_MST_graph.h"
 #include "dctc/algorithms/connectivity/communication_checker.h"
 
 RelaysMSTGraph::RelaysMSTGraph(const std::vector<Node*>& nodes, GraphNodeType graph_node_type, double r_c, double theta_c,
                                std::vector<Edge*>& communication_edges, int n_total_nodes_omni)
+: MSTGraph(nodes, graph_node_type, false)
 {
-    MSTGraph(nodes, graph_node_type, false); 
     r_c_ = r_c;
     theta_c_ = theta_c;
     n_total_nodes_omni_ = n_total_nodes_omni;
     beta_ = (1.0*nodes_.size())/(1.0*n_total_nodes_omni_);
-    buildMST(communication_edges, false);
+    buildMST(communication_edges);
 
     for(Node* node : nodes_) {
         if (node->getNodeType() <= SENSING_DD_NODE) {
@@ -22,7 +23,7 @@ RelaysMSTGraph::RelaysMSTGraph(const std::vector<Node*>& nodes, GraphNodeType gr
     }
     assert(CommunicationChecker::checkConnectivityAngleAndRange(this));
     std::cout << "Result: OK. Returned Relays MST Graph satisfies connectivity , angle and range requirements.\n";
-    std::cout << "beta = " << beta_ << '\n';
+    //std::cout << "beta = " << beta_ << '\n';
 }
 
 GraphNodeType RelaysMSTGraph::getGraphNodeType() const {return graph_node_type_;}

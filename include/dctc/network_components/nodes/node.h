@@ -21,6 +21,7 @@ enum NodeType {
     RELAY_DD_NODE_TYPE_3,
     RELAY_DD_NODE_TYPE_4,
     RELAY_DD_NODE_TYPE_5,
+    RELAY_DD_NODE_SHORT_EDGE,
 };
 
 class Node {

@@ -30,15 +30,15 @@ protected:
 
     double required_theta_c_ = TWO_PI;
 
-    void init(Node* node);
-    void init(MSTNode* node);
+    void init(Node* node, bool deep_copy=true);
+    void init(MSTNode* node, bool deep_copy=true);
     virtual std::string getStringContent() const override;
 
 public:
     MSTNode();
     MSTNode(const Point2D& point2D, NodeType node_type);
-    MSTNode(Node* node);
-    MSTNode(MSTNode* node);
+    MSTNode(Node* node, bool deep_copy=true);
+    MSTNode(MSTNode* node, bool deep_copy=true);
     virtual std::string getNodeTypeStr() const override;
     virtual Circle* getSensingSector() const;
     virtual Circle* getCommunicationAntenna() const;

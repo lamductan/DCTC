@@ -40,6 +40,34 @@ std::vector<Node*> MSTGraph::getNodes() const {return nodes_;}
 
 std::vector<Edge*> MSTGraph::getMSTEdges() const {return MST_edges_;}
 
+double MSTGraph::getMinimumMSTEdgeLength() const {
+    double min_MST_edge_length = INT_MAX;
+    for(Edge* edge : MST_edges_)
+        min_MST_edge_length = std::min(min_MST_edge_length, edge->length());
+    return min_MST_edge_length;
+}
+
+double MSTGraph::getMaximumMSTEdgeLength() const {
+    double max_MST_edge_length = 0;
+    for(Edge* edge : MST_edges_)
+        max_MST_edge_length = std::max(max_MST_edge_length, edge->length());
+    return max_MST_edge_length;
+}
+
+double MSTGraph::getMinimumCommunicationEdgeLength() const {
+    double min_communication_edge_length = INT_MAX;
+    for(Edge* edge : communication_edges_)
+        min_communication_edge_length = std::min(min_communication_edge_length, edge->length());
+    return min_communication_edge_length;
+}
+
+double MSTGraph::getMaximumCommunicationEdgeLength() const {
+    double max_communication_edge_length = 0;
+    for(Edge* edge : communication_edges_)
+        max_communication_edge_length = std::max(max_communication_edge_length, edge->length());
+    return max_communication_edge_length;
+}
+
 MSTNode* MSTGraph::rootTree(MSTNode* root_node) {
     for(Node* node : nodes_) {
         MSTNode* MST_node = (MSTNode*) node;
@@ -70,7 +98,6 @@ void MSTGraph::dfs1(MSTNode* u, MSTNode* par, int level) {
 
 
 Edge* MSTGraph::addCommunicationEdge(MSTNode* a, MSTNode* b) {
-    //std::cout << communication_edges_.size() << ": Add communication edge (" << a->getId() << "," << b->getId() << ")\n";
     Edge* edge = new Edge(a, b);
     a->addCommunicationEdge(edge);
     b->addCommunicationEdge(edge);
@@ -93,10 +120,12 @@ double MSTGraph::buildMST() {
             edges.push_back(edge);
         }
     }
-    return buildMST(edges, true);
+    mst_weight_ = buildMST(edges);
+    for(Edge* edge : edges) delete edge;
+    return mst_weight_;
 }
 
-double MSTGraph::buildMST(std::vector<Edge*>& edges, bool delete_edge) {
+double MSTGraph::buildMST(std::vector<Edge*>& edges) {
     time_t start_time = time(NULL);
     UnionFind union_find(Counter::get());
     double mst_weight = 0;
@@ -123,8 +152,9 @@ double MSTGraph::buildMST(std::vector<Edge*>& edges, bool delete_edge) {
             MSTNode* endpoint2 = (MSTNode*) mst_edge->getEndpoint2();
             endpoint2->addMSTEdge(mst_edge);
             MST_edges_by_id_.push_back({fr, to});
+        } else {
+            break;
         }
-        if (delete_edge) delete edge;
     }
 
     MSTNode* root = nullptr;
@@ -166,6 +196,7 @@ MSTGraph::~MSTGraph() {
     //std::cout << getGraphTypeStr() << "'s Destructor\n";
     for(Edge* edge : MST_edges_) delete edge;
     for(Edge* edge : communication_edges_) delete edge;
+
     for(Node* node : nodes_) delete node;
 }
 

@@ -39,8 +39,12 @@ public:
     std::vector<Node*> getNodes() const;
 
     double buildMST();
-    double buildMST(std::vector<Edge*>& graph_edges, bool delete_edge=true);
+    double buildMST(std::vector<Edge*>& graph_edges);
     std::vector<Edge*> getMSTEdges() const;
+    double getMinimumMSTEdgeLength() const;
+    double getMaximumMSTEdgeLength() const;
+    double getMinimumCommunicationEdgeLength() const;
+    double getMaximumCommunicationEdgeLength() const;
 
     MSTNode* rootTree(MSTNode* root);
 

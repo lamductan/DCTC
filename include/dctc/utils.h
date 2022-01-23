@@ -14,6 +14,9 @@ std::vector<V> getMapValues(const std::unordered_map<K, V>& m);
 template<typename T>
 void print_vector_ptr(const std::vector<T*>& v, char last_char=0, std::ostream& os=std::cout);
 
+template<typename T>
+void print_vector_ptr_new_line(const std::vector<T*>& v, char last_char=0, std::ostream& os=std::cout);
+
 #include "dctc/utils.tpp"
 
 #endif // DCTC_UTILS_H_

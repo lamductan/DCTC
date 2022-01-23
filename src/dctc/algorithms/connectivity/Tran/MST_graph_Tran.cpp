@@ -31,12 +31,12 @@ void MSTGraphTran::partition() {
     for(Node* node : nodes_) {
         MSTNodeTran* mst_node_tran = (MSTNodeTran*) node;
         int level = mst_node_tran->level_in_rooted_mst_;
-        leaves_at_levels_[level].insert(mst_node_tran);
+        nodes_at_levels_[level].insert(mst_node_tran);
     }
 
     for(int level = max_level_; level >= 0; --level) {
-        while (!leaves_at_levels_[level].empty()) {
-            MSTNodeTran* node = *(leaves_at_levels_[level].begin());
+        while (!nodes_at_levels_[level].empty()) {
+            MSTNodeTran* node = *(nodes_at_levels_[level].begin());
             MSTNodeTran* cur = node;
             bool can_form_group = false;
             // try parent, grandparent and greatparent 's subtree
@@ -80,7 +80,7 @@ void MSTGraphTran::dfs2(MSTNodeTran* u, std::vector<MSTNodeTran*>& remained_node
 void MSTGraphTran::removeNode(MSTNodeTran* node, bool in_group) {
     node->removed_ = true;
     node->in_group_ = in_group;
-    leaves_at_levels_[node->level_in_rooted_mst_].erase(node);
+    nodes_at_levels_[node->level_in_rooted_mst_].erase(node);
 }
 
 GroupTran* MSTGraphTran::formGroup(std::vector<MSTNodeTran*>& nodes) {
@@ -265,7 +265,7 @@ MSTGraph* MSTGraphTran::doAllSteps() {
 
     //Step 6: Return MST of the communication graph
     MSTGraph* result_MST_graph = new MSTGraph(nodes_, MST_GRAPH_NODE, false);
-    result_MST_graph->buildMST(communication_edges_, false);
+    result_MST_graph->buildMST(communication_edges_);
     //std::cout << "result_MST_graph:\n";
     //std::cout << *result_MST_graph << '\n';
 

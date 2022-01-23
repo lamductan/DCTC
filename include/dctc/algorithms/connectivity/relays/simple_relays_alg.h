@@ -5,11 +5,12 @@
 #include "dctc/algorithms/connectivity/relays/relays_MST_graph.h"
 
 
-struct SteinerizeLongEdgeResult_LEF {
+struct SteinerizeLongOrMediumEdgeResult_LEF {
     std::vector<Node*> type_1_relays;
     std::vector<Node*> type_2_relays;
     std::vector<Edge*> communication_edges;
 };
+
 
 class SimpleRelaysAlg {
 protected:
@@ -18,21 +19,29 @@ protected:
     GraphNodeType graph_node_type_;
     double r_c_;
     double theta_c_;
-    int n_total_nodes_omni_ = 0;
+    int n_total_nodes_omni_;
     std::vector<Node*> terminals_;
     std::vector<Node*> relays_;
     std::vector<Node*> nodes_;
     std::vector<Edge*> communication_edges_;
 
-    bool isShortEdge(Edge* edge) const;
-    bool isLongEdge(Edge* edge) const;
-    bool isMediumEdge(Edge* edge) const;
-
 public:
     SimpleRelaysAlg(MSTGraph* MST_graph, double r_c, double theta_c);
+
     virtual RelaysMSTGraph* solve();
-    SteinerizeLongEdgeResult_LEF steinerizeMediumEdge(Edge* medium_edge) const;
-    SteinerizeLongEdgeResult_LEF steinerizeLongEdgesUpAndDown(Edge* long_edge) const;
+    bool isShortEdge(Edge* edge) const;
+    bool isLongOrMediumEdge(Edge* edge) const;
+    bool isLongEdge(Edge* edge) const;
+    bool isMediumEdge(Edge* edge) const;
+    void connectTerminalsWithType1Type2Relays(
+        Edge* edge, const std::vector<Node*>& type_1_relays, const std::vector<Node*>& type_2_relays,
+        std::vector<Edge*>& communication_edges) const;
+    SteinerizeLongOrMediumEdgeResult_LEF steinerizeLongOrMediumEdges(
+        Edge* edge, const std::pair<Point2D, Point2D>& type_1_relays_pos,
+        const std::vector<Point2D>& type_2_relays_pos) const;
+    SteinerizeLongOrMediumEdgeResult_LEF steinerizeLongEdges(Edge* long_edge) const;
+    SteinerizeLongOrMediumEdgeResult_LEF steinerizeMediumEdge(Edge* medium_edge) const;
+
     GraphNodeType getGraphNodeType() const;
     double getThetaC() const;
     double getRC() const;

@@ -11,10 +11,11 @@ Instance::Instance() {}
 void Instance::init(
     int n_targets, double min_range, double max_range,
     NodeType node_type, double r_s, double r_c, double theta_s, double theta_c,
-    bool deterministic, long unsigned int seed)
+    bool deterministic, long unsigned int seed, bool regen_targets)
 {
     deterministic_ = deterministic;
     seed_ = seed;
+    regen_targets_ = regen_targets;
 
     n_targets_ = n_targets;
     min_range_ = min_range;
@@ -25,23 +26,24 @@ void Instance::init(
     theta_s_ = theta_s;
     theta_c_ = theta_c;
     Counter::resetCount();
-    gen_targets();
+    if (regen_targets_) gen_targets();
 }
 
 Instance::Instance(
     int n_targets, double min_range, double max_range,
     NodeType node_type, double r_s, double r_c, double theta_s, double theta_c,
-    bool deterministic, long unsigned int seed)
+    bool deterministic, long unsigned int seed, bool regen_targets)
 {
     init(
         n_targets, min_range, max_range,
         node_type, r_s, r_c, theta_s, theta_c,
-        deterministic, seed);
+        deterministic, seed, regen_targets);
 }
 
 Instance::Instance(const Instance& other) {
     deterministic_ = other.deterministic_;
     seed_ = other.seed_;
+    regen_targets_ = other.regen_targets_;
 
     n_targets_ = other.n_targets_;
     min_range_ = other.min_range_;
@@ -73,6 +75,8 @@ double Instance::getThetaC() const {return theta_c_;}
 
 std::vector<Point2D> Instance::getTargets() const {return targets_;}
 
+void Instance::setTargets(const std::vector<Point2D>& targets) {targets_ = targets;}
+
 void Instance::gen_targets() {
     std::set<Point2D> already;
     IntGenerator generator(min_range_, max_range_, deterministic_, seed_); 
@@ -81,7 +85,6 @@ void Instance::gen_targets() {
         while (already.count(target) > 0)
             target = Point2D(generator.next(), generator.next());
         already.insert(target);
-        //std::cout << target << '\n';
         targets_.push_back(target);
     }
 }

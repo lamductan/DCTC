@@ -12,7 +12,7 @@ enum GraphNodeType {
 
 class NodeFactory {
 public:
-    static Node* createNode(Node* node, GraphNodeType graph_node_type);
+    static Node* createNode(Node* node, GraphNodeType graph_node_type, bool deep_copy=true);
 };
 
 #endif //DCTC_NETWORK_COMPOMENTS_NODES_NODE_FACTORY_H_

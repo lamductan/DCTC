@@ -1,6 +1,7 @@
 #include <cassert>
 #include <iostream>
 
+#include "data_structures/counter.h"
 #include "dctc/utils.h"
 #include "dctc/network_components/nodes/node.h"
 #include "dctc/network_components/nodes/MST_node.h"
@@ -8,19 +9,21 @@
 
 MSTNode::MSTNode() {}
 
-void MSTNode::init(Node* node) {
+void MSTNode::init(Node* node, bool deep_copy) {
     Node::init(node->getX(), node->getY(), node->getNodeType());
     id_ = node->getId();
-    node_ = node->deepCopy(); //Create new object. Should be delete later
+    Counter::decrease();
+    if (deep_copy) node_ = node->deepCopy(); //Create new object. Should be delete later
+    else node_ = node;
 }
 
-void MSTNode::init(MSTNode* node) {
-    init((Node*) node);
+void MSTNode::init(MSTNode* node, bool deep_copy) {
+    init((Node*) node, deep_copy);
     is_leaf_ = node->is_leaf_;
 }
 
-MSTNode::MSTNode(Node* node) {
-    init(node);
+MSTNode::MSTNode(Node* node, bool deep_copy) {
+    init(node, deep_copy);
 }
 
 MSTNode::MSTNode(const Point2D& point2D, NodeType node_type) {
@@ -28,8 +31,8 @@ MSTNode::MSTNode(const Point2D& point2D, NodeType node_type) {
     init(&node);
 }
 
-MSTNode::MSTNode(MSTNode* node) {
-    init(node);
+MSTNode::MSTNode(MSTNode* node, bool deep_copy) {
+    init(node, deep_copy);
 }
 
 std::string MSTNode::getNodeTypeStr() const {return "MSTNode";}

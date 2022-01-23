@@ -10,7 +10,7 @@
 
 class MSTGraphTran : public MSTGraph {
 protected:
-    std::unordered_map<int, std::unordered_set<MSTNodeTran*>> leaves_at_levels_;
+    std::unordered_map<int, std::unordered_set<MSTNodeTran*>> nodes_at_levels_;
 
     std::vector<MSTNodeTran*> getRemainedNodesInSubtree(MSTNodeTran* u) const;
     void dfs2(MSTNodeTran* u, std::vector<MSTNodeTran*>& remained_nodes_in_subtree) const;

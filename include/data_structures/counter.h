@@ -7,6 +7,7 @@ private:
     static int count;
 public:
     static int increase();
+    static int decrease();
     static int get();
     static void resetCount(int val=0);
 };
