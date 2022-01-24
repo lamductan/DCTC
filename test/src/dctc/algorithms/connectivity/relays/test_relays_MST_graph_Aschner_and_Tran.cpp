@@ -70,6 +70,19 @@ TEST(TestMSTGraphAschnerAndTran1, TestFixedRS)
             std::cout << "Tran's beta = " << relays_MST_graph_Tran->getBeta() << '\n';
             total_beta_Tran += relays_MST_graph_Tran->getBeta();
 
+
+            delete MST_graph_ptr;
+
+            delete MST_graph_Aschner_ptr;
+            delete result_MST_graph_Aschner_ptr;
+            delete simple_relays_alg_Aschner;
+            delete relays_MST_graph_Aschner;
+
+            delete MST_graph_Tran_ptr;
+            delete result_MST_graph_Tran_ptr;
+            delete simple_relays_alg_Tran;
+            delete relays_MST_graph_Tran;
+
             for(Node* coverage_sensor : coverage_sensors)
                 delete coverage_sensor;
             std::cout << "Done TearDown\n";
