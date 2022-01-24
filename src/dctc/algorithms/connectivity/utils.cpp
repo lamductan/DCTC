@@ -20,16 +20,15 @@ std::vector<Node*> orientFourNodesPI_2CoverPlane(std::vector<Node*> nodes) {
     if (m < 3) {
         std::sort(nodes.begin(), nodes.end(), 
                   [](Node* a, Node* b) {return a->getPoint2D() < b->getPoint2D();});
-        nA = nodes[0], nB = nodes[1];
-        nC = nodes[2], nD = nodes[3];
+        nA = nodes[0], nB = nodes[3];
+        nC = nodes[1], nD = nodes[2];
         Point2D pA = nA->getPoint2D(), pB = nB->getPoint2D();
         Point2D pC = nC->getPoint2D(), pD = nD->getPoint2D();
-        Point2D pC_1 = rotate(pC, pA, -PI_4); 
-        Point2D pC_2 = rotate(pC, pA, PI_4); 
+        Point2D pC_1 = rotate(pC, pA, PI_4); 
         sector_A = (Sector*) nA->getCommunicationAntenna();
         sector_B = (Sector*) nB->getCommunicationAntenna();
-        orientation_angle_A = sector_A->orientBoundaryPassingThroughPointAndCoverAnotherPoint(pC, pC_1, false);
-        orientation_angle_B = sector_B->orientBoundaryPassingThroughPointAndCoverAnotherPoint(pC, pC_2, false);
+        orientation_angle_A = sector_A->orientBoundaryPassingThroughPointAndCoverAnotherPoint(pB, pC_1, false);
+        orientation_angle_B = sector_B->orientBoundaryPassingThroughPointAndCoverAnotherPoint(pA, pC_1, false);
     } 
     else if (m == 3) {
         for(int i = 0; i < 3; ++i) {

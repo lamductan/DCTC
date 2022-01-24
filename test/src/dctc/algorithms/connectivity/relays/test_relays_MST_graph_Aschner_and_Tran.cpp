@@ -17,7 +17,7 @@ TEST(TestMSTGraphAschnerAndTran1, TestFixedRS)
     int n_tests = 100;
     long unsigned int seed = time(NULL);
 
-    bool deterministic = true;
+    bool deterministic = false;
     if (deterministic) {
         n_tests = 1;
         seed = 1642978912;
@@ -42,7 +42,6 @@ TEST(TestMSTGraphAschnerAndTran1, TestFixedRS)
         long double total_beta_Aschner = 0.0;
         long double total_beta_Tran = 0.0;
         std::cout << "\n===========================================================\n";
-        std::cout << "r_c = " << r_c << '\n';
         for(int i = 0; i < n_tests; ++i) {
             std::cout << "-----------------------------------------------------------\n";
             std::cout << "Test " << i << ", r_c = " << r_c << '\n';
