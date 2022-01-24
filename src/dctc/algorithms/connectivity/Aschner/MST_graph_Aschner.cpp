@@ -143,7 +143,7 @@ MSTGraph* MSTGraphAschner::doAllSteps() {
 
     time_t end_time = time(NULL);
     std::cout << "Done " << __PRETTY_FUNCTION__ << " in " << end_time - start_time << "s\n";
-    std::cout << "Result: OK. Returned MST Graph satisfies both connectivity and angle requirements.\n";
+    std::cout << "Result: OK. Returned MST Graph satisfies both symmetric connectivity and angle requirements.\n";
 
     return result_MST_graph;
 }

@@ -47,6 +47,28 @@ void CommunicationChecker::dfs1(MSTNode* node, Node* par, std::unordered_map<Nod
     }
 }
 
+bool CommunicationChecker::checkSymmetricConnectivity(const MSTGraph* MST_graph) {
+    for(Node* node : MST_graph->getNodes())
+        if (!checkSymmetricConnectivityOneNode((MSTNode*) node)) return false;
+    return true;
+}
+
+bool CommunicationChecker::checkSymmetricConnectivityOneNode(MSTNode* node) {
+    for(Node* adj_node : node->getMSTEdgeAdjNodes()) {
+        if (!node->canCoverOtherNodeByCommunicationAntenna(adj_node)) return false;
+        if (!adj_node->canCoverOtherNodeByCommunicationAntenna(node)) return false;
+    }
+    return true;
+}
+
+bool CommunicationChecker::checkSymmetricConnectivityOneNode1(MSTNode* node) {
+    for(Node* adj_node : node->getCommunicationEdgeAdjNodes()) {
+        if (!node->canCoverOtherNodeByCommunicationAntenna(adj_node)) return false;
+        if (!adj_node->canCoverOtherNodeByCommunicationAntenna(node)) return false;
+    }
+    return true;
+}
+
 bool CommunicationChecker::checkAngle(const MSTGraph* MST_graph) {
     for(Node* node : MST_graph->getNodes())
         if (!checkAngleOneNode((MSTNode*) node)) return false;
@@ -136,9 +158,10 @@ bool CommunicationChecker::checkRangeOneNode(MSTNode* node) {
 }
 
 bool CommunicationChecker::checkConnectivityAndAngle(const MSTGraph* MST_graph) {
-    return checkConnectivity(MST_graph) && checkAngle(MST_graph);
+    return checkConnectivity(MST_graph) && checkSymmetricConnectivity(MST_graph) && checkAngle(MST_graph);
 }
 
 bool CommunicationChecker::checkConnectivityAngleAndRange(const MSTGraph* MST_graph) {
-    return checkConnectivity(MST_graph) && checkAngle(MST_graph) && checkRange(MST_graph); 
+    return checkConnectivity(MST_graph) && checkSymmetricConnectivity(MST_graph)
+           && checkAngle(MST_graph) && checkRange(MST_graph);
 }

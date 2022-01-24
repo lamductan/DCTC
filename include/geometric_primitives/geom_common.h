@@ -24,19 +24,21 @@ long double computeGeometricAngle(long double angle);
 long double standardize_angle(long double angle);
 
 template<typename T>
-void print_vector(const std::vector<T>& v, char last_char=0, std::ostream& os=std::cout) {
+std::ostream& print_vector(const std::vector<T>& v, char last_char=0, std::ostream& os=std::cout) {
     os << "[";
     for(const T& t : v) os << t << ", ";
     os << "]";
     if (last_char) os << last_char;
+    return os;
 }
 
 template<typename T>
-void print_set(const std::set<T>& v, char last_char=0, std::ostream& os=std::cout) {
+std::ostream& print_set(const std::set<T>& v, char last_char=0, std::ostream& os=std::cout) {
     os << "[";
     for(const T& t : v) os << t << ", ";
     os << "]";
     if (last_char) os << last_char;
+    return os;
 }
 
 template <typename T>

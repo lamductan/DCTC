@@ -121,7 +121,7 @@ std::vector<Point2D> Line2D::getPointsOnObject(int n_points) const {
 
 std::string Line2D::toString() const {
     char s[100];
-    snprintf(s, 100, "Line2D(%.2Le*x + %.2Le*y + %.2Le = 0)", coefs[0], coefs[1], coefs[2]);
+    snprintf(s, 100, "Line2D(%.2f*x + %.2f*y + %.2f = 0)", (double) coefs[0], (double) coefs[1], (double) coefs[2]);
     std::string str = s;
     return str;
 }

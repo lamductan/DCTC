@@ -20,7 +20,7 @@ TEST(TestMSTGraphAschnerAndTran1, TestFixedRS)
     bool deterministic = false;
     if (deterministic) {
         n_tests = 1;
-        seed = 1642978912;
+        seed = 1643052521;
     }
 
     int n_targets = 200;
@@ -92,6 +92,6 @@ TEST(TestMSTGraphAschnerAndTran1, TestFixedRS)
         long double average_beta_Tran = total_beta_Tran/n_tests;
         std::cout << "Average Aschner's beta = " << average_beta_Aschner << '\n';
         std::cout << "Average Tran's beta    = " << average_beta_Tran << '\n';
-        logger.append("%d,%.3Le,%.3Le\n", (int) r_c, average_beta_Aschner, average_beta_Tran); 
+        logger.append("%d,%.3f,%.3f\n", (int) r_c, (double) average_beta_Aschner, (double) average_beta_Tran); 
     }
 }

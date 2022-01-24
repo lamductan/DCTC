@@ -1,6 +1,7 @@
 #include <cassert>
 
 #include "geometric_primitives/geom2D.h"
+#include "dctc/utils.h"
 #include "dctc/algorithms/connectivity/communication_checker.h"
 #include "dctc/algorithms/connectivity/relays/relays_utils.h"
 #include "dctc/algorithms/connectivity/relays/simple_relays_alg.h"
@@ -58,17 +59,21 @@ void SimpleRelaysAlg::connectTerminalsWithType1Type2Relays(
 ) const {
     //Connect terminals to type-1 relays
     orientNodeToBisectorCoverNode(type_1_relays[0], edge->getEndpoint1());
+    assert(type_1_relays[0]->canCoverOtherNodeByCommunicationAntenna(edge->getEndpoint1()));
     communication_edges.push_back(addCommunicationEdge(type_1_relays[0], edge->getEndpoint1()));
     orientNodeToBisectorCoverNode(type_1_relays[1], edge->getEndpoint2());
+    assert(type_1_relays[1]->canCoverOtherNodeByCommunicationAntenna(edge->getEndpoint2()));
     communication_edges.push_back(addCommunicationEdge(type_1_relays[1], edge->getEndpoint2()));
 
     //Connect type-1 relays to their corresponding type-2 relays
     Node* type_2_relay_0 = type_2_relays[0];
     orientNodeToBisectorCoverNode(type_2_relay_0, type_1_relays[0]);
+    assert(type_2_relay_0->canCoverOtherNodeByCommunicationAntenna(type_1_relays[0]));
     communication_edges.push_back(addCommunicationEdge(type_2_relay_0, type_1_relays[0])); 
-    Node* type_2_relay_1 = type_2_relays.back();
-    orientNodeToBisectorCoverNode(type_2_relay_1, type_1_relays[1]);
-    communication_edges.push_back(addCommunicationEdge(type_2_relay_1, type_1_relays[1])); 
+    Node* type_2_relay_last = type_2_relays.back();
+    orientNodeToBisectorCoverNode(type_2_relay_last, type_1_relays[1]);
+    assert(type_2_relay_last->canCoverOtherNodeByCommunicationAntenna(type_1_relays[1]));
+    communication_edges.push_back(addCommunicationEdge(type_2_relay_last, type_1_relays[1])); 
 
     //Orient and Connect type-2 relays
     for(int i = 1; i < type_2_relays.size() - 1; ++i) {

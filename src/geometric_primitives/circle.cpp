@@ -149,7 +149,7 @@ std::vector<Point2D> Circle::findIntersectionsWithCircle(const Circle& other) co
 
 std::string Circle::toString() const {
     char s[100];
-    snprintf(s, 100, "Circle(%s,%.2Le)", center.toString().c_str(), radius);
+    snprintf(s, 100, "Circle(%s,%.2f)", center.toString().c_str(), (double) radius);
     std::string str = s;
     return str;
 }

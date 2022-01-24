@@ -207,7 +207,7 @@ std::vector<Point2D> Sector::findIntersectionsSectorWithSector(const Sector& oth
 }
 
 bool Sector::canOrientToCoverPoint2D(const Point2D& p, bool consider_distance) const {
-    if (consider_distance && computeEuclidDistance(center, p) > radius) return false;
+    if (consider_distance && computeEuclidDistance(center, p) > radius + EPSILON) return false;
     return true;
 }
 
@@ -232,7 +232,7 @@ long double Sector::findPossibleOrientAngleToCoverPoints2D(const std::vector<Poi
     }
     int n_points_can_cover = 0;
     for(int i = 0; i < n; ++i) {
-        if (angles[i + n - 1] - angles[i] <= this->angle) 
+        if (angles[i + n - 1] - angles[i] <= this->angle + EPSILON) 
             return standardize_angle(angles[i] + half_angle);
     }
     return -1;
@@ -253,7 +253,7 @@ long double Sector::orientBoundaryPassingThroughPointAndCoverAnotherPoint(
     const Point2D& a, const Point2D& b, bool consider_distance
 ) {
     long double angle_AOB = computeGeometricAngle(a, center, b);
-    if (angle_AOB > angle) return -1;
+    if (angle_AOB > angle + EPSILON) return -1;
     long double required_radius = std::max(computeEuclidDistance(center, a), computeEuclidDistance(center, b));
     if (consider_distance && radius < required_radius) return -1;
     long double old_radius = (!consider_distance && radius < required_radius) ? radius : -1;
@@ -271,8 +271,8 @@ long double Sector::orientBoundaryPassingThroughPointAndCoverAnotherPoint(
 
 std::string Sector::toString() const {
     char s[100];
-    snprintf(s, 100, "Sector(%s,%.2Le,%.2Le,%.2Le)",
-        center.toString().c_str(), radius, rad2deg(angle), rad2deg(orientation_angle));
+    snprintf(s, 100, "Sector(%s,%.2f,%.2f,%.2f)",
+        center.toString().c_str(), (double) radius, (double) rad2deg(angle), (double) rad2deg(orientation_angle));
     std::string str = s;
     return str;
 }

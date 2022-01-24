@@ -4,8 +4,8 @@
 #include "dctc/algorithms/connectivity/relays/relays_MST_graph.h"
 #include "dctc/algorithms/connectivity/communication_checker.h"
 
-RelaysMSTGraph::RelaysMSTGraph(const std::vector<Node*>& nodes, GraphNodeType graph_node_type, long double r_c, long double theta_c,
-                               std::vector<Edge*>& communication_edges, int n_total_nodes_omni)
+RelaysMSTGraph::RelaysMSTGraph(const std::vector<Node*>& nodes, GraphNodeType graph_node_type, long double r_c,
+                               long double theta_c, std::vector<Edge*>& communication_edges, int n_total_nodes_omni)
 : MSTGraph(nodes, graph_node_type, false)
 {
     r_c_ = r_c;
@@ -22,7 +22,8 @@ RelaysMSTGraph::RelaysMSTGraph(const std::vector<Node*>& nodes, GraphNodeType gr
         }
     }
     assert(CommunicationChecker::checkConnectivityAngleAndRange(this));
-    std::cout << "Result: OK. Returned Relays MST Graph satisfies connectivity, angle and range requirements.\n";
+    std::cout << "Result: OK. Returned Relays MST Graph satisfies symmetric connectivity, angle ";
+    std::cout << "and range requirements.\n";
     //std::cout << "beta = " << beta_ << '\n';
 }
 

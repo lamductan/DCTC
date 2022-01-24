@@ -60,6 +60,7 @@ set(HEADERS
     include/dctc/algorithms/connectivity/relays/relays_utils.h
     include/dctc/algorithms/connectivity/relays/relays_MST_graph.h
     include/dctc/algorithms/connectivity/relays/simple_relays_alg.h
+    include/dctc/algorithms/connectivity/Lam/long_edge_first_relays_alg.h
 )
 
 set(SOURCES
@@ -109,6 +110,7 @@ set(SOURCES
     src/dctc/algorithms/connectivity/relays/relays_utils.cpp
     src/dctc/algorithms/connectivity/relays/relays_MST_graph.cpp
     src/dctc/algorithms/connectivity/relays/simple_relays_alg.cpp
+    src/dctc/algorithms/connectivity/Lam/long_edge_first_relays_alg.cpp
 )
 
 add_library(${This} STATIC ${SOURCES} ${HEADERS})
