@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/tests.dir/src/dctc/algorithms/connectivity/relays/test_relays_MST_graph_Aschner_and_Tran.cpp.o -o tests  ../lib/libgtest_main.a ../libdctc.a ../lib/libgtest.a -pthread 
