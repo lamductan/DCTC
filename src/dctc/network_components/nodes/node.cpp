@@ -84,6 +84,13 @@ bool Node::canCoverOtherNodeByCommunicationAntenna(Node* other) const {
     return communication_antenna->containsPoint2DWithInfRange(other_point2D);
 }
 
+bool Node::canCoverOtherNodesByCommunicationAntenna(const std::vector<Node*> nodes) const {
+    for(Node* node : nodes) {
+        if (!canCoverOtherNodeByCommunicationAntenna(node)) return false;
+    }
+    return true;
+}
+
 Node::~Node() {
     //std::cout << getNodeTypeStr() << "'s Destructor\n";
 }

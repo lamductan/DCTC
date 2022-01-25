@@ -67,6 +67,8 @@ long double orientNodeToBisectorCoverNode(Node* node_to_orient, Node* node_to_co
 }
 
 long double orientNodeToCoverNodes(Node* node_to_orient, const std::vector<Node*>& nodes_to_cover) {
+    if (nodes_to_cover.size() == 1)
+        return orientNodeToBisectorCoverNode(node_to_orient, nodes_to_cover[0]);
     std::vector<Point2D> points_to_cover;
     for(const Node* node_to_cover : nodes_to_cover) points_to_cover.push_back(node_to_cover->getPoint2D());
     return orientNodeToCoverPoints2D(node_to_orient, points_to_cover);

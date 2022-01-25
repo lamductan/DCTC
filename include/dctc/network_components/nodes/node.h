@@ -60,6 +60,7 @@ public:
     long double getRC() const;
     long double getThetaC() const;
     bool canCoverOtherNodeByCommunicationAntenna(Node* other) const;
+    bool canCoverOtherNodesByCommunicationAntenna(const std::vector<Node*> nodes) const;
 
     virtual ~Node();
 

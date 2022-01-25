@@ -25,7 +25,21 @@ protected:
     std::vector<Node*> nodes_;
     std::vector<Edge*> communication_edges_;
 
+    virtual void init(long double r_c, long double theta_c);
+    virtual void connectTerminalsWithType1Relays(
+        Edge* edge, const std::vector<Node*>& type_1_relays, std::vector<Edge*>& communication_edges) const;
+    void connectType1Type2Relays(
+        const std::vector<Node*>& type_1_relays, const std::vector<Node*>& type_2_relays,
+        std::vector<Edge*>& communication_edges) const;
+    SteinerizeLongOrMediumEdgeResult_LEF steinerizeLongOrMediumEdges_1(
+        Edge* edge, const std::pair<Point2D, Point2D>& type_1_relays_pos,
+        const std::vector<Point2D>& type_2_relays_pos) const;
+    SteinerizeLongOrMediumEdgeResult_LEF steinerizeLongEdges(Edge* long_edge) const;
+    SteinerizeLongOrMediumEdgeResult_LEF steinerizeMediumEdge(Edge* medium_edge) const;
+    virtual SteinerizeLongOrMediumEdgeResult_LEF steinerizeLongOrMediumEdge(Edge* long_or_medium_edge);
+
 public:
+    SimpleRelaysAlg();
     SimpleRelaysAlg(MSTGraph* MST_graph, long double r_c, long double theta_c);
 
     virtual RelaysMSTGraph* solve();
@@ -33,14 +47,6 @@ public:
     bool isLongOrMediumEdge(Edge* edge) const;
     bool isLongEdge(Edge* edge) const;
     bool isMediumEdge(Edge* edge) const;
-    void connectTerminalsWithType1Type2Relays(
-        Edge* edge, const std::vector<Node*>& type_1_relays, const std::vector<Node*>& type_2_relays,
-        std::vector<Edge*>& communication_edges) const;
-    SteinerizeLongOrMediumEdgeResult_LEF steinerizeLongOrMediumEdges(
-        Edge* edge, const std::pair<Point2D, Point2D>& type_1_relays_pos,
-        const std::vector<Point2D>& type_2_relays_pos) const;
-    SteinerizeLongOrMediumEdgeResult_LEF steinerizeLongEdges(Edge* long_edge) const;
-    SteinerizeLongOrMediumEdgeResult_LEF steinerizeMediumEdge(Edge* medium_edge) const;
 
     GraphNodeType getGraphNodeType() const;
     long double getThetaC() const;

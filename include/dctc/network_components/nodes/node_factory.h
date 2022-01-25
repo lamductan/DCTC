@@ -7,7 +7,7 @@ enum GraphNodeType {
     BASE_GRAPH_NODE,
     MST_GRAPH_NODE,
     MST_GRAPH_NODE_TRAN,
-    MST_GRAPH_NODE_ASCHNER,
+    MST_GRAPH_NODE_LAM,
 };
 
 class NodeFactory {
