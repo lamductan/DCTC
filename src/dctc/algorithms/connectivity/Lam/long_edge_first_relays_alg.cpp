@@ -53,6 +53,17 @@ std::vector<Edge*> LongEdgeFirstRelaysAlg::connectTerminalWithType1Relays(MSTNod
 
 SteinerizeShortEdgeResult_LEF LongEdgeFirstRelaysAlg::steinerizeShortEdge(Edge* short_edge) const {
     SteinerizeShortEdgeResult_LEF result;
+    Node* endpoint1 = short_edge->getEndpoint1();
+    Node* endpoint2 = short_edge->getEndpoint2();
+    bool one_can_cover_two = endpoint1->canCoverOtherNodeByCommunicationAntenna(endpoint2);
+    bool two_can_cover_one = endpoint2->canCoverOtherNodeByCommunicationAntenna(endpoint1);
+
+    if (one_can_cover_two && two_can_cover_one) {
+        std::vector<Edge*> communication_edges{addCommunicationEdge(endpoint1, endpoint2)};
+        result.communication_edges = communication_edges;
+        return result;
+    }
+
     //TODO: implement
     return result;
 }

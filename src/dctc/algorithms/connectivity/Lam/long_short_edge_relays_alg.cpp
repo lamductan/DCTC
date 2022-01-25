@@ -1,6 +1,7 @@
 #include <cassert>
 #include <unordered_map>
 
+#include "dctc/algorithms/connectivity/relays/relays_utils.h"
 #include "dctc/algorithms/connectivity/Lam/long_short_edge_relays_alg.h"
 #include "dctc/algorithms/connectivity/Lam/MST_node_Lam.h"
 
@@ -77,7 +78,12 @@ std::vector<std::vector<Node*>> LongShortEdgeRelaysAlg::findConnectedComponentsT
 
 std::vector<Edge*> LongShortEdgeRelaysAlg::connectType1RelaysInTheSameComponent(const std::vector<Node*>& component) const {
     std::vector<Edge*> communication_edges;
-    //TODO: implement
+    int n = component.size();
+    for(int i = 0; i < n; ++i) {
+        for(int j = i + 1; j < n; ++j) {
+            communication_edges.push_back(addCommunicationEdge(component[i], component[j]));
+        }
+    }
     return communication_edges;
 }
 

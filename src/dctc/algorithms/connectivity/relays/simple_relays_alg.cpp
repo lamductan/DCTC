@@ -45,7 +45,8 @@ RelaysMSTGraph* SimpleRelaysAlg::solve() {
         if (isLongOrMediumEdge(MST_edge)) {
             SteinerizeLongOrMediumEdgeResult_LEF steinerize_long_or_medium_edge_result
                 = steinerizeLongOrMediumEdge(MST_edge);
-            connectTerminalsWithType1Relays(MST_edge, steinerize_long_or_medium_edge_result.type_1_relays, communication_edges_);
+            connectTerminalsWithType1Relays(
+                MST_edge, steinerize_long_or_medium_edge_result.type_1_relays, communication_edges_);
         } else {
             Edge* communication_edge = addCommunicationEdge(MST_edge->getEndpoint1(), MST_edge->getEndpoint2());
             communication_edges_.push_back(communication_edge);
