@@ -141,6 +141,7 @@ SteinerizeLongOrMediumEdgeResult_LEF SimpleRelaysAlg::steinerizeLongOrMediumEdge
     relays_ += steinerize_long_or_medium_edge_result.type_1_relays;
     relays_ += steinerize_long_or_medium_edge_result.type_2_relays;
     communication_edges_ += steinerize_long_or_medium_edge_result.communication_edges;
+    return steinerize_long_or_medium_edge_result;
 }
 
 GraphNodeType SimpleRelaysAlg::getGraphNodeType() const {return graph_node_type_;}

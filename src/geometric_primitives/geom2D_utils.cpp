@@ -88,19 +88,40 @@ long double computeOppositeAngle(long double angle) {return standardize_angle(an
 
 Point2D getPointOnRayAtDistance(const Ray2D& ray2D, long double distance) {
     Circle circle(ray2D.getPoint0(), distance);
-    return circle.findIntersectionsWithRay2D(ray2D)[0];
+    Point2D start_point = ray2D.getPoint0();
+    std::vector<Point2D> intersections_with_circle = circle.findIntersectionsWithRay2D(ray2D);
+    if (intersections_with_circle[0] == start_point) {
+        if (intersections_with_circle.size() == 1)
+            return POINT_INFINITY;
+        return intersections_with_circle[1];
+    } 
+    return intersections_with_circle[0];
 }
 
 Point2D getPointOnSegmentAtDistanceFromEndpoint1(const Segment2D& segment2D, long double distance) {
     if (distance > segment2D.length()) return POINT_INFINITY;
-    Circle circle(segment2D.getEndpoint1(), distance);
-    return circle.findIntersectionsWithSegment2D(segment2D)[0];
+    Point2D endpoint = segment2D.getEndpoint1();
+    Circle circle(endpoint, distance);
+    std::vector<Point2D> intersections_with_circle = circle.findIntersectionsWithSegment2D(segment2D);
+    if (intersections_with_circle[0] == endpoint) {
+        if (intersections_with_circle.size() == 1)
+            return POINT_INFINITY;
+        return intersections_with_circle[1];
+    } 
+    return intersections_with_circle[0];
 }
 
 Point2D getPointOnSegmentAtDistanceFromEndpoint2(const Segment2D& segment2D, long double distance) {
     if (distance > segment2D.length()) return POINT_INFINITY;
-    Circle circle(segment2D.getEndpoint2(), distance);
-    return circle.findIntersectionsWithSegment2D(segment2D)[0];
+    Point2D endpoint = segment2D.getEndpoint2();
+    Circle circle(endpoint, distance);
+    std::vector<Point2D> intersections_with_circle = circle.findIntersectionsWithSegment2D(segment2D);
+    if (intersections_with_circle[0] == endpoint) {
+        if (intersections_with_circle.size() == 1)
+            return POINT_INFINITY;
+        return intersections_with_circle[1];
+    } 
+    return intersections_with_circle[0];
 }
 
 Line2D getLine2DParallelLineAndPassingThroughPoint(const Line2D& line2D, const Point2D& p) {
@@ -135,4 +156,10 @@ std::vector<Point2D> findIntersectionsBetweenGeom2DObjects(const Segment2D& segm
     std::vector<Point2D> intersections;
     if (!intersection.isPointInfinity()) intersections.push_back(intersection);
     return intersections;
+}
+
+Point2D getOrthogonalProjectionOfPoint2DOnLine(const Point2D& p, const Line2D& line2D) {
+    if (line2D.containsPoint2D(p)) return p;
+    Line2D perpendicular_line = getLine2DPerpendicularLineAndPassingThroughPoint(line2D, p);
+    return line2D.findIntersectionsWithLine2D(perpendicular_line);
 }

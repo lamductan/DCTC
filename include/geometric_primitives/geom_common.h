@@ -14,7 +14,7 @@ const long double TWO_PI = PI*2.0L;
 const long double PI_2 = acosl(0L);
 const long double PI_4 = PI_2/2.0L;
 const long double PI_3 = acosl(1.0L/2.0L);
-const long double PI_2_3 = acosl(-1.0L/2.0L);
+const long double TWO_PI_3 = acosl(-1.0L/2.0L);
 
 bool approx(long double x, long double y); 
 int findLargestAbsoluteValueCoefPos(const std::vector<long double>& vDouble);
