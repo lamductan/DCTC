@@ -60,8 +60,9 @@ TEST_F(TestRelaysMSTGraphTran, Test1)
     std::cout << "Tran's beta = " << relays_MST_graph_Tran->getBeta() << '\n';
 
     delete MST_graph_Tran_ptr;
-    delete relays_MST_graph_Tran;
     delete result_MST_graph_Tran_ptr;
+    delete simple_relays_alg_Tran;
+    delete relays_MST_graph_Tran;
 }
 
 TEST(TestMSTGraphTran1, TestRandomNondeterministic)
@@ -102,6 +103,12 @@ TEST(TestMSTGraphTran1, TestRandomNondeterministic)
         ASSERT_TRUE(CommunicationChecker::checkConnectivityAngleAndRange(relays_MST_graph_Tran));
         std::cout << "Tran's beta = " << relays_MST_graph_Tran->getBeta() << '\n';
         total_beta_Tran += relays_MST_graph_Tran->getBeta();
+
+
+        delete MST_graph_Tran_ptr;
+        delete result_MST_graph_Tran_ptr;
+        delete simple_relays_alg_Tran;
+        delete relays_MST_graph_Tran;
 
         for(Node* coverage_sensor : coverage_sensors)
             delete coverage_sensor;

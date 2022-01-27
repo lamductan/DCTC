@@ -46,13 +46,17 @@ std::vector<Point2D> calculateShortEdgeRelaysPos_TwoNonFree(const Segment2D& seg
     return {P0, P1, P2};
 }
 
-Node* createRelayNode(const Point2D& pos, NodeType node_type, long double r_c, long double theta_c) {
-    return createRelayNode(pos, node_type, r_c, theta_c, r_c, theta_c);
+Node* createRelayNode(const Point2D& pos, NodeType node_type, GraphNodeType graph_node_type,
+                      long double r_c, long double theta_c) 
+{
+    return createRelayNode(pos, node_type, graph_node_type, r_c, theta_c, r_c, theta_c);
 }
 
-Node* createRelayNode(const Point2D& pos, NodeType node_type, long double r_s, long double theta_s, long double r_c, long double theta_c) {
+Node* createRelayNode(const Point2D& pos, NodeType node_type, GraphNodeType graph_node_type,
+                      long double r_s, long double theta_s, long double r_c, long double theta_c)
+{
     Node* node = new DDNode(pos.getX(), pos.getY(), node_type, r_s, r_c, theta_s, theta_c);
-    return new MSTNode(node, false);
+    return NodeFactory::createNode(node, graph_node_type, false);
 }
 
 long double orientNodeToBisectorCoverPoint2D(Node* node, const Point2D& point) {
@@ -89,10 +93,12 @@ Edge* addCommunicationEdge(Node* a1, Node* b1) {
 }
 
 Point2D findPoint2DWithDistanceFromAPointKnowingAPointInBetween(const Point2D& G, const Point2D& A, long double r) {
-    long double length_GA = computeEuclidDistance(G, A);
-    long double t1 = r/length_GA;
-    long double t2 = r - t1;
-    Point2D H = A*t1 + G*t2;
+    Ray2D ray_GA = Ray2D::fromTwoPoints(G, A);
+    Circle C(G, r);
+    std::vector<Point2D> intersections = C.findIntersectionsWithRay2D(ray_GA);
+    Point2D H = intersections[0];
+    if (H == G) H = intersections[1];
+    assert(fabs(computeEuclidDistance(G, H) - r) <= EPSILON);
     return H;
 }
 
@@ -100,7 +106,6 @@ std::pair<Point2D, Point2D> findPointsToFormIsoscelesRightTriangle(const Point2D
     Point2D M = (A + B) / 2;
     Point2D C1 = rotate(A, M, PI_2);
     Point2D C2 = M*2 - C1;
-    std::cout << "M, C1, C2 = " << M << ' ' << C1 << ' ' << C2 << '\n';
     return {C1, C2};
 }
 
@@ -108,10 +113,16 @@ std::vector<Point2D> calculateShortEdgeRelaysPos_TwoNonFree_general(Sector* sA, 
     Point2D A = sA->getCenter();
     Point2D B = sB->getCenter(); 
     Segment2D AB = Segment2D(A, B);
+    Ray2D ray_AB = Ray2D::fromTwoPoints(A, B);
+    Ray2D ray_BA = Ray2D::fromTwoPoints(B, A);
+    long double length_AB = AB.length();
     long double r_A = sA->getRadius();
     long double r_B = sB->getRadius();
     long double r = std::min(r_A, r_B);
     assert(AB.length() <= r + EPSILON);
+
+    //std::cout << A << ' ' << sA->getOrientationAngle() << '\n';
+    //std::cout << B << ' ' << sB->getOrientationAngle() << '\n';
 
     bool sA_contains_B = sA->containsPoint2D(B);
     bool sB_contains_A = sB->containsPoint2D(A);
@@ -135,7 +146,10 @@ std::vector<Point2D> calculateShortEdgeRelaysPos_TwoNonFree_general(Sector* sA, 
     if (!is_l1_coincident_with_AB && !is_l1_perpendicular_to_AB) {
         //std::cout << "normal case\n";
         if (sB_contains_A || (!sB_contains_A && !sA_contains_B)) {
+            //std::cout << "l1 = " << l1 << '\n';
+            //std::cout << "A_A2 = " << (Line2D) A_A2 << '\n';
             Point2D G = l1.findIntersectionsWithLine2D(A_A2);
+            //std::cout << "G = " << G << '\n';
             bool sA_contains_G = sA->containsPoint2D(G);
             bool sB_contains_G = sB->containsPoint2D(G);
             if (sA_contains_G && sB_contains_G) {
@@ -149,7 +163,6 @@ std::vector<Point2D> calculateShortEdgeRelaysPos_TwoNonFree_general(Sector* sA, 
                     //return res;
                 } else if (sA_contains_G) {
                     Point2D H = findPoint2DWithDistanceFromAPointKnowingAPointInBetween(G, B, r);
-                    std::cout << "H = " << H << '\n';
                     res.push_back(G);
                     res.push_back(H);
                     //return res;
@@ -169,9 +182,9 @@ std::vector<Point2D> calculateShortEdgeRelaysPos_TwoNonFree_general(Sector* sA, 
         }
     } else if (is_l1_coincident_with_AB) {
         //std::cout << "l1_coincidient_with_AB\n";
-        Point2D G = getPointOnSegmentAtDistanceFromEndpoint1(A_A1, r*0.2);
-        res.push_back(G);
         if (sB_contains_A) {
+            Point2D G = getPointOnSegmentAtDistanceFromEndpoint1(A_A1, r*0.2);
+            res.push_back(G);
             std::pair<Point2D, Point2D> Hs = findPointsToFormIsoscelesRightTriangle(G, B);
             Point2D H = Hs.first;
             if (!sB->containsPoint2D(H)) {
@@ -179,11 +192,26 @@ std::vector<Point2D> calculateShortEdgeRelaysPos_TwoNonFree_general(Sector* sA, 
             }
             res.push_back(H);
             //return res;
+        } else if (sA_contains_B) {
+            Point2D G = getPointOnRayAtDistance(ray_AB, length_AB + r*0.2);
+            std::pair<Point2D, Point2D> Hs = findPointsToFormIsoscelesRightTriangle(G, A);
+            Point2D H = Hs.first;
+            if (!sA->containsPoint2D(H)) {
+                H = Hs.second;
+            }
+            res.push_back(H);
+            res.push_back(G);
+            //return res;
+
         } else {
-            Point2D I_prime = getPointOnSegmentAtDistanceFromEndpoint2(AB, r*0.2);
-            Point2D I = B*2 - I_prime;
+            Point2D G = getPointOnSegmentAtDistanceFromEndpoint1(A_A1, r*0.2);
+            res.push_back(G);
+            Point2D I = getPointOnRayAtDistance(ray_AB, length_AB + r*0.2);
             std::pair<Point2D, Point2D> Hs = findPointsToFormIsoscelesRightTriangle(G, I);
             Point2D H = Hs.first;
+            if (!sB->containsPoint2D(H)) {
+                H = Hs.second;
+            }
             res.push_back(H);
             res.push_back(I);
             //return res;
@@ -193,17 +221,17 @@ std::vector<Point2D> calculateShortEdgeRelaysPos_TwoNonFree_general(Sector* sA, 
         Point2D G = getPointOnSegmentAtDistanceFromEndpoint1(A_A1, r*0.2);
         res.push_back(G);
         Point2D H = G + B - A;
+        res.push_back(H);
         if (sB->containsPoint2D(H)) {
-            res.push_back(H);
             //return res;
         } else {
-            Point2D I = getPointOnSegmentAtDistanceFromEndpoint1(Segment2D(B, sB->getEndpoint1()), r*0.2);
-            std::pair<Point2D, Point2D> Hs = findPointsToFormIsoscelesRightTriangle(G, I);
-            res.push_back(Hs.first);
+            Point2D I = findPoint2DWithDistanceFromAPointKnowingAPointInBetween(H, B, r);
             res.push_back(I);
             //return res;
         } 
     }
+
+    //print_vector<Point2D>(res, '\n');
     assert(res.size() <= 3);
     assert(sA->containsPoint2D(res[0]));
     assert(sB->containsPoint2D(res.back()));
@@ -212,6 +240,12 @@ std::vector<Point2D> calculateShortEdgeRelaysPos_TwoNonFree_general(Sector* sA, 
     points += res;
     points.push_back(B);
     for(int i = 1; i < points.size() - 1; ++i) {
+        if (!(computeGeometricAngle(points[i - 1], points[i], points[i + 1]) <= PI_2 + EPSILON)) {
+            std::cout << "BUG\n";
+            std::cout << i << ' ' << computeGeometricAngle(points[i - 1], points[i], points[i + 1]) << '\n';
+            print_vector<Point2D>(points, '\n');
+            std::cout << sA->getOrientationAngle() << ' ' << sB->getOrientationAngle() << '\n';
+        }
         assert(computeGeometricAngle(points[i - 1], points[i], points[i + 1]) <= PI_2 + EPSILON);
         assert(computeEuclidDistance(points[i - 1], points[i]) <= r + EPSILON);
         assert(computeEuclidDistance(points[i], points[i + 1]) <= r + EPSILON);

@@ -60,8 +60,9 @@ TEST_F(TestRelaysMSTGraphAschner, Test1)
     std::cout << "Aschner's beta = " << relays_MST_graph_Aschner->getBeta() << '\n';
 
     delete MST_graph_Aschner_ptr;
-    delete relays_MST_graph_Aschner;
     delete result_MST_graph_Aschner_ptr;
+    delete simple_relays_alg_Aschner;
+    delete relays_MST_graph_Aschner;
 }
 
 TEST(TestMSTGraphAschner1, TestRandomNondeterministic)
@@ -102,6 +103,13 @@ TEST(TestMSTGraphAschner1, TestRandomNondeterministic)
         ASSERT_TRUE(CommunicationChecker::checkConnectivityAngleAndRange(relays_MST_graph_Aschner));
         std::cout << "Aschner's beta = " << relays_MST_graph_Aschner->getBeta() << '\n';
         total_beta_Aschner += relays_MST_graph_Aschner->getBeta();
+
+
+        delete MST_graph_ptr;
+        delete MST_graph_Aschner_ptr;
+        delete result_MST_graph_Aschner_ptr;
+        delete simple_relays_alg_Aschner;
+        delete relays_MST_graph_Aschner;
 
         for(Node* coverage_sensor : coverage_sensors)
             delete coverage_sensor;

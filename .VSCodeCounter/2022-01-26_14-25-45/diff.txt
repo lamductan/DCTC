@@ -1,0 +1,82 @@
+Date : 2022-01-26 14:25:45
+Directory : /home/tanlam/dev/phd/research/2021/2021-09b/dctc
+Total : 32 files,  753 codes, 42 comments, 132 blanks, all 927 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| C++      |         32 |        753 |         42 |        132 |        927 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                                       | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                                          |         32 |        753 |         42 |        132 |        927 |
+| include                                                                                                                                    |         14 |        114 |          1 |         42 |        157 |
+| include/dctc                                                                                                                               |         10 |         90 |          1 |         33 |        124 |
+| include/dctc/algorithms                                                                                                                    |          7 |         87 |          1 |         32 |        120 |
+| include/dctc/algorithms/connectivity                                                                                                       |          7 |         87 |          1 |         32 |        120 |
+| include/dctc/algorithms/connectivity/Lam                                                                                                   |          4 |         71 |          0 |         27 |         98 |
+| include/dctc/algorithms/connectivity/relays                                                                                                |          2 |         13 |          1 |          4 |         18 |
+| include/dctc/network_components                                                                                                            |          1 |          1 |          0 |          0 |          1 |
+| include/dctc/network_components/nodes                                                                                                      |          1 |          1 |          0 |          0 |          1 |
+| include/geometric_primitives                                                                                                               |          2 |          3 |          0 |          1 |          4 |
+| include/logger                                                                                                                             |          1 |         15 |          0 |          5 |         20 |
+| src                                                                                                                                        |         15 |        457 |         17 |         59 |        533 |
+| src/dctc                                                                                                                                   |         11 |        400 |         17 |         52 |        469 |
+| src/dctc/algorithms                                                                                                                        |          9 |        391 |         17 |         50 |        458 |
+| src/dctc/algorithms/connectivity                                                                                                           |          9 |        391 |         17 |         50 |        458 |
+| src/dctc/algorithms/connectivity/Lam                                                                                                       |          4 |        180 |          5 |         30 |        215 |
+| src/dctc/algorithms/connectivity/relays                                                                                                    |          3 |        183 |         12 |         15 |        210 |
+| src/dctc/network_components                                                                                                                |          2 |          9 |          0 |          2 |         11 |
+| src/dctc/network_components/nodes                                                                                                          |          2 |          9 |          0 |          2 |         11 |
+| src/geometric_primitives                                                                                                                   |          1 |         26 |          0 |          1 |         27 |
+| src/logger                                                                                                                                 |          1 |         33 |          0 |          7 |         40 |
+| test                                                                                                                                       |          3 |        182 |         24 |         31 |        237 |
+| test/src                                                                                                                                   |          3 |        182 |         24 |         31 |        237 |
+| test/src/dctc                                                                                                                              |          3 |        182 |         24 |         31 |        237 |
+| test/src/dctc/algorithms                                                                                                                   |          3 |        182 |         24 |         31 |        237 |
+| test/src/dctc/algorithms/connectivity                                                                                                      |          3 |        182 |         24 |         31 |        237 |
+| test/src/dctc/algorithms/connectivity/relays                                                                                               |          3 |        182 |         24 |         31 |        237 |
++--------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                                                                   | language | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/algorithms/connectivity/Lam/MST_node_Lam.h                                   | C++      |         25 |          0 |          9 |         34 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/algorithms/connectivity/Lam/long_edge_first_relays_alg.h                     | C++      |         17 |          0 |          6 |         23 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/algorithms/connectivity/Lam/long_short_edge_relays_alg.h                     | C++      |         20 |          0 |          8 |         28 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/algorithms/connectivity/Lam/short_edge_first_relays_alg.h                    | C++      |          9 |          0 |          4 |         13 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/algorithms/connectivity/communication_checker.h                              | C++      |          3 |          0 |          1 |          4 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/algorithms/connectivity/relays/relays_utils.h                                | C++      |          7 |          1 |          3 |         11 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/algorithms/connectivity/relays/simple_relays_alg.h                           | C++      |          6 |          0 |          1 |          7 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/network_components/nodes/node.h                                              | C++      |          1 |          0 |          0 |          1 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/utils.h                                                                      | C++      |          0 |          0 |          1 |          1 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/utils.tpp                                                                    | C++      |          2 |          0 |          0 |          2 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/geometric_primitives/geom_common.h                                                | C++      |          2 |          0 |          0 |          2 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/geometric_primitives/geom_utils_1.h                                               | C++      |          1 |          0 |          1 |          2 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/logger/logger.h                                                                   | C++      |         15 |          0 |          5 |         20 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/utils.h                                                                           | C++      |          6 |          0 |          3 |          9 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/algorithms/connectivity/Lam/MST_node_Lam.cpp                                     | C++      |         22 |          1 |          5 |         28 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/algorithms/connectivity/Lam/long_edge_first_relays_alg.cpp                       | C++      |         66 |          4 |         13 |         83 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/algorithms/connectivity/Lam/long_short_edge_relays_alg.cpp                       | C++      |         91 |          0 |         12 |        103 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/algorithms/connectivity/Lam/short_edge_first_relays_alg.cpp                      | C++      |          1 |          0 |          0 |          1 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/algorithms/connectivity/communication_checker.cpp                                | C++      |         26 |          0 |          5 |         31 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/algorithms/connectivity/relays/relays_MST_graph.cpp                              | C++      |          1 |          0 |          0 |          1 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/algorithms/connectivity/relays/relays_utils.cpp                                  | C++      |        161 |         13 |         13 |        187 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/algorithms/connectivity/relays/simple_relays_alg.cpp                             | C++      |         21 |         -1 |          2 |         22 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/algorithms/connectivity/utils.cpp                                                | C++      |          2 |          0 |          0 |          2 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/network_components/nodes/node.cpp                                                | C++      |          6 |          0 |          1 |          7 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/network_components/nodes/node_factory.cpp                                        | C++      |          3 |          0 |          1 |          4 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/geometric_primitives/geom2D_utils.cpp                                                 | C++      |         26 |          0 |          1 |         27 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/logger/logger.cpp                                                                     | C++      |         33 |          0 |          7 |         40 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/main.cpp                                                                              | C++      |          1 |          0 |          0 |          1 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/utils.cpp                                                                             | C++      |         -3 |          0 |         -1 |         -4 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/test/src/dctc/algorithms/connectivity/relays/test_relays_MST_graph_Aschner_and_Tran.cpp   | C++      |         25 |          0 |          6 |         31 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/test/src/dctc/algorithms/connectivity/relays/test_relays_MST_graph_Aschner_and_Tran_1.cpp | C++      |         82 |          0 |         15 |         97 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/test/src/dctc/algorithms/connectivity/relays/test_relays_utils.cpp                        | C++      |         75 |         24 |         10 |        109 |
+| Total                                                                                                                                      |          |        753 |         42 |        132 |        927 |
++--------------------------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+

@@ -148,3 +148,11 @@ TEST(RelaysUtilsTestShortEdgeRelays_OneFree, Test3)
         print_vector<Point2D>(relays_pos, '\n');
     }
 }
+
+TEST(RelaysUtilsTestShortEdgeRelays_TwoFixed, Test10)
+{
+    Sector sA(Point2D(24.8, 81.3), 5, PI_2, 4.27);
+    Sector sB(Point2D(28.4, 84.7), 5, PI_2, 0.72);
+    std::vector<Point2D> relays_pos = calculateShortEdgeRelaysPos_TwoNonFree_general(&sA, &sB);
+    print_vector<Point2D>(relays_pos, '\n');
+}

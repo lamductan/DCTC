@@ -14,7 +14,10 @@ struct SteinerizeShortEdgeResult_LEF {
 class LongEdgeFirstRelaysAlg : public LongShortEdgeRelaysAlg {
 protected:
     std::vector<Edge*> connectTerminalWithType1Relays(MSTNodeLam* terminal) const;
-    SteinerizeShortEdgeResult_LEF steinerizeShortEdge(Edge* short_edge) const;
+    SteinerizeShortEdgeResult_LEF steinerizeShortEdge(Edge* short_edge, GraphNodeType graph_node_type) const;
+    SteinerizeShortEdgeResult_LEF steinerizeShortEdgeWithOrientation(
+        MSTNodeLam* terminal1, MSTNodeLam* terminal2, const std::vector<Point2D>& type_4_relays_pos,
+        GraphNodeType graph_node_type) const;
 public:
     LongEdgeFirstRelaysAlg(MSTGraph* MST_graph, long double r_c, long double theta_c);
     virtual RelaysMSTGraph* solve();

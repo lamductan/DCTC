@@ -23,6 +23,7 @@ protected:
     std::vector<Edge*> MST_edges_;
     std::vector<std::pair<int, int>> MST_edges_by_id_;
     int max_level_ = 0;
+    int n_total_nodes_omni_ = 0;
 
     std::vector<Edge*> communication_edges_;
 
@@ -38,6 +39,8 @@ public:
     std::unordered_map<int, Node*> getMapIdNodes() const;
     std::vector<Node*> getNodes() const;
 
+    static int calculateNumRelaysOmni(Edge* edge, long double r_c);
+
     long double buildMST();
     long double buildMST(std::vector<Edge*>& graph_edges);
     std::vector<Edge*> getMSTEdges() const;
@@ -45,6 +48,9 @@ public:
     long double getMaximumMSTEdgeLength() const;
     long double getMinimumCommunicationEdgeLength() const;
     long double getMaximumCommunicationEdgeLength() const;
+
+    int getNTotalNodesOmni() const;
+    void setNTotalNodesOmni(int n_total_nodes_omni);
 
     MSTNode* rootTree(MSTNode* root);
 

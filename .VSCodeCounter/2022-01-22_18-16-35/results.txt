@@ -1,0 +1,168 @@
+Date : 2022-01-22 18:16:35
+Directory : /home/tanlam/dev/phd/research/2021/2021-09b/dctc
+Total : 97 files,  4934 codes, 71 comments, 1049 blanks, all 6054 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| C++      |         96 |      4,922 |         71 |      1,048 |      6,041 |
+| Markdown |          1 |         12 |          0 |          1 |         13 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                     | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                        |         97 |      4,934 |         71 |      1,049 |      6,054 |
+| include                                                                                                                  |         35 |      1,034 |          7 |        266 |      1,307 |
+| include/data_structures                                                                                                  |          2 |         26 |          0 |          7 |         33 |
+| include/dctc                                                                                                             |         18 |        552 |          7 |        145 |        704 |
+| include/dctc/algorithms                                                                                                  |          8 |        192 |          1 |         57 |        250 |
+| include/dctc/algorithms/connectivity                                                                                     |          7 |        183 |          1 |         53 |        237 |
+| include/dctc/algorithms/connectivity/Tran                                                                                |          2 |         60 |          0 |         21 |         81 |
+| include/dctc/algorithms/connectivity/relays                                                                              |          3 |         94 |          0 |         18 |        112 |
+| include/dctc/algorithms/coverage                                                                                         |          1 |          9 |          0 |          4 |         13 |
+| include/dctc/instance                                                                                                    |          1 |         57 |          0 |         10 |         67 |
+| include/dctc/network_components                                                                                          |          7 |        255 |          6 |         62 |        323 |
+| include/dctc/network_components/edges                                                                                    |          1 |         40 |          0 |          6 |         46 |
+| include/dctc/network_components/graphs                                                                                   |          1 |         45 |          0 |         14 |         59 |
+| include/dctc/network_components/nodes                                                                                    |          5 |        170 |          6 |         42 |        218 |
+| include/equations                                                                                                        |          1 |         14 |          0 |          6 |         20 |
+| include/geometric_primitives                                                                                             |         13 |        416 |          0 |        101 |        517 |
+| include/random                                                                                                           |          1 |         26 |          0 |          7 |         33 |
+| src                                                                                                                      |         37 |      2,558 |         62 |        565 |      3,185 |
+| src/data_structures                                                                                                      |          2 |         24 |          0 |         10 |         34 |
+| src/dctc                                                                                                                 |         19 |      1,334 |         48 |        300 |      1,682 |
+| src/dctc/algorithms                                                                                                      |         11 |        768 |         33 |        143 |        944 |
+| src/dctc/algorithms/connectivity                                                                                         |          8 |        750 |         33 |        140 |        923 |
+| src/dctc/algorithms/connectivity/Tran                                                                                    |          2 |        249 |         21 |         38 |        308 |
+| src/dctc/algorithms/connectivity/relays                                                                                  |          3 |        206 |          4 |         58 |        268 |
+| src/dctc/algorithms/coverage                                                                                             |          3 |         18 |          0 |          3 |         21 |
+| src/dctc/instance                                                                                                        |          1 |         79 |          4 |         21 |        104 |
+| src/dctc/network_components                                                                                              |          7 |        487 |         11 |        136 |        634 |
+| src/dctc/network_components/edges                                                                                        |          1 |         66 |          1 |         24 |         91 |
+| src/dctc/network_components/graphs                                                                                       |          1 |        169 |          8 |         29 |        206 |
+| src/dctc/network_components/nodes                                                                                        |          5 |        252 |          2 |         83 |        337 |
+| src/equations                                                                                                            |          1 |         16 |          0 |          5 |         21 |
+| src/geometric_primitives                                                                                                 |         12 |      1,072 |         14 |        229 |      1,315 |
+| src/random                                                                                                               |          1 |         21 |          0 |          8 |         29 |
+| test                                                                                                                     |         24 |      1,330 |          2 |        217 |      1,549 |
+| test/src                                                                                                                 |         24 |      1,330 |          2 |        217 |      1,549 |
+| test/src/dctc                                                                                                            |         11 |        437 |          1 |         79 |        517 |
+| test/src/dctc/algorithms                                                                                                 |          5 |        291 |          1 |         48 |        340 |
+| test/src/dctc/algorithms/connectivity                                                                                    |          5 |        291 |          1 |         48 |        340 |
+| test/src/dctc/algorithms/connectivity/Tran                                                                               |          1 |         83 |          1 |         15 |         99 |
+| test/src/dctc/algorithms/connectivity/relays                                                                             |          2 |         72 |          0 |         14 |         86 |
+| test/src/dctc/instance                                                                                                   |          1 |         32 |          0 |          8 |         40 |
+| test/src/dctc/network_components                                                                                         |          4 |         90 |          0 |         17 |        107 |
+| test/src/dctc/network_components/edges                                                                                   |          1 |         22 |          0 |          4 |         26 |
+| test/src/dctc/network_components/nodes                                                                                   |          3 |         68 |          0 |         13 |         81 |
+| test/src/equations                                                                                                       |          1 |         26 |          0 |          6 |         32 |
+| test/src/geometric_primitives                                                                                            |         10 |        817 |          1 |        112 |        930 |
+| test/src/random                                                                                                          |          1 |         44 |          0 |         15 |         59 |
++--------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                                                 | language | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/README.md                                                               | Markdown |         12 |          0 |          1 |         13 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/data_structures/counter.h                                       | C++      |         12 |          0 |          3 |         15 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/data_structures/union_find.h                                    | C++      |         14 |          0 |          4 |         18 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/algorithms/connectivity/Tran/MST_graph_Tran.h              | C++      |         33 |          0 |         11 |         44 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/algorithms/connectivity/Tran/MST_node_Tran.h               | C++      |         27 |          0 |         10 |         37 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/algorithms/connectivity/communication_checker.h            | C++      |         20 |          0 |          8 |         28 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/algorithms/connectivity/relays/relays_MST_graph.h          | C++      |         27 |          0 |          5 |         32 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/algorithms/connectivity/relays/relays_utils.h              | C++      |         16 |          0 |          4 |         20 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/algorithms/connectivity/relays/simple_relays_alg.h         | C++      |         51 |          0 |          9 |         60 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/algorithms/connectivity/utils.h                            | C++      |          9 |          1 |          6 |         16 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/algorithms/coverage/coverage_alg.h                         | C++      |          9 |          0 |          4 |         13 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/instance/instance.h                                        | C++      |         57 |          0 |         10 |         67 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/network_components/edges/edge.h                            | C++      |         40 |          0 |          6 |         46 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/network_components/graphs/MST_graph.h                      | C++      |         45 |          0 |         14 |         59 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/network_components/nodes/DD_node.h                         | C++      |         22 |          0 |          5 |         27 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/network_components/nodes/DO_node.h                         | C++      |         22 |          0 |          4 |         26 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/network_components/nodes/MST_node.h                        | C++      |         53 |          6 |         17 |         76 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/network_components/nodes/node.h                            | C++      |         59 |          0 |         12 |         71 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/network_components/nodes/node_factory.h                    | C++      |         14 |          0 |          4 |         18 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/utils.h                                                    | C++      |         15 |          0 |          8 |         23 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/dctc/utils.tpp                                                  | C++      |         33 |          0 |          8 |         41 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/equations/quadratic_equation.h                                  | C++      |         14 |          0 |          6 |         20 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/geometric_primitives/circle.h                                   | C++      |         41 |          0 |          9 |         50 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/geometric_primitives/convex_hull.h                              | C++      |          8 |          0 |          5 |         13 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/geometric_primitives/geom2D.h                                   | C++      |          8 |          0 |          3 |         11 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/geometric_primitives/geom_common.h                              | C++      |         51 |          0 |         10 |         61 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/geometric_primitives/geom_utils_1.h                             | C++      |         33 |          0 |         11 |         44 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/geometric_primitives/geometric_2D_object.h                      | C++      |         15 |          0 |          5 |         20 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/geometric_primitives/line2D.h                                   | C++      |         41 |          0 |         10 |         51 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/geometric_primitives/point2D.h                                  | C++      |         45 |          0 |         14 |         59 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/geometric_primitives/ray2D.h                                    | C++      |         30 |          0 |          7 |         37 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/geometric_primitives/rotation.h                                 | C++      |          6 |          0 |          4 |         10 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/geometric_primitives/sector.h                                   | C++      |         79 |          0 |         12 |         91 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/geometric_primitives/segment2D.h                                | C++      |         33 |          0 |          6 |         39 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/geometric_primitives/vector2D.h                                 | C++      |         26 |          0 |          5 |         31 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/include/random/generator.h                                              | C++      |         26 |          0 |          7 |         33 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/data_structures/counter.cpp                                         | C++      |          6 |          0 |          6 |         12 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/data_structures/union_find.cpp                                      | C++      |         18 |          0 |          4 |         22 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/algorithms/connectivity/Tran/MST_graph_Tran.cpp                | C++      |        232 |         20 |         33 |        285 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/algorithms/connectivity/Tran/MST_node_Tran.cpp                 | C++      |         17 |          1 |          5 |         23 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/algorithms/connectivity/communication_checker.cpp              | C++      |        113 |          2 |         21 |        136 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/algorithms/connectivity/convex_hull.cpp                        | C++      |         62 |          6 |         13 |         81 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/algorithms/connectivity/relays/relays_MST_graph.cpp            | C++      |         34 |          0 |         15 |         49 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/algorithms/connectivity/relays/relays_utils.cpp                | C++      |         62 |          0 |         12 |         74 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/algorithms/connectivity/relays/simple_relays_alg.cpp           | C++      |        110 |          4 |         31 |        145 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/algorithms/connectivity/utils.cpp                              | C++      |        120 |          0 |         10 |        130 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/algorithms/coverage/greedy_coverage_alg.cpp                    | C++      |          1 |          0 |          0 |          1 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/algorithms/coverage/strip_coverage_alg.cpp                     | C++      |          1 |          0 |          0 |          1 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/algorithms/coverage/trivial_coverage_alg.cpp                   | C++      |         16 |          0 |          3 |         19 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/instance/instance.cpp                                          | C++      |         79 |          4 |         21 |        104 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/network_components/edges/edge.cpp                              | C++      |         66 |          1 |         24 |         91 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/network_components/graphs/MST_graph.cpp                        | C++      |        169 |          8 |         29 |        206 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/network_components/nodes/DD_node.cpp                           | C++      |         36 |          0 |         11 |         47 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/network_components/nodes/DO_node.cpp                           | C++      |         36 |          0 |         11 |         47 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/network_components/nodes/MST_node.cpp                          | C++      |         97 |          1 |         32 |        130 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/network_components/nodes/node.cpp                              | C++      |         69 |          1 |         27 |         97 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/network_components/nodes/node_factory.cpp                      | C++      |         14 |          0 |          2 |         16 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/equations/quadratic_equation.cpp                                    | C++      |         16 |          0 |          5 |         21 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/geometric_primitives/circle.cpp                                     | C++      |        135 |          0 |         25 |        160 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/geometric_primitives/convex_hull.cpp                                | C++      |         61 |         11 |         11 |         83 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/geometric_primitives/geom2D_utils.cpp                               | C++      |        112 |          2 |         24 |        138 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/geometric_primitives/geom_common.cpp                                | C++      |         43 |          0 |          8 |         51 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/geometric_primitives/geometric_2D_object.cpp                        | C++      |         21 |          0 |          4 |         25 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/geometric_primitives/line2D.cpp                                     | C++      |        108 |          0 |         24 |        132 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/geometric_primitives/point2D.cpp                                    | C++      |         88 |          0 |         28 |        116 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/geometric_primitives/ray2D.cpp                                      | C++      |         95 |          0 |         18 |        113 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/geometric_primitives/rotation.cpp                                   | C++      |         17 |          0 |          4 |         21 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/geometric_primitives/sector.cpp                                     | C++      |        228 |          1 |         49 |        278 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/geometric_primitives/segment2D.cpp                                  | C++      |         94 |          0 |         21 |        115 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/geometric_primitives/vector2D.cpp                                   | C++      |         70 |          0 |         13 |         83 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/main.cpp                                                            | C++      |         79 |          0 |         11 |         90 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/random/generator.cpp                                                | C++      |         21 |          0 |          8 |         29 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/utils.cpp                                                           | C++      |         12 |          0 |          2 |         14 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/test/src/dctc/algorithms/connectivity/Tran/test_MST_graph_Tran.cpp      | C++      |         83 |          1 |         15 |         99 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/test/src/dctc/algorithms/connectivity/relays/test_relays_utils.cpp      | C++      |         23 |          0 |          6 |         29 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/test/src/dctc/algorithms/connectivity/relays/test_simple_relays_alg.cpp | C++      |         49 |          0 |          8 |         57 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/test/src/dctc/algorithms/connectivity/test_convex_hull.cpp              | C++      |         72 |          0 |         10 |         82 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/test/src/dctc/algorithms/connectivity/test_utils.cpp                    | C++      |         64 |          0 |          9 |         73 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/test/src/dctc/instance/test_instance.cpp                                | C++      |         32 |          0 |          8 |         40 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/test/src/dctc/network_components/edges/test_edge.cpp                    | C++      |         22 |          0 |          4 |         26 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/test/src/dctc/network_components/nodes/test_DD_node.cpp                 | C++      |         31 |          0 |          5 |         36 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/test/src/dctc/network_components/nodes/test_DO_node.cpp                 | C++      |         18 |          0 |          4 |         22 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/test/src/dctc/network_components/nodes/test_node.cpp                    | C++      |         19 |          0 |          4 |         23 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/test/src/dctc/test_utils.cpp                                            | C++      |         24 |          0 |          6 |         30 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/test/src/equations/test_quadratic_equation.cpp                          | C++      |         26 |          0 |          6 |         32 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/test/src/geometric_primitives/test_circle.cpp                           | C++      |        123 |          1 |         15 |        139 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/test/src/geometric_primitives/test_geom_common.cpp                      | C++      |          9 |          0 |          3 |         12 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/test/src/geometric_primitives/test_geom_utils.cpp                       | C++      |        101 |          0 |         11 |        112 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/test/src/geometric_primitives/test_line2D.cpp                           | C++      |        101 |          0 |         17 |        118 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/test/src/geometric_primitives/test_point2D.cpp                          | C++      |         72 |          0 |         11 |         83 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/test/src/geometric_primitives/test_ray2D.cpp                            | C++      |         62 |          0 |          9 |         71 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/test/src/geometric_primitives/test_rotation.cpp                         | C++      |         23 |          0 |          4 |         27 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/test/src/geometric_primitives/test_sector.cpp                           | C++      |        218 |          0 |         22 |        240 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/test/src/geometric_primitives/test_segment2D.cpp                        | C++      |         51 |          0 |          8 |         59 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/test/src/geometric_primitives/test_vector2D.cpp                         | C++      |         57 |          0 |         12 |         69 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/test/src/random/test_generator.cpp                                      | C++      |         44 |          0 |         15 |         59 |
+| /home/tanlam/dev/phd/research/2021/2021-09b/dctc/test/src/test_utils.cpp                                                 | C++      |          6 |          0 |          5 |         11 |
+| Total                                                                                                                    |          |      4,934 |         71 |      1,049 |      6,054 |
++--------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+

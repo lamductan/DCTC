@@ -27,7 +27,17 @@ void MSTGraph::init(const std::vector<Node*>& nodes, GraphNodeType graph_node_ty
 
 MSTGraph::MSTGraph(const std::vector<Node*>& nodes, GraphNodeType graph_node_type, bool build_MST) {
     init(nodes, graph_node_type);
-    if (build_MST) mst_weight_ = buildMST();
+    if (build_MST) {
+        mst_weight_ = buildMST();
+        n_total_nodes_omni_ = nodes_.size();
+        for(Edge* edge :MST_edges_) {
+            n_total_nodes_omni_ += calculateNumRelaysOmni(edge, nodes_[0]->getRC());
+        }
+    }
+}
+
+int MSTGraph::calculateNumRelaysOmni(Edge* edge, long double r_c) {
+    return ceil(edge->length() / r_c) - 1;
 }
 
 GraphNodeType MSTGraph::getGraphNodeType() const {return graph_node_type_;}
@@ -67,6 +77,10 @@ long double MSTGraph::getMaximumCommunicationEdgeLength() const {
         max_communication_edge_length = std::max(max_communication_edge_length, edge->length());
     return max_communication_edge_length;
 }
+
+int MSTGraph::getNTotalNodesOmni() const {return n_total_nodes_omni_;}
+
+void MSTGraph::setNTotalNodesOmni(int n_total_nodes_omni) {n_total_nodes_omni_ = n_total_nodes_omni;}
 
 MSTNode* MSTGraph::rootTree(MSTNode* root_node) {
     for(Node* node : nodes_) {
@@ -174,6 +188,7 @@ long double MSTGraph::buildMST(std::vector<Edge*>& edges) {
 MSTGraph* MSTGraph::cloneFrom(const MSTGraph* mst_graph, GraphNodeType graph_node_type) {
     init(mst_graph->nodes_, graph_node_type);
     mst_weight_ = mst_graph->mst_weight_;
+    n_total_nodes_omni_ = mst_graph->n_total_nodes_omni_;
     MST_edges_by_id_ = mst_graph->MST_edges_by_id_;
     for(std::pair<int, int> edge_by_id : MST_edges_by_id_) {
         MSTNode* endpoint1 = (MSTNode*) map_id_nodes_[edge_by_id.first];

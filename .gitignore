@@ -1,0 +1,10 @@
+build
+.ccls-cache
+.vscode
+logs
+data
+third_party
+!third_party.zip
+config
+!.gitignore
+!*.gitkeep

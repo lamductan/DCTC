@@ -126,5 +126,9 @@ add_executable(prog src/main.cpp ${SOURCES} ${HEADERS})
 target_include_directories(prog PUBLIC include)
 target_link_libraries(prog PRIVATE Threads::Threads)
 
+add_executable(debug src/debug.cpp ${SOURCES} ${HEADERS})
+target_include_directories(debug PUBLIC include)
+target_link_libraries(debug PRIVATE Threads::Threads)
+
 add_subdirectory(third_party)
 add_subdirectory(test)

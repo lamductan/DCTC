@@ -13,10 +13,11 @@ struct SteinerizeLongOrMediumEdgeResult_LEF {
 
 
 class SimpleRelaysAlg {
+private:
+    GraphNodeType graph_node_type_ = MST_GRAPH_NODE;
 protected:
     MSTGraph* MST_graph_;
     std::vector<Edge*> MST_edges_;
-    GraphNodeType graph_node_type_;
     long double r_c_;
     long double theta_c_;
     int n_total_nodes_omni_;
@@ -28,15 +29,18 @@ protected:
     virtual void init(long double r_c, long double theta_c);
     virtual void connectTerminalsWithType1Relays(
         Edge* edge, const std::vector<Node*>& type_1_relays, std::vector<Edge*>& communication_edges) const;
-    void connectType1Type2Relays(
+    virtual void connectType1Type2Relays(
         const std::vector<Node*>& type_1_relays, const std::vector<Node*>& type_2_relays,
         std::vector<Edge*>& communication_edges) const;
-    SteinerizeLongOrMediumEdgeResult_LEF steinerizeLongOrMediumEdges_1(
+    virtual SteinerizeLongOrMediumEdgeResult_LEF steinerizeLongOrMediumEdgesWithOrientation(
         Edge* edge, const std::pair<Point2D, Point2D>& type_1_relays_pos,
-        const std::vector<Point2D>& type_2_relays_pos) const;
-    SteinerizeLongOrMediumEdgeResult_LEF steinerizeLongEdges(Edge* long_edge) const;
-    SteinerizeLongOrMediumEdgeResult_LEF steinerizeMediumEdge(Edge* medium_edge) const;
-    virtual SteinerizeLongOrMediumEdgeResult_LEF steinerizeLongOrMediumEdge(Edge* long_or_medium_edge);
+        const std::vector<Point2D>& type_2_relays_pos, GraphNodeType graph_node_type) const;
+    virtual SteinerizeLongOrMediumEdgeResult_LEF steinerizeLongEdges(
+        Edge* long_edge, GraphNodeType graph_node_type) const;
+    virtual SteinerizeLongOrMediumEdgeResult_LEF steinerizeMediumEdge(
+        Edge* medium_edge, GraphNodeType graph_node_type) const;
+    virtual SteinerizeLongOrMediumEdgeResult_LEF steinerizeLongOrMediumEdge(
+        Edge* long_or_medium_edge, GraphNodeType graph_node_type);
 
 public:
     SimpleRelaysAlg();

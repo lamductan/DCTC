@@ -1,9 +1,12 @@
 #include <set>
+#include <iostream>
+#include <fstream>
 
 #include "random/generator.h"
 #include "dctc/instance/instance.h"
 #include "dctc/algorithms/coverage/coverage_alg.h"
 #include "data_structures/counter.h"
+#include "logger/logger.h"
 
 
 Instance::Instance() {}
@@ -101,4 +104,32 @@ std::vector<Node*> Instance::putCoverageSensors(CoverageAlgType coverageAlgType)
 
 MSTGraph* Instance::constructMSTGraphCoverageSensors(const std::vector<Node*>& coverage_sensors) {
     return new MSTGraph(coverage_sensors);
+}
+
+void Instance::save(const std::string& path) const {
+    Logger logger(path);
+    logger.write("%d %d %d %d %d %d %.10f %.10f\n",
+                 n_targets_, (int) min_range_, (int) max_range_, node_type_,
+                 (int) r_s_, (int) r_c_, (double) theta_s_, (double) theta_c_);
+    for(const Point2D& target : targets_) {
+        logger.append("%d %d\n", (int) target.getX(), (int) target.getY());
+    }
+}
+
+Instance Instance::load(const std::string& path) {
+    std::ifstream fin;
+    fin.open(path);
+
+    Instance instance;
+    int node_type;
+    fin >> instance.n_targets_ >> instance.min_range_ >> instance.max_range_ >> node_type;
+    if (node_type == 4) instance.node_type_ = SENSING_DD_NODE;
+    fin >> instance.r_s_ >> instance.r_c_ >> instance.theta_s_ >> instance.theta_c_;
+    if (approx(instance.theta_c_, PI_2)) instance.theta_c_ = PI_2;
+    for(int i = 0; i < instance.n_targets_; ++i) {
+        int x, y;
+        fin >> x >> y;
+        instance.targets_.push_back(Point2D(x, y));
+    }
+    return instance;
 }

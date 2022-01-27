@@ -23,19 +23,30 @@ void LongShortEdgeRelaysAlg::init(long double r_c, long double theta_c) {
 }
 
 LongShortEdgeRelaysAlg::LongShortEdgeRelaysAlg(MSTGraph* MST_graph, long double r_c, long double theta_c) {
-    MST_graph_ = MST_graph->deepCopy(MST_GRAPH_NODE_LAM);
+    MST_graph_ = MST_graph->deepCopy(graph_node_type_);
     init(r_c, theta_c);
-    for(Edge* edge : MST_edges_) {
-    }
 }
 
-SteinerizeLongOrMediumEdgeResult_LEF LongShortEdgeRelaysAlg::steinerizeLongOrMediumEdge(Edge* long_or_medium_edge) {
+void LongShortEdgeRelaysAlg::setNodeFixed(Node* node) {
+    dynamic_cast<MSTNodeLam*>(node)->free_ = false;
+}
+
+SteinerizeLongOrMediumEdgeResult_LEF LongShortEdgeRelaysAlg::steinerizeLongOrMediumEdge(
+    Edge* long_or_medium_edge, GraphNodeType graph_node_type
+) {
     SteinerizeLongOrMediumEdgeResult_LEF steinerize_long_or_medium_edge_result 
-        = SimpleRelaysAlg::steinerizeLongOrMediumEdge(long_or_medium_edge);
+        = SimpleRelaysAlg::steinerizeLongOrMediumEdge(long_or_medium_edge, graph_node_type);
     MSTNodeLam* endpoint1 = (MSTNodeLam*) long_or_medium_edge->getEndpoint1();
     endpoint1->type_1_relays_.push_back(steinerize_long_or_medium_edge_result.type_1_relays[0]);
-    MSTNodeLam* endpoint2 = (MSTNodeLam*) long_or_medium_edge->getEndpoint1();
+    MSTNodeLam* endpoint2 = (MSTNodeLam*) long_or_medium_edge->getEndpoint2();
     endpoint2->type_1_relays_.push_back(steinerize_long_or_medium_edge_result.type_1_relays[1]);
+
+    for(Node* relay_node : steinerize_long_or_medium_edge_result.type_1_relays) {
+        setNodeFixed(relay_node);
+    }
+    for(Node* relay_node : steinerize_long_or_medium_edge_result.type_2_relays) {
+        setNodeFixed(relay_node);
+    }
     return steinerize_long_or_medium_edge_result;
 }
 
@@ -76,12 +87,19 @@ std::vector<std::vector<Node*>> LongShortEdgeRelaysAlg::findConnectedComponentsT
     return connected_components;
 }
 
-std::vector<Edge*> LongShortEdgeRelaysAlg::connectType1RelaysInTheSameComponent(const std::vector<Node*>& component) const {
+std::vector<Edge*> LongShortEdgeRelaysAlg::connectType1RelaysInTheSameComponent(
+    const std::vector<Node*>& component
+) const {
     std::vector<Edge*> communication_edges;
     int n = component.size();
     for(int i = 0; i < n; ++i) {
         for(int j = i + 1; j < n; ++j) {
-            communication_edges.push_back(addCommunicationEdge(component[i], component[j]));
+            Node* node_i = component[i];
+            Node* node_j = component[j];
+            if (node_i->canCoverOtherNodeByCommunicationAntenna(node_j)
+                    && node_j->canCoverOtherNodeByCommunicationAntenna(node_i)) {
+                communication_edges.push_back(addCommunicationEdge(node_i, node_j));
+            }
         }
     }
     return communication_edges;

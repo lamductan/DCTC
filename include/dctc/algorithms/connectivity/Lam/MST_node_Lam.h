@@ -26,7 +26,7 @@ protected:
     virtual std::string getStringContent() const override;
 
 public:
-    MSTNodeLam(MSTNode* node);
+    MSTNodeLam(MSTNode* node, bool deep_copy=true);
     virtual std::string getNodeTypeStr() const override;
     virtual ~MSTNodeLam();
 };

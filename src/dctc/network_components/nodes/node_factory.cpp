@@ -14,7 +14,7 @@ Node* NodeFactory::createNode(Node* node, GraphNodeType graph_node_type, bool de
     } else if (graph_node_type == MST_GRAPH_NODE_TRAN) {
         return new MSTNodeTran((MSTNode*) node);
     } else if (graph_node_type == MST_GRAPH_NODE_LAM) {
-        return new MSTNodeLam((MSTNode*) node);
+        return new MSTNodeLam((MSTNode*) node, deep_copy);
     }
     return nullptr;
 }

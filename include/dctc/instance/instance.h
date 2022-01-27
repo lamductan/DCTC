@@ -62,6 +62,9 @@ public:
     void setTargets(const std::vector<Point2D>& targets);
     std::vector<Node*> putCoverageSensors(CoverageAlgType coverage_alg_type) const;
     static MSTGraph* constructMSTGraphCoverageSensors(const std::vector<Node*>& coverage_sensors);
+
+    void save(const std::string& path) const;
+    static Instance load(const std::string& path);
 };
 
 #endif //DCTC_INSTANCE_INSTANCE_H_

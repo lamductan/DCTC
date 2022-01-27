@@ -134,6 +134,7 @@ MSTGraph* MSTGraphAschner::doAllSteps() {
     //Step 6: Return MST of the communication graph
     MSTGraph* result_MST_graph = new MSTGraph(nodes_, MST_GRAPH_NODE, false);
     result_MST_graph->buildMST(communication_edges_);
+    result_MST_graph->setNTotalNodesOmni(n_total_nodes_omni_);
     //std::cout << "result_MST_graph:\n";
     //std::cout << *result_MST_graph << '\n';
 

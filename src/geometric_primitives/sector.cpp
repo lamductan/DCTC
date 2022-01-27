@@ -272,7 +272,7 @@ long double Sector::orientBoundaryPassingThroughPointAndCoverAnotherPoint(
 std::string Sector::toString() const {
     char s[100];
     snprintf(s, 100, "Sector(%s,%.2f,%.2f,%.2f)",
-        center.toString().c_str(), (double) radius, (double) rad2deg(angle), (double) rad2deg(orientation_angle));
+        center.toString().c_str(), (double) radius, (double) rad2deg(angle), (double) orientation_angle);
     std::string str = s;
     return str;
 }

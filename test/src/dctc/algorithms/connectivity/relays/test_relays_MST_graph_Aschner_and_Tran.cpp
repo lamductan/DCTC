@@ -12,7 +12,7 @@
 #include "dctc/algorithms/connectivity/relays/simple_relays_alg.h"
 
 
-TEST(TestMSTGraphAschnerAndTran1, TestFixedRS)
+TEST(TestMSTGraphAschnerAndTran, TestFixedRS)
 {
     int n_tests = 100;
     long unsigned int seed = time(NULL);
@@ -38,7 +38,10 @@ TEST(TestMSTGraphAschnerAndTran1, TestFixedRS)
     Logger logger(filename);
     logger.write(",Aschner,Tran\n");
 
+
     for(long double r_c = 10; r_c <= 100; r_c += 10) {
+        std::string instance_save_path = PROJECT_ROOT_PATH + "/data/" + std::to_string((int) r_c) + ".dat";
+
         long double total_beta_Aschner = 0.0;
         long double total_beta_Tran = 0.0;
         std::cout << "\n===========================================================\n";
@@ -48,12 +51,15 @@ TEST(TestMSTGraphAschnerAndTran1, TestFixedRS)
             instance = Instance(
                 n_targets, min_range, max_range,
                 node_type, r_s, r_c, theta_s, theta_c,
-                deterministic, seed);
+                deterministic, seed + i);
+            instance.save(instance_save_path);
+            
             coverage_sensors = instance.putCoverageSensors(TRIVIAL_COVERAGE_ALG);
             MST_graph_ptr = Instance::constructMSTGraphCoverageSensors(coverage_sensors);
             std::cout << "Done MST_graph_ptr" << '\n';
             std::cout << "Done SetUp()\n";
 
+            /* Aschner */
             MSTGraphAschner* MST_graph_Aschner_ptr = new MSTGraphAschner(MST_graph_ptr);
             MSTGraph* result_MST_graph_Aschner_ptr = MST_graph_Aschner_ptr->doAllSteps();
             SimpleRelaysAlg* simple_relays_alg_Aschner = new SimpleRelaysAlg(result_MST_graph_Aschner_ptr, r_c, theta_c);
@@ -62,6 +68,7 @@ TEST(TestMSTGraphAschnerAndTran1, TestFixedRS)
             std::cout << "Aschner's beta = " << relays_MST_graph_Aschner->getBeta() << '\n';
             total_beta_Aschner += relays_MST_graph_Aschner->getBeta();
 
+            /* Tran */
             MSTGraphTran* MST_graph_Tran_ptr = new MSTGraphTran(MST_graph_ptr);
             MSTGraph* result_MST_graph_Tran_ptr = MST_graph_Tran_ptr->doAllSteps();
             SimpleRelaysAlg* simple_relays_alg_Tran = new SimpleRelaysAlg(result_MST_graph_Tran_ptr, r_c, theta_c);

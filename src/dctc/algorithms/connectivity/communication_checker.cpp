@@ -48,23 +48,56 @@ void CommunicationChecker::dfs1(MSTNode* node, Node* par, std::unordered_map<Nod
 }
 
 bool CommunicationChecker::checkSymmetricConnectivity(const MSTGraph* MST_graph) {
-    for(Node* node : MST_graph->getNodes())
+    for(Node* node : MST_graph->getNodes()) {
         if (!checkSymmetricConnectivityOneNode((MSTNode*) node)) return false;
+    }
     return true;
 }
 
 bool CommunicationChecker::checkSymmetricConnectivityOneNode(MSTNode* node) {
     for(Node* adj_node : node->getMSTEdgeAdjNodes()) {
-        if (!node->canCoverOtherNodeByCommunicationAntenna(adj_node)) return false;
-        if (!adj_node->canCoverOtherNodeByCommunicationAntenna(node)) return false;
+        //if (!node->canCoverOtherNodeByCommunicationAntenna(adj_node)) return false;
+        //if (!adj_node->canCoverOtherNodeByCommunicationAntenna(node)) return false;
+        if (!node->canCoverOtherNodeByCommunicationAntenna(adj_node)) {
+            std::cout << "BUG: " << __PRETTY_FUNCTION__ << '\n';
+            std::cout << *node->getCommunicationAntenna() << '\n';
+            std::cout << *adj_node->getCommunicationAntenna() << '\n';
+            std::cout << *node << '\n';
+            std::cout << *adj_node << '\n';
+            return false;
+        }
+        if (!adj_node->canCoverOtherNodeByCommunicationAntenna(node)) {
+            std::cout << "BUG: " << __PRETTY_FUNCTION__ << '\n';
+            std::cout << *node->getCommunicationAntenna() << '\n';
+            std::cout << *adj_node->getCommunicationAntenna() << '\n';
+            std::cout << *node << '\n';
+            std::cout << *adj_node << '\n';
+            return false;
+        }
     }
     return true;
 }
 
 bool CommunicationChecker::checkSymmetricConnectivityOneNode1(MSTNode* node) {
     for(Node* adj_node : node->getCommunicationEdgeAdjNodes()) {
-        if (!node->canCoverOtherNodeByCommunicationAntenna(adj_node)) return false;
-        if (!adj_node->canCoverOtherNodeByCommunicationAntenna(node)) return false;
+        //if (!node->canCoverOtherNodeByCommunicationAntenna(adj_node)) return false;
+        //if (!adj_node->canCoverOtherNodeByCommunicationAntenna(node)) return false;
+        if (!node->canCoverOtherNodeByCommunicationAntenna(adj_node)) {
+            std::cout << "BUG: " << __PRETTY_FUNCTION__ << '\n';
+            std::cout << *node->getCommunicationAntenna() << '\n';
+            std::cout << *adj_node->getCommunicationAntenna() << '\n';
+            std::cout << *node << '\n';
+            std::cout << *adj_node << '\n';
+            return false;
+        }
+        if (!adj_node->canCoverOtherNodeByCommunicationAntenna(node)) {
+            std::cout << "BUG: " << __PRETTY_FUNCTION__ << '\n';
+            std::cout << *node->getCommunicationAntenna() << '\n';
+            std::cout << *adj_node->getCommunicationAntenna() << '\n';
+            std::cout << *node << '\n';
+            std::cout << *adj_node << '\n';
+            return false;
+        }
     }
     return true;
 }

@@ -12,15 +12,9 @@ void SimpleRelaysAlg::init(long double r_c, long double theta_c) {
     MST_edges_ = MST_graph_->getMSTEdges();
     r_c_ = r_c;
     theta_c_ = theta_c;
-    graph_node_type_ = MST_graph_->getGraphNodeType();
 
     terminals_ = MST_graph_->getNodes();
-
-    n_total_nodes_omni_ = MST_graph_->getNNodes();
-    for(Edge* mst_edge : MST_edges_) {
-        if (isLongEdge(mst_edge)) 
-            n_total_nodes_omni_ += ceil(mst_edge->length() / r_c) - 1;
-    }
+    n_total_nodes_omni_ = MST_graph_->getNTotalNodesOmni();
     std::cout << MST_graph_->getMaximumMSTEdgeLength() << ' ' << r_c_ << ' ' << n_total_nodes_omni_ << '\n';
 }
 
@@ -41,10 +35,12 @@ bool SimpleRelaysAlg::isMediumEdge(Edge* edge) const {
 }
 
 RelaysMSTGraph* SimpleRelaysAlg::solve() {
+    int n_long_or_medium_edges = 0;
     for(Edge* MST_edge : MST_edges_) {
         if (isLongOrMediumEdge(MST_edge)) {
+            ++n_long_or_medium_edges;
             SteinerizeLongOrMediumEdgeResult_LEF steinerize_long_or_medium_edge_result
-                = steinerizeLongOrMediumEdge(MST_edge);
+                = steinerizeLongOrMediumEdge(MST_edge, graph_node_type_);
             connectTerminalsWithType1Relays(
                 MST_edge, steinerize_long_or_medium_edge_result.type_1_relays, communication_edges_);
         } else {
@@ -52,6 +48,18 @@ RelaysMSTGraph* SimpleRelaysAlg::solve() {
             communication_edges_.push_back(communication_edge);
         }
     }
+
+    int n_type1_relays = 0;
+    int n_type2_relays = 0;
+    for(Node* relay : relays_) {
+        if (relay->getNodeType() == RELAY_DD_NODE_TYPE_1) ++n_type1_relays;
+        else if (relay->getNodeType() == RELAY_DD_NODE_TYPE_2) ++n_type2_relays;
+    }
+    assert(n_type1_relays + n_type2_relays == relays_.size());
+    int n = terminals_.size();
+    std::cout << "Check size: " << n << '\n';
+    std::cout << "Type 1: " << n_type1_relays << ' ' << 2*n_long_or_medium_edges << '\n';
+    std::cout << "Type 2: " << n_type2_relays << ' ' << 3*(n_total_nodes_omni_ - terminals_.size()) << '\n';
     nodes_ = terminals_ + relays_;
     return new RelaysMSTGraph(nodes_, graph_node_type_, r_c_, theta_c_, communication_edges_, n_total_nodes_omni_);
 }
@@ -59,10 +67,8 @@ RelaysMSTGraph* SimpleRelaysAlg::solve() {
 void SimpleRelaysAlg::connectTerminalsWithType1Relays(
     Edge* edge, const std::vector<Node*>& type_1_relays, std::vector<Edge*>& communication_edges
 ) const {
-    orientNodeToBisectorCoverNode(type_1_relays[0], edge->getEndpoint1());
     assert(type_1_relays[0]->canCoverOtherNodeByCommunicationAntenna(edge->getEndpoint1()));
     communication_edges.push_back(addCommunicationEdge(type_1_relays[0], edge->getEndpoint1()));
-    orientNodeToBisectorCoverNode(type_1_relays[1], edge->getEndpoint2());
     assert(type_1_relays[1]->canCoverOtherNodeByCommunicationAntenna(edge->getEndpoint2()));
     communication_edges.push_back(addCommunicationEdge(type_1_relays[1], edge->getEndpoint2()));
 }
@@ -88,21 +94,23 @@ void SimpleRelaysAlg::connectType1Type2Relays(
         orientNodeToCoverNodes(node_to_orient, nodes_to_cover);
     }
     for(int i = 0; i < type_2_relays.size() - 1; ++i) {
-        communication_edges.push_back(addCommunicationEdge(type_2_relays[i], type_2_relays[i + 1])); 
+        communication_edges.push_back(addCommunicationEdge(type_2_relays[i], type_2_relays[i + 1]));
     }
 }
 
-SteinerizeLongOrMediumEdgeResult_LEF SimpleRelaysAlg::steinerizeLongOrMediumEdges_1(
-    Edge* edge, const std::pair<Point2D, Point2D>& type_1_relays_pos,
-    const std::vector<Point2D>& type_2_relays_pos
+SteinerizeLongOrMediumEdgeResult_LEF SimpleRelaysAlg::steinerizeLongOrMediumEdgesWithOrientation(
+    Edge* edge, const std::pair<Point2D, Point2D>& type_1_relays_pos, const std::vector<Point2D>& type_2_relays_pos,
+    GraphNodeType graph_node_type
 ) const {
-    Node* type_1_relay_0 = createRelayNode(type_1_relays_pos.first, RELAY_DD_NODE_TYPE_1, r_c_, theta_c_);
-    Node* type_1_relay_1 = createRelayNode(type_1_relays_pos.second, RELAY_DD_NODE_TYPE_1, r_c_, theta_c_);
+    Node* type_1_relay_0 = createRelayNode(
+        type_1_relays_pos.first, RELAY_DD_NODE_TYPE_1, graph_node_type, r_c_, theta_c_);
+    Node* type_1_relay_1 = createRelayNode(
+        type_1_relays_pos.second, RELAY_DD_NODE_TYPE_1, graph_node_type, r_c_, theta_c_);
     std::vector<Node*> type_1_relays{type_1_relay_0, type_1_relay_1};
 
     std::vector<Node*> type_2_relays;
     for(const Point2D& type_2_relay_pos : type_2_relays_pos) {
-        Node* type_2_relay = createRelayNode(type_2_relay_pos, RELAY_DD_NODE_TYPE_2, r_c_, theta_c_);
+        Node* type_2_relay = createRelayNode(type_2_relay_pos, RELAY_DD_NODE_TYPE_2, graph_node_type, r_c_, theta_c_);
         type_2_relays.push_back(type_2_relay);
     }
 
@@ -117,27 +125,39 @@ SteinerizeLongOrMediumEdgeResult_LEF SimpleRelaysAlg::steinerizeLongOrMediumEdge
     return result;
 }
 
-SteinerizeLongOrMediumEdgeResult_LEF SimpleRelaysAlg::steinerizeLongEdges(Edge* long_edge) const {
+SteinerizeLongOrMediumEdgeResult_LEF SimpleRelaysAlg::steinerizeLongEdges(
+    Edge* long_edge, GraphNodeType graph_node_type
+) const {
     Segment2D segment2D = long_edge->getSegment2D();
     std::pair<Point2D, Point2D> type_1_relays_pos = calculateRelaysType1Positions(segment2D, r_c_); 
     std::vector<Point2D> type_2_relays_pos = calculateRelaysType2Positions_LongEdge(
         segment2D, type_1_relays_pos, r_c_);
-    return steinerizeLongOrMediumEdges_1(long_edge, type_1_relays_pos, type_2_relays_pos);
+    return steinerizeLongOrMediumEdgesWithOrientation(
+        long_edge, type_1_relays_pos, type_2_relays_pos, graph_node_type);
 }
 
-SteinerizeLongOrMediumEdgeResult_LEF SimpleRelaysAlg::steinerizeMediumEdge(Edge* medium_edge) const {
+SteinerizeLongOrMediumEdgeResult_LEF SimpleRelaysAlg::steinerizeMediumEdge(
+    Edge* medium_edge, GraphNodeType graph_node_type
+) const {
     Segment2D segment2D = medium_edge->getSegment2D();
     std::pair<Point2D, Point2D> type_1_relays_pos = calculateRelaysType1Positions(segment2D, r_c_); 
     std::vector<Point2D> type_2_relays_pos = calculateShortEdgeRelaysPos_TwoNonFree(
         Segment2D(type_1_relays_pos.first, type_1_relays_pos.second));
-    return steinerizeLongOrMediumEdges_1(medium_edge, type_1_relays_pos, type_2_relays_pos);
+    return steinerizeLongOrMediumEdgesWithOrientation(
+        medium_edge, type_1_relays_pos, type_2_relays_pos, graph_node_type);
 }
 
-SteinerizeLongOrMediumEdgeResult_LEF SimpleRelaysAlg::steinerizeLongOrMediumEdge(Edge* long_or_medium_edge) {
+SteinerizeLongOrMediumEdgeResult_LEF SimpleRelaysAlg::steinerizeLongOrMediumEdge(
+    Edge* long_or_medium_edge, GraphNodeType graph_node_type
+) {
     SteinerizeLongOrMediumEdgeResult_LEF steinerize_long_or_medium_edge_result;
      if (isMediumEdge(long_or_medium_edge)) 
-        steinerize_long_or_medium_edge_result = steinerizeMediumEdge(long_or_medium_edge);
-    else steinerize_long_or_medium_edge_result = steinerizeLongEdges(long_or_medium_edge);
+        steinerize_long_or_medium_edge_result = steinerizeMediumEdge(long_or_medium_edge, graph_node_type);
+    else steinerize_long_or_medium_edge_result = steinerizeLongEdges(long_or_medium_edge, graph_node_type);
+    orientNodeToBisectorCoverNode(
+        steinerize_long_or_medium_edge_result.type_1_relays[0], long_or_medium_edge->getEndpoint1());
+    orientNodeToBisectorCoverNode(
+        steinerize_long_or_medium_edge_result.type_1_relays[1], long_or_medium_edge->getEndpoint2());
     relays_ += steinerize_long_or_medium_edge_result.type_1_relays;
     relays_ += steinerize_long_or_medium_edge_result.type_2_relays;
     communication_edges_ += steinerize_long_or_medium_edge_result.communication_edges;
