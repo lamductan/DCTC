@@ -1,1 +1,0 @@
-prog: /home/tanlam/dev/phd/research/2021/2021-09b/dctc/src/dctc/algorithms/connectivity/relays/relays_utils.cpp:291: std::vector<Point2D> calculateShortEdgeRelaysPos_OneFree(Sector*, Sector*, Ray2D*): Assertion `sA_fixed->containsPoint2D(res[0])' failed.

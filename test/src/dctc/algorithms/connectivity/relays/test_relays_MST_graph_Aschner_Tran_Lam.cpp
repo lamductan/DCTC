@@ -51,6 +51,8 @@ TEST(TestMSTGraphAschnerTranLam, TestFixedRS)
                 n_targets, min_range, max_range,
                 node_type, r_s, r_c, theta_s, theta_c,
                 deterministic, seed + i);
+            std::string instance_save_path = PROJECT_ROOT_PATH + "/data/test_" + std::to_string((int) r_c) + ".dat";
+            instance.save(instance_save_path);
             coverage_sensors = instance.putCoverageSensors(TRIVIAL_COVERAGE_ALG);
             MST_graph_ptr = Instance::constructMSTGraphCoverageSensors(coverage_sensors);
             std::cout << "Done MST_graph_ptr" << '\n';

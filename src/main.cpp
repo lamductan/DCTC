@@ -189,7 +189,16 @@ void test5(long double r_c, int n_tests) {
         (double) average_beta_Aschner, (double) average_beta_Tran, (double) average_beta_Lam_LEF);
 }
 
+
 int main(int argc, char** argv) {
+    if (argc == 1) {
+        int n_tests = 100;
+        for(int r_c = 10; r_c <= 100; r_c += 10) {
+            test5(r_c, n_tests);
+        }
+        return 0;
+    }
+
     long double r_c = atof(argv[1]);
     int n_tests = atoi(argv[2]);
     test5(r_c, n_tests);

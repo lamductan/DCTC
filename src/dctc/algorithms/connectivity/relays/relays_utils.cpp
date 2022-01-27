@@ -263,22 +263,23 @@ std::vector<Point2D> calculateShortEdgeRelaysPos_OneFree(Sector* sA_fixed, Secto
     assert(AB.length() <= r + EPSILON);
 
     std::vector<Point2D> res = std::vector<Point2D>();
-    bool free_Ax = false;
+    bool delete_Ax_later = false;
     if (Ax == nullptr) {
         if (sA_fixed->containsPoint2D(B)) return res;
         Ray2D ray = Ray2D::fromTwoPoints(A, sA_fixed->getEndpoint1());
         Ax = new Ray2D(ray);
-        free_Ax = true;
+        delete_Ax_later = true;
     }
 
     if (Ax->containsPoint2D(B)) return res;
 
     Point2D C = getOrthogonalProjectionOfPoint2DOnLine(B, *Ax);
-    if (Ax->containsPoint2D(C) && computeEuclidDistance(C, A) >= r*0.2) {
+    if (!C.isPointInfinity() && Ax->containsPoint2D(C) && computeEuclidDistance(C, A) >= r*0.2) {
         res.push_back(C);
         //return res;
     } else {
         Point2D D = getPointOnRayAtDistance(*Ax, r*0.2);
+        assert(!D.isPointInfinity());
         std::pair<Point2D, Point2D> Es = findPointsToFormIsoscelesRightTriangle(D, B);
         Point2D E = Es.first;
         if (computeGeometricAngle(A, D, E) > PI_2 + EPSILON) E = Es.second;
@@ -298,6 +299,6 @@ std::vector<Point2D> calculateShortEdgeRelaysPos_OneFree(Sector* sA_fixed, Secto
         assert(computeEuclidDistance(points[i - 1], points[i]) <= r + EPSILON);
         assert(computeEuclidDistance(points[i], points[i + 1]) <= r + EPSILON);
     }
-    if (free_Ax) delete Ax;
+    if (delete_Ax_later) delete Ax;
     return res;
 }

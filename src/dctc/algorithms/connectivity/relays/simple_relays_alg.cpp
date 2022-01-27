@@ -39,10 +39,32 @@ RelaysMSTGraph* SimpleRelaysAlg::solve() {
     for(Edge* MST_edge : MST_edges_) {
         if (isLongOrMediumEdge(MST_edge)) {
             ++n_long_or_medium_edges;
+            Edge* edge;
+            bool delete_edge_later = false;
+            if (isMediumEdge(MST_edge)) edge = MST_edge;
+            else {
+                delete_edge_later = true;
+                Node* endpoint1 = MST_edge->getEndpoint1();
+                Node* endpoint2 = MST_edge->getEndpoint2();
+                Point2D A = endpoint1->getPoint2D();
+                Point2D B = endpoint2->getPoint2D();
+                long double half_r_c = r_c_*0.5;
+                Segment2D AB(A, B);
+                Point2D A1 = getPointOnSegmentAtDistanceFromEndpoint1(AB, half_r_c);
+                Point2D B1 = getPointOnSegmentAtDistanceFromEndpoint2(AB, half_r_c);
+                Node* new_endpoint_1 = new Node(A1, endpoint1->getNodeType());
+                Node* new_endpoint_2 = new Node(B1, endpoint2->getNodeType());
+                edge = new Edge(new_endpoint_1, new_endpoint_2);
+            }
             SteinerizeLongOrMediumEdgeResult_LEF steinerize_long_or_medium_edge_result
-                = steinerizeLongOrMediumEdge(MST_edge, graph_node_type_);
+                = steinerizeLongOrMediumEdge(edge, graph_node_type_);
             connectTerminalsWithType1Relays(
                 MST_edge, steinerize_long_or_medium_edge_result.type_1_relays, communication_edges_);
+            if (delete_edge_later) {
+                delete edge->getEndpoint1();
+                delete edge->getEndpoint2();
+                delete edge;
+            }
         } else {
             Edge* communication_edge = addCommunicationEdge(MST_edge->getEndpoint1(), MST_edge->getEndpoint2());
             communication_edges_.push_back(communication_edge);
