@@ -1,1 +1,0 @@
-#include "dctc/algorithms/coverage/coverage_alg.h"

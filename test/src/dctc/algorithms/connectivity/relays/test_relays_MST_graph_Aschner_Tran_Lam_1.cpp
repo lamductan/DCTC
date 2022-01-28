@@ -15,16 +15,16 @@
 
 TEST(TestMSTGraphAschnerTranLam_1, TestFixedRS)
 {
-    int n_tests = 100;
+    int n_tests = 50;
     long unsigned int seed = time(NULL);
 
-    bool deterministic = true;
+    bool deterministic = false;
     if (deterministic) {
         n_tests = 1;
         seed = 1643245398;
     }
 
-    int n_targets = 100; //200
+    int n_targets = 200;
     long double min_range = 0;
     long double max_range = 1000;
     NodeType node_type = SENSING_DD_NODE;
@@ -35,14 +35,20 @@ TEST(TestMSTGraphAschnerTranLam_1, TestFixedRS)
     MSTGraph* MST_graph_ptr;
     std::vector<Node*> coverage_sensors; 
 
-    std::string filename = PROJECT_ROOT_PATH + "/results/Aschner_Tran_Lam_1.csv";
+    std::string filename = PROJECT_ROOT_PATH + "/results/Aschner_Tran_Lam_1_r_s_pi_3.csv";
     Logger logger(filename);
-    logger.write(",Aschner,Tran,Lam_LEF\n");
+    logger.write(",beta_Aschner,beta_Tran,beta_Lam_LEF,n_total_omni,n_total_Aschner,n_total_Tran,n_total_Lam_LEF\n");
 
     for(long double r_c = 10; r_c <= 10; r_c += 10) {
+
         long double total_beta_Aschner = 0.0;
         long double total_beta_Tran = 0.0;
         long double total_beta_Lam_LEF = 0.0;
+        int n_total_nodes_omni = 0;
+        int n_total_nodes_Aschner = 0;
+        int n_total_nodes_Tran = 0;
+        int n_total_nodes_Lam_LEF = 0;
+
         std::cout << "\n===========================================================\n";
         for(int i = 0; i < n_tests; ++i) {
             std::cout << "-----------------------------------------------------------\n";
@@ -51,8 +57,9 @@ TEST(TestMSTGraphAschnerTranLam_1, TestFixedRS)
                 n_targets, min_range, max_range,
                 node_type, r_s, r_c, theta_s, theta_c,
                 deterministic, seed + i);
-            coverage_sensors = instance.putCoverageSensors(TRIVIAL_COVERAGE_ALG);
+            coverage_sensors = instance.putCoverageSensors(STRIP_COVERAGE_ALG);
             MST_graph_ptr = Instance::constructMSTGraphCoverageSensors(coverage_sensors);
+            n_total_nodes_omni += MST_graph_ptr->getNTotalNodesOmni();
             std::cout << "Done MST_graph_ptr" << '\n';
             std::cout << "Done SetUp()\n";
 
@@ -60,11 +67,13 @@ TEST(TestMSTGraphAschnerTranLam_1, TestFixedRS)
             std::cout << "=========================Aschner==============================\n";
             MSTGraphAschner* MST_graph_Aschner_ptr = new MSTGraphAschner(MST_graph_ptr);
             MSTGraph* result_MST_graph_Aschner_ptr = MST_graph_Aschner_ptr->doAllSteps();
-            SimpleRelaysAlg* simple_relays_alg_Aschner = new SimpleRelaysAlg(result_MST_graph_Aschner_ptr, r_c, theta_c);
+            SimpleRelaysAlg* simple_relays_alg_Aschner = new SimpleRelaysAlg(
+                result_MST_graph_Aschner_ptr, r_c, theta_c);
             RelaysMSTGraph* relays_MST_graph_Aschner = simple_relays_alg_Aschner->solve();
             ASSERT_TRUE(CommunicationChecker::checkConnectivityAngleAndRange(relays_MST_graph_Aschner));
             std::cout << "Aschner's beta = " << relays_MST_graph_Aschner->getBeta() << '\n';
             total_beta_Aschner += relays_MST_graph_Aschner->getBeta();
+            n_total_nodes_Aschner += relays_MST_graph_Aschner->getNNodes();
             delete MST_graph_Aschner_ptr;
             delete result_MST_graph_Aschner_ptr;
             delete simple_relays_alg_Aschner;
@@ -79,6 +88,7 @@ TEST(TestMSTGraphAschnerTranLam_1, TestFixedRS)
             ASSERT_TRUE(CommunicationChecker::checkConnectivityAngleAndRange(relays_MST_graph_Tran));
             std::cout << "Tran's beta = " << relays_MST_graph_Tran->getBeta() << '\n';
             total_beta_Tran += relays_MST_graph_Tran->getBeta();
+            n_total_nodes_Tran += relays_MST_graph_Tran->getNNodes();
             delete MST_graph_Tran_ptr;
             delete result_MST_graph_Tran_ptr;
             delete simple_relays_alg_Tran;
@@ -92,6 +102,7 @@ TEST(TestMSTGraphAschnerTranLam_1, TestFixedRS)
             ASSERT_TRUE(CommunicationChecker::checkConnectivityAngleAndRange(relays_MST_graph_Lam_LEF));
             std::cout << "Lam_LEF's beta = " << relays_MST_graph_Lam_LEF->getBeta() << '\n';
             total_beta_Lam_LEF += relays_MST_graph_Lam_LEF->getBeta();
+            n_total_nodes_Lam_LEF += relays_MST_graph_Lam_LEF->getNNodes();
             delete long_edge_first_relays_alg;
             delete relays_MST_graph_Lam_LEF;
 
@@ -102,16 +113,28 @@ TEST(TestMSTGraphAschnerTranLam_1, TestFixedRS)
 
             for(Node* coverage_sensor : coverage_sensors)
                 delete coverage_sensor;
-            std::cout << "Done TearDown\n";
         }
 
+        /* Analyzing and logging results */
         long double average_beta_Aschner = total_beta_Aschner/n_tests;
         long double average_beta_Tran = total_beta_Tran/n_tests;
         long double average_beta_Lam_LEF = total_beta_Lam_LEF/n_tests;
+        double average_n_total_nodes_omni = n_total_nodes_omni/n_tests;
+        double average_n_total_nodes_Aschner = n_total_nodes_Aschner/n_tests;
+        double average_n_total_nodes_Tran = n_total_nodes_Tran/n_tests;
+        double average_n_total_nodes_Lam_LEF = n_total_nodes_Lam_LEF/n_tests;
+
         std::cout << "Average Aschner's beta = " << average_beta_Aschner << '\n';
         std::cout << "Average Tran's beta    = " << average_beta_Tran << '\n';
         std::cout << "Average Lam_LEF's beta    = " << average_beta_Lam_LEF << '\n';
-        logger.append("%d,%.3f,%.3f,%.3f\n", (int) r_c, 
-            (double) average_beta_Aschner, (double) average_beta_Tran, (double) average_beta_Lam_LEF);
+        std::cout << "Average total omni nodes = " << average_n_total_nodes_omni << '\n';
+        std::cout << "Average total nodes by Aschner = " << average_n_total_nodes_Aschner << '\n';
+        std::cout << "Average total nodes by Tran = " << average_n_total_nodes_Tran << '\n';
+        std::cout << "Average total nodes by Lam_LEF = " << average_n_total_nodes_Lam_LEF << '\n';
+
+        logger.append("%d,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f\n", (int) r_c, 
+            (double) average_beta_Aschner, (double) average_beta_Tran, (double) average_beta_Lam_LEF,
+            average_n_total_nodes_omni, average_n_total_nodes_Aschner, average_n_total_nodes_Tran,
+            average_n_total_nodes_Lam_LEF);
     }
 }

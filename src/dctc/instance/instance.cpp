@@ -97,8 +97,8 @@ std::vector<Node*> Instance::putCoverageSensors(CoverageAlgType coverageAlgType)
         return trivialCoverageAlg(this);
     //else if (coverageAlgType == GREEDY_COVERAGE_ALG)
     //    return greedyCoverageAlg(this);
-    //else if (coverageAlgType == STRIP_COVERAGE_ALG)
-    //    return stripCoverageAlg(this);
+    else if (coverageAlgType == STRIP_COVERAGE_ALG)
+        return stripCoverageAlg(this);
     return trivialCoverageAlg(this);
 }
 

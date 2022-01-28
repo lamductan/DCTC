@@ -6,6 +6,7 @@
 #include "dctc/instance/instance.h"
 #include "dctc/network_components/nodes/node.h"
 
+bool checkCoverage(const std::vector<Point2D>& targets, const std::vector<Node*>& nodes);
 std::vector<Node*> trivialCoverageAlg(const Instance* instance);
 std::vector<Node*> greedyCoverageAlg(const Instance* instance);
 std::vector<Node*> stripCoverageAlg(const Instance* instance);

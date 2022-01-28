@@ -20,7 +20,7 @@ void debug(char* path_cstr) {
     MSTGraph* MST_graph_ptr;
     std::vector<Node*> coverage_sensors; 
 
-    coverage_sensors = instance.putCoverageSensors(TRIVIAL_COVERAGE_ALG);
+    coverage_sensors = instance.putCoverageSensors(STRIP_COVERAGE_ALG);
     MST_graph_ptr = Instance::constructMSTGraphCoverageSensors(coverage_sensors);
     std::cout << "Done MST_graph_ptr" << '\n';
     std::cout << "Done SetUp()\n";

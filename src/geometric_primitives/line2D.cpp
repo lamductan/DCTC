@@ -16,6 +16,7 @@ void Line2D::init(const Point2D& point0, const Vector2D& norm_vector) {
     std::vector<long double> norm_v_original = Vector2DToVector(norm_vector);
     largest_absolute_value_coef_pos = findLargestAbsoluteValueCoefPos(norm_v_original);
     long double k = fabsl(norm_v_original[largest_absolute_value_coef_pos]);
+    if (k <= EPSILON) std::cout << "k = " << k << '\n';
     assert (k > EPSILON);
     this->norm_vector = norm_vector / k;
     long double c = -this->norm_vector.dot(point0);

@@ -22,6 +22,8 @@ set(TESTS
 
     #"src/dctc/instance/test_instance.cpp"
 
+    #"src/dctc/algorithms/coverage/test_coverage.cpp"
+
     #"src/dctc/algorithms/connectivity/test_convex_hull.cpp"
     #"src/dctc/algorithms/connectivity/test_utils.cpp"
     #"src/dctc/algorithms/connectivity/Tran/test_MST_graph_Tran.cpp"

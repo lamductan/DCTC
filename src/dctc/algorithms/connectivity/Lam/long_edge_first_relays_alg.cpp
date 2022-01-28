@@ -98,6 +98,15 @@ SteinerizeShortEdgeResult_LEF LongEdgeFirstRelaysAlg::steinerizeShortEdgeWithOri
         MSTNodeLam* prev_node = all_nodes[i - 1];
         MSTNodeLam* next_node = all_nodes[i + 1];
         orientNodeToCoverNodes(cur_node, {prev_node, next_node});
+        if (!cur_node->canCoverOtherNodeByCommunicationAntenna(next_node)) {
+            std::cout << "BUG " << __PRETTY_FUNCTION__ << '\n';
+            for(Node* node : all_nodes) {
+                std::cout << *node->getCommunicationAntenna() << '\n';
+            }
+            std::cout << "END BUG\n";
+        }
+        assert(cur_node->canCoverOtherNodeByCommunicationAntenna(prev_node));
+        assert(cur_node->canCoverOtherNodeByCommunicationAntenna(next_node));
         result.communication_edges.push_back(addCommunicationEdge(prev_node, cur_node));
         setNodeFixed(cur_node);
     }

@@ -50,6 +50,7 @@ public:
     Segment2D getBoundarySegment2() const;
 
     virtual bool passesThroughPoint2D(const Point2D& p) const override;
+    long double calculateCriterion(const Point2D& p) const;
     virtual bool containsPoint2D(const Point2D& p) const override;
     virtual bool containsPoint2DWithInfRange(const Point2D& p) const override;
     std::vector<Point2D> findIntersectionsSectorWithLine2D(const Line2D& line2D) const;

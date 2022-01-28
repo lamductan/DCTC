@@ -25,9 +25,9 @@ SimpleRelaysAlg::SimpleRelaysAlg(MSTGraph* MST_graph, long double r_c, long doub
 
 bool SimpleRelaysAlg::isShortEdge(Edge* edge) const {return !isLongEdge(edge);}
 
-bool SimpleRelaysAlg::isLongOrMediumEdge(Edge* edge) const {return edge->length() > r_c_;}
+bool SimpleRelaysAlg::isLongOrMediumEdge(Edge* edge) const {return edge->length() > r_c_ + EPSILON;}
 
-bool SimpleRelaysAlg::isLongEdge(Edge* edge) const {return edge->length() > r_c_*2;}
+bool SimpleRelaysAlg::isLongEdge(Edge* edge) const {return edge->length() > r_c_*2 + EPSILON;}
 
 bool SimpleRelaysAlg::isMediumEdge(Edge* edge) const {
     long double length = edge->length();
@@ -163,8 +163,15 @@ SteinerizeLongOrMediumEdgeResult_LEF SimpleRelaysAlg::steinerizeMediumEdge(
 ) const {
     Segment2D segment2D = medium_edge->getSegment2D();
     std::pair<Point2D, Point2D> type_1_relays_pos = calculateRelaysType1Positions(segment2D, r_c_); 
-    std::vector<Point2D> type_2_relays_pos = calculateShortEdgeRelaysPos_TwoNonFree(
-        Segment2D(type_1_relays_pos.first, type_1_relays_pos.second));
+    std::vector<Point2D> type_2_relays_pos;
+    if (computeEuclidDistance(type_1_relays_pos.first, type_1_relays_pos.second) < r_c_*0.2) {
+        Segment2D s1 = Segment2D(segment2D.getEndpoint1(), type_1_relays_pos.first);
+        Segment2D s2 = Segment2D(segment2D.getEndpoint2(), type_1_relays_pos.second);
+        type_2_relays_pos = {s1.getMidPoint(), s2.getMidPoint()};
+    } else {
+        type_2_relays_pos = calculateShortEdgeRelaysPos_TwoNonFree(
+            Segment2D(type_1_relays_pos.first, type_1_relays_pos.second));
+    }
     return steinerizeLongOrMediumEdgesWithOrientation(
         medium_edge, type_1_relays_pos, type_2_relays_pos, graph_node_type);
 }

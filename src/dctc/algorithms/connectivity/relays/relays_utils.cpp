@@ -1,5 +1,6 @@
 #include <cassert>
 #include <algorithm>
+#include <iostream>
 
 #include "dctc/network_components/nodes/DD_node.h"
 #include "dctc/network_components/nodes/MST_node.h"
@@ -17,6 +18,13 @@ std::pair<Point2D, Point2D> calculateRelaysType1Positions(const Segment2D& segme
 std::vector<Point2D> calculateRelaysType2Positions_LongEdge(
     const Segment2D& segment2D, const std::pair<Point2D, Point2D>& relays_type_1_pos, long double r_c
 ) {
+    Point2D relay_type_1_pos_1 = relays_type_1_pos.first;
+    Point2D relay_type_1_pos_2 = relays_type_1_pos.second;
+    if (computeEuclidDistance(relay_type_1_pos_1, relay_type_1_pos_2) < r_c*0.2) {
+        Segment2D s1 = Segment2D(segment2D.getEndpoint1(), relay_type_1_pos_1);
+        Segment2D s2 = Segment2D(segment2D.getEndpoint2(), relay_type_1_pos_1);
+        return {s1.getMidPoint(), s2.getMidPoint()};
+    }
     int d = ceil(segment2D.length() / r_c);
     assert(d > 1);
     Point2D D0 = rotate(segment2D.getEndpoint1(), relays_type_1_pos.first, PI/4);
@@ -64,7 +72,13 @@ long double orientNodeToBisectorCoverPoint2D(Node* node, const Point2D& point) {
 }
 
 long double orientNodeToCoverPoints2D(Node* node, const std::vector<Point2D>& points) {
-    return dynamic_cast<Sector*>(node->getCommunicationAntenna())->orientToCoverPoints2D(points, false);
+    long double result = dynamic_cast<Sector*>(node->getCommunicationAntenna())->orientToCoverPoints2D(points, false);
+    if (result == -1) {
+        std::cout << "terminal = " << *node << '\n';
+        print_vector<Point2D>(points, '\n');
+    }
+    assert(result != -1);
+    return result;
 }
 
 long double orientNodeToBisectorCoverNode(Node* node_to_orient, Node* node_to_cover) {
@@ -240,13 +254,15 @@ std::vector<Point2D> calculateShortEdgeRelaysPos_TwoNonFree_general(Sector* sA, 
     points += res;
     points.push_back(B);
     for(int i = 1; i < points.size() - 1; ++i) {
-        if (!(computeGeometricAngle(points[i - 1], points[i], points[i + 1]) <= PI_2 + EPSILON)) {
-            std::cout << "BUG\n";
+        if (!(computeGeometricAngle(points[i - 1], points[i], points[i + 1]) <= PI_2 + EPSILON*2.5)) {
+            std::cout << "BUG at " << i << '\n';
+            long double angle = computeGeometricAngle(points[i - 1], points[i], points[i + 1]);
+            std::cout << fabs(angle - PI_2) - EPSILON*2.5 << '\n';
             std::cout << i << ' ' << computeGeometricAngle(points[i - 1], points[i], points[i + 1]) << '\n';
             print_vector<Point2D>(points, '\n');
             std::cout << sA->getOrientationAngle() << ' ' << sB->getOrientationAngle() << '\n';
         }
-        assert(computeGeometricAngle(points[i - 1], points[i], points[i + 1]) <= PI_2 + EPSILON);
+        assert(computeGeometricAngle(points[i - 1], points[i], points[i + 1]) <= PI_2 + EPSILON*2.5);
         assert(computeEuclidDistance(points[i - 1], points[i]) <= r + EPSILON);
         assert(computeEuclidDistance(points[i], points[i + 1]) <= r + EPSILON);
     }
@@ -295,7 +311,7 @@ std::vector<Point2D> calculateShortEdgeRelaysPos_OneFree(Sector* sA_fixed, Secto
     points += res;
     points.push_back(B);
     for(int i = 1; i < points.size() - 1; ++i) {
-        assert(computeGeometricAngle(points[i - 1], points[i], points[i + 1]) <= PI_2 + EPSILON);
+        assert(computeGeometricAngle(points[i - 1], points[i], points[i + 1]) <= PI_2 + EPSILON*2.5);
         assert(computeEuclidDistance(points[i - 1], points[i]) <= r + EPSILON);
         assert(computeEuclidDistance(points[i], points[i + 1]) <= r + EPSILON);
     }

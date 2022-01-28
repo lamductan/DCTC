@@ -83,9 +83,14 @@ bool Sector::containsPoint2D(const Point2D& p) const {
     return Circle::containsPoint2D(p) && containsPoint2DWithInfRange(p);
 }
 
-bool Sector::containsPoint2DWithInfRange(const Point2D& p) const {
+long double Sector::calculateCriterion(const Point2D& p) const {
     Vector2D v(center, p);
     long double criterion = v.dot(bisector_unit_vector) - v.length()*cosl(half_angle);
+    return criterion;
+}
+
+bool Sector::containsPoint2DWithInfRange(const Point2D& p) const {
+    long double criterion = calculateCriterion(p);
     //std::cout << "Check inside sector: " << *this << ", " << p << ' ' << criterion << '\n';
     return criterion >= -EPSILON;
 }
@@ -232,7 +237,7 @@ long double Sector::findPossibleOrientAngleToCoverPoints2D(const std::vector<Poi
     }
     int n_points_can_cover = 0;
     for(int i = 0; i < n; ++i) {
-        if (angles[i + n - 1] - angles[i] <= this->angle + EPSILON) 
+        if (angles[i + n - 1] - angles[i] <= this->angle + EPSILON*2.5) 
             return standardize_angle(angles[i] + half_angle);
     }
     return -1;

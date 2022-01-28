@@ -98,9 +98,8 @@ set(SOURCES
 
     src/dctc/instance/instance.cpp
 
-    src/dctc/algorithms/coverage/trivial_coverage_alg.cpp
-    src/dctc/algorithms/coverage/greedy_coverage_alg.cpp
-    src/dctc/algorithms/coverage/strip_coverage_alg.cpp
+    src/dctc/algorithms/coverage/coverage_alg.cpp
+
     src/dctc/algorithms/connectivity/utils.cpp
     src/dctc/algorithms/connectivity/convex_hull.cpp
     src/dctc/algorithms/connectivity/communication_checker.cpp
@@ -122,9 +121,13 @@ add_library(${This} STATIC ${SOURCES} ${HEADERS})
 target_include_directories(${This} PUBLIC include)
 target_link_libraries(${This} PRIVATE Threads::Threads)
 
-add_executable(prog src/main.cpp ${SOURCES} ${HEADERS})
-target_include_directories(prog PUBLIC include)
-target_link_libraries(prog PRIVATE Threads::Threads)
+add_executable(main src/main.cpp ${SOURCES} ${HEADERS})
+target_include_directories(main PUBLIC include)
+target_link_libraries(main PRIVATE Threads::Threads)
+
+add_executable(main2 src/main2.cpp ${SOURCES} ${HEADERS})
+target_include_directories(main2 PUBLIC include)
+target_link_libraries(main2 PRIVATE Threads::Threads)
 
 add_executable(debug src/debug.cpp ${SOURCES} ${HEADERS})
 target_include_directories(debug PUBLIC include)

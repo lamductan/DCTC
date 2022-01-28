@@ -56,18 +56,13 @@ bool CommunicationChecker::checkSymmetricConnectivity(const MSTGraph* MST_graph)
 
 bool CommunicationChecker::checkSymmetricConnectivityOneNode(MSTNode* node) {
     for(Node* adj_node : node->getMSTEdgeAdjNodes()) {
-        //if (!node->canCoverOtherNodeByCommunicationAntenna(adj_node)) return false;
-        //if (!adj_node->canCoverOtherNodeByCommunicationAntenna(node)) return false;
-        if (!node->canCoverOtherNodeByCommunicationAntenna(adj_node)) {
+        if (!node->canCoverOtherNodeByCommunicationAntenna(adj_node)
+                || !adj_node->canCoverOtherNodeByCommunicationAntenna(node)) {
             std::cout << "BUG: " << __PRETTY_FUNCTION__ << '\n';
-            std::cout << *node->getCommunicationAntenna() << '\n';
-            std::cout << *adj_node->getCommunicationAntenna() << '\n';
-            std::cout << *node << '\n';
-            std::cout << *adj_node << '\n';
-            return false;
-        }
-        if (!adj_node->canCoverOtherNodeByCommunicationAntenna(node)) {
-            std::cout << "BUG: " << __PRETTY_FUNCTION__ << '\n';
+            Sector* sA = (Sector*) node->getCommunicationAntenna();
+            Sector* sB = (Sector*) adj_node->getCommunicationAntenna();
+            std::cout << sA->calculateCriterion(sB->getCenter()) << '\n';
+            std::cout << sB->calculateCriterion(sA->getCenter()) << '\n';
             std::cout << *node->getCommunicationAntenna() << '\n';
             std::cout << *adj_node->getCommunicationAntenna() << '\n';
             std::cout << *node << '\n';
@@ -80,18 +75,13 @@ bool CommunicationChecker::checkSymmetricConnectivityOneNode(MSTNode* node) {
 
 bool CommunicationChecker::checkSymmetricConnectivityOneNode1(MSTNode* node) {
     for(Node* adj_node : node->getCommunicationEdgeAdjNodes()) {
-        //if (!node->canCoverOtherNodeByCommunicationAntenna(adj_node)) return false;
-        //if (!adj_node->canCoverOtherNodeByCommunicationAntenna(node)) return false;
-        if (!node->canCoverOtherNodeByCommunicationAntenna(adj_node)) {
+        if (!node->canCoverOtherNodeByCommunicationAntenna(adj_node)
+                || !adj_node->canCoverOtherNodeByCommunicationAntenna(node)) {
             std::cout << "BUG: " << __PRETTY_FUNCTION__ << '\n';
-            std::cout << *node->getCommunicationAntenna() << '\n';
-            std::cout << *adj_node->getCommunicationAntenna() << '\n';
-            std::cout << *node << '\n';
-            std::cout << *adj_node << '\n';
-            return false;
-        }
-        if (!adj_node->canCoverOtherNodeByCommunicationAntenna(node)) {
-            std::cout << "BUG: " << __PRETTY_FUNCTION__ << '\n';
+            Sector* sA = (Sector*) node->getCommunicationAntenna();
+            Sector* sB = (Sector*) adj_node->getCommunicationAntenna();
+            std::cout << sA->calculateCriterion(sB->getCenter());
+            std::cout << sB->calculateCriterion(sA->getCenter());
             std::cout << *node->getCommunicationAntenna() << '\n';
             std::cout << *adj_node->getCommunicationAntenna() << '\n';
             std::cout << *node << '\n';
@@ -185,7 +175,7 @@ bool CommunicationChecker::checkRange(const MSTGraph* MST_graph) {
 bool CommunicationChecker::checkRangeOneNode(MSTNode* node) {
     long double r_c = node->getRC();
     for(Edge* edge : node->getMSTEdges()) {
-        if (edge->length() - EPSILON > r_c) return false;
+        if (edge->length() > r_c + EPSILON*2) return false;
     }
     return true;
 }
