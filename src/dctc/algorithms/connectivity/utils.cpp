@@ -54,17 +54,27 @@ std::vector<Node*> orientFourNodesPI_2CoverPlane(std::vector<Node*> nodes) {
         Point2D pO = Segment2D(convex_hull[0]->getPoint2D(), convex_hull[2]->getPoint2D())
             .findIntersectionsWithSegment2D(Segment2D(convex_hull[1]->getPoint2D(), convex_hull[3]->getPoint2D()));
         assert(!pO.isPointInfinity());
+        bool found = false;
         for(int i = 0; i < 4; ++i) {
             nA = convex_hull[i], nB = convex_hull[(i + 1) % 4];
             nC = convex_hull[(i + 2) % 4], nD = convex_hull[(i + 3) % 4];
             pA = nA->getPoint2D(), pB = nB->getPoint2D();
             pC = nC->getPoint2D(), pD = nD->getPoint2D();
-            if (computeGeometricAngle(pO, pA, pB) <= PI_2 && computeGeometricAngle(pO, pB, pA) <= PI_2)
+            if (computeGeometricAngle(pO, pA, pB) <= PI_2 && computeGeometricAngle(pO, pB, pA) <= PI_2) {
+                found = true;
                 break;
+            }
         }
+        assert(found);
         sector_A = (Sector*) nA->getCommunicationAntenna();
         sector_B = (Sector*) nB->getCommunicationAntenna();
         orientation_angle_A = sector_A->orientBoundaryPassingThroughPointAndCoverAnotherPoint(pB, pC, false);
+        if (orientation_angle_A == -1) {
+            std::cout << __PRETTY_FUNCTION__ << " :BUG: " << pA << ' ' << pB << ' ' << pC << '\n';
+            std::cout << computeGeometricAngle(pC, pA, pB) << ' ' << computeGeometricAngle(pC, pB, pA) << '\n';
+            print_vector_ptr_new_line<Node>(convex_hull, '\n');
+            std::cout << "D on AB: " << Line2D::fromTwoPoints(pA, pB).containsPoint2D(pD) << ", CCW = " << computeCCW(pA, pB, pD) << '\n';
+        }
         assert(orientation_angle_A != -1);
         orientation_angle_B = sector_B->orientBoundaryPassingThroughPointAndCoverAnotherPoint(pA, pD, false);
         assert(orientation_angle_B != -1);

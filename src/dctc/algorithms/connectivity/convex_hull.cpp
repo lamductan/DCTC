@@ -1,3 +1,4 @@
+#include <cassert>
 #include <algorithm>
 #include <stack>
 #include <vector>
@@ -27,11 +28,13 @@ std::vector<Node*> findConvexHull(std::vector<Node*> nodes) {
     if (n == 0) return convex_hull;
 
     // Find the bottommost point
-    long double ymin = nodes[0]->getY(), min = 0;
+    long double ymin = nodes[0]->getY();
+    int min = 0;
     for (int i = 1; i < n; i++) {
-        int y = nodes[i]->getY();
-        if ((y < ymin) || (ymin == y && nodes[i]->getX() < nodes[min]->getX()))
+        long double y = nodes[i]->getY();
+        if ((y < ymin) || (approx(y, ymin) && nodes[i]->getX() < nodes[min]->getX())) {
             ymin = nodes[i]->getY(), min = i;
+        }
     }
  
     // Place the bottom-most point at first position

@@ -93,6 +93,7 @@ std::vector<Node*> stripCoverageAlg(const Instance* instance) {
                 assert(used_pos.count(new_pos) == 0);
                 Node* node = new DDNode(
                     new_pos.getX(), new_pos.getY(), node_type, r_s, r_c, theta_s, theta_c);
+                assert(node->getY() == node->getPoint2D().getY());
                 used_pos.insert(new_pos);
                 nodes.push_back(node);
                 x_cur = x;
@@ -104,6 +105,7 @@ std::vector<Node*> stripCoverageAlg(const Instance* instance) {
         assert(used_pos.count(new_pos) == 0);
         Node* node = new DDNode(
             new_pos.getX(), new_pos.getY(), node_type, r_s, r_c, theta_s, theta_c);
+        assert(node->getY() == node->getPoint2D().getY());
         used_pos.insert(new_pos);
         nodes.push_back(node);
     }
