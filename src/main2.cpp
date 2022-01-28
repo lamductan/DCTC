@@ -192,6 +192,9 @@ void testFixed_RC1(int n_tests) {
 
 int main(int argc, char** argv) {
     int n_tests = 2;
+    if (argc == 2) {
+        n_tests = atoi(argv[1]);
+    }
     testFixed_RS1(n_tests);
     testFixed_RC1(n_tests);
     return 0;
