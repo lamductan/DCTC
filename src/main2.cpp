@@ -148,7 +148,7 @@ void testFixed_RS(int theta_s_deg, int theta_c_deg, int r_s, int r_c, int n_test
     std::cout << out_filename << '\n';
     long double theta_s = degToRad1(theta_s_deg);
     long double theta_c = degToRad1(theta_c_deg);
-    std::string out_path_str = PROJECT_ROOT_PATH + "/results/" + out_filename_str + ".csv";
+    std::string out_path_str = PROJECT_ROOT_PATH + "/results_1/" + out_filename_str + ".csv";
     test6(theta_s, theta_c, r_s, r_c, n_tests, out_path_str, out_filename_str, timestamp);
 }
 
@@ -160,7 +160,7 @@ void testFixed_RC(int theta_s_deg, int theta_c_deg, int r_s, int r_c, int n_test
     std::cout << out_filename << '\n';
     long double theta_s = degToRad1(theta_s_deg);
     long double theta_c = degToRad1(theta_c_deg);
-    std::string out_path_str = PROJECT_ROOT_PATH + "/results/" + out_filename_str + ".csv";
+    std::string out_path_str = PROJECT_ROOT_PATH + "/results_1/" + out_filename_str + ".csv";
     test6(theta_s, theta_c, r_s, r_c, n_tests, out_path_str, out_filename_str, timestamp);
 }
 

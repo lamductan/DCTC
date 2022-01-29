@@ -16,77 +16,6 @@
 #include "dctc/algorithms/connectivity/Lam/long_edge_first_relays_alg.h"
 
 
-void test1() {
-    Point2D A(0, 0);
-    Point2D B(5, 0);
-    Point2D C(4, 3);
-    Point2D D(2, 4);
-    Point2D E(-1, 4);
-    Point2D F(-2, -1);
-    Point2D G(-4, 0);
-    Point2D H(0, -4);
-    Point2D I(2, -3);
-    Point2D J(4, -2);
-    Point2D K(7, -1);
-
-    std::cout << "BAX" << '\n';
-    std::vector<Point2D> points1{C, D, E, F, G, H, I, J, K};
-    std::vector<char> point_names1{'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'};
-    for(int i = 0; i < points1.size(); ++i) {
-        long double angle = computeAngle(B, A, points1[i]);
-        long double geometric_angle = computeGeometricAngle(B, A, points1[i]);
-        std::cout << "angle BA" << point_names1[i] << " = " 
-            << rad2deg(angle) << ' ' << rad2deg(geometric_angle) << ' ' << computeCCW(B, A, points1[i]) << '\n';
-    }
-
-    std::cout << "=========================" << '\n';
-    std::cout << "GAX" << '\n';
-    std::vector<Point2D> points2{E, D, C, B, K, J, I, H, F};
-    std::vector<char> point_names2{'E', 'D', 'C', 'B', 'K', 'J', 'I', 'H', 'F'};
-    for(int i = 0; i < points2.size(); ++i) {
-        long double angle = computeAngle(G, A, points2[i]);
-        long double geometric_angle = computeGeometricAngle(G, A, points2[i]);
-        std::cout << "angle GA" << point_names2[i] << " = "
-            << rad2deg(angle) << ' ' << rad2deg(geometric_angle) << ' ' << computeCCW(G, A, points2[i]) << '\n';
-    }
-}
-
-void test2() {
-    std::vector<Point2D*> p;
-    Vector2D v1(1, 1);
-    Vector2D v2(0, 0);
-    p.push_back(&v1);
-    p.push_back(&v2);
-    for(auto x : p) std::cout << *x << ' ';
-    std::cout << '\n';
-}
-
-void test3() {
-    Sector sector(Point2D(1, 1), 5, PI_2, PI_3);
-    std::cout << sector << '\n';
-}
-
-void test4() {
-    bool deterministic = true;
-    int n_targets = 5;
-    long double min_range = 0;
-    long double max_range = 10;
-    NodeType node_type = SENSING_DD_NODE;
-    long double r_s = 2.0;
-    long double r_c = 1.0;
-    long double theta_s = PI_3;
-    long double theta_c = PI_2;
-
-    Instance instance(
-        n_targets, min_range, max_range,
-        node_type, r_s, r_c, theta_s, theta_c,
-        deterministic);
-    std::vector<Node*> coverage_sensors = instance.putCoverageSensors(TRIVIAL_COVERAGE_ALG);
-    MSTGraph* MST_graph_ptr = Instance::constructMSTGraphCoverageSensors(coverage_sensors);
-    std::cout << *MST_graph_ptr << '\n';
-    delete MST_graph_ptr;
-}
-
 void test5(long double r_c, int n_tests) {
     long unsigned int seed = time(NULL);
 
@@ -196,10 +125,9 @@ long double degToRad1(int deg) {
     return TWO_PI_3;
 }
 
-void test6(long double theta_s, long double theta_c, long double r_s, long double r_c,
-           int n_tests, std::string out_path, std::string out_filename, long unsigned int timestamp
+void test6(long double theta_s, long double theta_c, long double r_s, long double r_c, int n_tests,
+           const std::string& result_path, const std::string& instance_save_path, long unsigned int seed
 ) {
-    long unsigned int seed = timestamp;
     bool deterministic = false;
 
     int n_targets = 200;
@@ -211,9 +139,8 @@ void test6(long double theta_s, long double theta_c, long double r_s, long doubl
     MSTGraph* MST_graph_ptr;
     std::vector<Node*> coverage_sensors; 
 
-    Logger logger(out_path);
+    Logger logger(result_path);
     logger.write(",beta_Aschner,beta_Tran,beta_Lam_LEF,n_total_omni,n_total_Aschner,n_total_Tran,n_total_Lam_LEF\n");
-    std::string instance_save_path = PROJECT_ROOT_PATH + "/data/" + out_filename + ".dat";
 
     long double total_beta_Aschner = 0.0;
     long double total_beta_Tran = 0.0;
@@ -313,28 +240,34 @@ void test6(long double theta_s, long double theta_c, long double r_s, long doubl
         average_n_total_nodes_Lam_LEF);
 }
 
-void testFixed_RS(int theta_s_deg, int theta_c_deg, int r_s, int r_c, int n_tests, long unsigned int timestamp) {
-    char out_filename[1000];
-    snprintf(out_filename, 1000, "%ld-fixed_rs-ts_%03d-tc_%03d-rs_%03d-rc_%03d",
-             timestamp, theta_s_deg, theta_c_deg, r_s, r_c);
+void test(
+    int theta_s_deg, int theta_c_deg, int r_s, int r_c, int n_tests, char* out_filename,
+    char* timestamp, long unsigned seed
+) {
     std::string out_filename_str(out_filename);
     std::cout << out_filename << '\n';
     long double theta_s = degToRad1(theta_s_deg);
     long double theta_c = degToRad1(theta_c_deg);
-    std::string out_path_str = PROJECT_ROOT_PATH + "/results/" + out_filename_str + ".csv";
-    test6(theta_s, theta_c, r_s, r_c, n_tests, out_path_str, out_filename_str, timestamp);
+    std::string result_path = PROJECT_ROOT_PATH + "/results/" + timestamp + "/" + out_filename_str + ".csv";
+    std::string instance_save_path = PROJECT_ROOT_PATH + "/data/" + timestamp + "/" + out_filename_str + ".csv";
+    test6(theta_s, theta_c, r_s, r_c, n_tests, result_path, instance_save_path, seed);
 }
 
-void testFixed_RC(int theta_s_deg, int theta_c_deg, int r_s, int r_c, int n_tests, long unsigned int timestamp) {
+void testFixed_RS(
+    int theta_s_deg, int theta_c_deg, int r_s, int r_c, int n_tests, char* timestamp, long unsigned seed)
+{
     char out_filename[1000];
-    snprintf(out_filename, 1000, "%ld-fixed_rc-ts_%03d-tc_%03d-rs_%03d-rc_%03d",
-             timestamp, theta_s_deg, theta_c_deg, r_s, r_c);
-    std::string out_filename_str(out_filename);
-    std::cout << out_filename << '\n';
-    long double theta_s = degToRad1(theta_s_deg);
-    long double theta_c = degToRad1(theta_c_deg);
-    std::string out_path_str = PROJECT_ROOT_PATH + "/results/" + out_filename_str + ".csv";
-    test6(theta_s, theta_c, r_s, r_c, n_tests, out_path_str, out_filename_str, timestamp);
+    snprintf(out_filename, 1000, "fixed_rs-ts_%03d-tc_%03d-rs_%03d-rc_%03d",
+             theta_s_deg, theta_c_deg, r_s, r_c);
+    test(theta_s_deg, theta_c_deg, r_s, r_c, n_tests, out_filename, timestamp, seed);
+}
+
+void testFixed_RC(
+    int theta_s_deg, int theta_c_deg, int r_s, int r_c, int n_tests, char* timestamp, long unsigned seed)
+{
+    char out_filename[1000];
+    snprintf(out_filename, 1000, "fixed_rc-ts_%03d-tc_%03d-rs_%03d-rc_%03d", theta_s_deg, theta_c_deg, r_s, r_c);
+    test(theta_s_deg, theta_c_deg, r_s, r_c, n_tests, out_filename, timestamp, seed);
 }
 
 int main(int argc, char** argv) {
@@ -346,9 +279,8 @@ int main(int argc, char** argv) {
         return 0;
     }
 
-    assert(argc == 7);
-
-    long unsigned int timestamp = time(NULL);
+    assert(argc >= 8);
+    long unsigned int seed;
 
     char* test_type = argv[1];
     int theta_s_deg = atoi(argv[2]);
@@ -356,11 +288,13 @@ int main(int argc, char** argv) {
     int r_s = atoi(argv[4]);
     int r_c = atoi(argv[5]);
     int n_tests = atoi(argv[6]);
+    char* timestamp = argv[7];
+    if (argc == 9) seed = atol(argv[8]);
 
     if (strcmp(test_type, "fixed_rs") == 0) {
-        testFixed_RS(theta_s_deg, theta_c_deg, r_s, r_c, n_tests, timestamp);
+        testFixed_RS(theta_s_deg, theta_c_deg, r_s, r_c, n_tests, timestamp, seed);
     } else {
-        testFixed_RC(theta_s_deg, theta_c_deg, r_s, r_c, n_tests, timestamp);
+        testFixed_RC(theta_s_deg, theta_c_deg, r_s, r_c, n_tests, timestamp, seed);
     }
     return 0;
 }
