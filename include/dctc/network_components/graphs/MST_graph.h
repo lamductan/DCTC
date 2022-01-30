@@ -60,6 +60,7 @@ public:
 
     virtual MSTGraph* cloneFrom(const MSTGraph* mst_graph, GraphNodeType graph_node_type=MST_GRAPH_NODE);
     virtual MSTGraph* deepCopy(GraphNodeType graph_node_type=MST_GRAPH_NODE) const;
+    void save(const std::string& save_path);
     virtual ~MSTGraph();
 
     friend std::ostream& operator<<(std::ostream& os, const MSTGraph& MST_graph);

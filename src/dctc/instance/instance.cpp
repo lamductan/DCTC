@@ -131,5 +131,6 @@ Instance Instance::load(const std::string& path) {
         fin >> x >> y;
         instance.targets_.push_back(Point2D(x, y));
     }
+    fin.close();
     return instance;
 }

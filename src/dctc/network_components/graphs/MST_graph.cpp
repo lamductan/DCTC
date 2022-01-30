@@ -2,6 +2,7 @@
 #include <ctime>
 #include <iomanip>
 #include <algorithm>
+#include <fstream>
 
 #include "data_structures/counter.h"
 #include "data_structures/union_find.h"
@@ -211,6 +212,23 @@ Edge* MSTGraph::orientAndConnect(MSTNode* node_to_orient, MSTNode* node_to_conne
     dynamic_cast<Sector*>(node_to_orient->getCommunicationAntenna())->orientToCoverPoint2D(
         node_to_connect->getPoint2D(), false);
     return addCommunicationEdge(node_to_orient, node_to_connect);
+}
+
+void MSTGraph::save(const std::string& save_path) {
+    std::ofstream fout;
+    fout.open(save_path);
+    fout << nodes_.size() << '\n';
+    for(Node* node : nodes_) {
+        fout << node->getX() << ' ' << node->getY() << ' ';
+        fout << node->getSensingSector()->getRadius() << ' ' << node->getSensingSector()->getAngle() << ' ';
+        fout << node->getNodeType() << '\n';
+    }
+    fout << MST_edges_.size() << '\n';
+    for(Edge* edge : MST_edges_) {
+        fout << edge->getEndpoint1()->getX() << ' ' << edge->getEndpoint1()->getY() << ' ';
+        fout << edge->getEndpoint2()->getX() << ' ' << edge->getEndpoint2()->getY() << '\n';
+    }
+    fout.close();
 }
 
 MSTGraph::~MSTGraph() {

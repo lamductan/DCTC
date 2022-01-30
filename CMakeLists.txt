@@ -9,6 +9,7 @@ set(This dctc)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
+find_package(X11 REQUIRED)
 
 set(HEADERS
     include/utils.h
@@ -117,21 +118,25 @@ set(SOURCES
     src/dctc/algorithms/connectivity/Lam/short_edge_first_relays_alg.cpp
 )
 
-add_library(${This} STATIC ${SOURCES} ${HEADERS})
+add_library(${This} OBJECT ${SOURCES} ${HEADERS})
 target_include_directories(${This} PUBLIC include)
-target_link_libraries(${This} PRIVATE Threads::Threads)
+include_directories(include)
+target_link_libraries(${This} PRIVATE Threads::Threads X11::X11)
 
-add_executable(main src/main.cpp ${SOURCES} ${HEADERS})
-target_include_directories(main PUBLIC include)
-target_link_libraries(main PRIVATE Threads::Threads)
+add_executable(main src/main.cpp $<TARGET_OBJECTS:${This}>)
+#add_executable(main src/main.cpp ${SOURCES} ${HEADERS})
+#target_include_directories(main PUBLIC include)
+#target_link_libraries(main PRIVATE Threads::Threads X11::X11)
 
-add_executable(main2 src/main2.cpp ${SOURCES} ${HEADERS})
-target_include_directories(main2 PUBLIC include)
-target_link_libraries(main2 PRIVATE Threads::Threads)
+add_executable(main2 src/main2.cpp $<TARGET_OBJECTS:${This}>)
+#add_executable(main2 src/main2.cpp ${SOURCES} ${HEADERS})
+#target_include_directories(main2 PUBLIC include)
+#target_link_libraries(main2 PRIVATE Threads::Threads X11::X11)
 
-add_executable(debug src/debug.cpp ${SOURCES} ${HEADERS})
-target_include_directories(debug PUBLIC include)
-target_link_libraries(debug PRIVATE Threads::Threads)
+add_executable(debug src/debug.cpp $<TARGET_OBJECTS:${This}>)
+#add_executable(debug src/debug.cpp ${SOURCES} ${HEADERS})
+#target_include_directories(debug PUBLIC include)
+#target_link_libraries(debug PRIVATE Threads::Threads X11::X11)
 
 add_subdirectory(third_party)
 add_subdirectory(test)

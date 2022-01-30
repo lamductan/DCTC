@@ -1,7 +1,6 @@
 import os
 import sys
 import json
-from time import time
 
 
 def parse_filename(filename):
