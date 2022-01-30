@@ -35,14 +35,14 @@ Yellow: Type-2 relays
 Cyan: Type-3 relays
 Blue: Type-4 (short edge) relays
 ```
-**Input targets together with the coverage sensors outputted by Strip-based algorithm and the MST over the set of sensors**
+**Input targets together with the coverage sensors outputted by Strip-based algorithm and the MST over the set of sensors: 21 sensors are needed**
 ![alt text](visualization/samples/mst_graph.png)
 
-**Aschner's algorithm**
+**Aschner's algorithm: 73 sensors are needed, beta = 3.476**
 ![alt text](visualization/samples/relays_mst_graph_Aschner.png)
 
-**Tran's algorithm**
+**Tran's algorithm: 84 sensors are needed, beta = 4.000**
 ![alt text](visualization/samples/relays_mst_graph_Tran.png)
 
-**Lam's LongEdgeFirst algorithm**
+**Lam's LongEdgeFirst algorithm: 58 sensors are needed, beta = 2.762**
 ![alt text](visualization/samples/relays_mst_graph_Lam_LEF.png)
