@@ -4,7 +4,7 @@
 ```
 g++10 (The code has been tested on Ubuntu 20.04.)
 ```
-If you want to visualize the graph, you need to install `X11` (to use `[CImg](https://github.com/dtschump/CImg)`).
+If you want to visualize the graph, you need to install `X11` (to use [CImg](https://github.com/dtschump/CImg)).
 
 ## To build and run
 ```
@@ -22,7 +22,7 @@ make
 * Results are saved in `results/{yyyy-mm-dd-HH-MM-SS}/fixed_rs.csv` and `results/{yyyy-mm-dd-HH-MM-SS}/fixed_rc.csv`, where `{yyyy-mm-dd-HH-MM-SS}` is the timestamp of running the script. (Paths to the result files are also echo-ed on the terminal).
 
 ## To visualize an input graph (of small size) and results of the algorithms on this input:
-1. Run test in file `test/src/dctc/network_components/test_save_graph.cpp`.
+1. Run test in file `test/src/dctc/network_components/test_save_graph.cpp`. (To specify which test file to run, uncomment this test file in `src/test/CMakeLists.txt`.)
 2. After the test is run, the input instance and the result graphs are saved in the folder `visualization/samples`. 
 3. Then `cd visualization` and run the command `bash build_and_run.sh`.
 

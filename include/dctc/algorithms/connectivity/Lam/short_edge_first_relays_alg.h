@@ -5,6 +5,13 @@
 
 
 class ShortEdgeFirstRelaysAlg : public LongShortEdgeRelaysAlg {
+private:
+    static Point2D findType3RelayPos(Node* terminal, Node* type_1_relay);
+protected:
+    void steinerizeAndOrientShortSubtree(MSTNodeLam* terminal);
+    SteinerizeShortEdgeResult steinerizeShortEdge(Edge* short_edge, GraphNodeType graph_node_type) const;
+    void dfsShortSubtree(MSTNodeLam* terminal, MSTNodeLam* parent, Edge* edge_to_parent);
+    void connectTerminalWithType1Relays(MSTNodeLam* terminal);
 public:
     ShortEdgeFirstRelaysAlg(MSTGraph* MST_graph, long double r_c, long double theta_c);
     virtual RelaysMSTGraph* solve();

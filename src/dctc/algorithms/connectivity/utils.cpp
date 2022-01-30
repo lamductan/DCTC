@@ -139,4 +139,8 @@ bool canNodesCoverPlane(const std::vector<Node*>& nodes) {
         }
     }
     return true;
-} 
+}
+
+bool canTwoNodesConnectEachOther(Node* a, Node* b) {
+    return (a->canCoverOtherNodeByCommunicationAntenna(b) && b->canCoverOtherNodeByCommunicationAntenna(a)); 
+}

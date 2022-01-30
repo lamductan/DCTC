@@ -1,9 +1,10 @@
 #include <cassert>
-#include <unordered_map>
 
+#include "dctc/algorithms/connectivity/utils.h"
 #include "dctc/algorithms/connectivity/relays/relays_utils.h"
 #include "dctc/algorithms/connectivity/Lam/long_short_edge_relays_alg.h"
 #include "dctc/algorithms/connectivity/Lam/MST_node_Lam.h"
+
 
 void LongShortEdgeRelaysAlg::init(long double r_c, long double theta_c) {
     SimpleRelaysAlg::init(r_c, theta_c);
@@ -20,6 +21,9 @@ void LongShortEdgeRelaysAlg::init(long double r_c, long double theta_c) {
             dynamic_cast<MSTNodeLam*>(endpoint2)->short_edge_adj_nodes_.push_back(endpoint1);
         }
     }
+    n_long_or_medium_edges_ = long_or_medium_edges_.size();
+    n_short_edges_ = short_edges_.size();
+    std::cout << "n_long_or_medium_edges = " << n_long_or_medium_edges_ <<", n_short_edges = " << n_short_edges_ << '\n';
 }
 
 LongShortEdgeRelaysAlg::LongShortEdgeRelaysAlg(MSTGraph* MST_graph, long double r_c, long double theta_c) {
@@ -96,13 +100,53 @@ std::vector<Edge*> LongShortEdgeRelaysAlg::connectType1RelaysInTheSameComponent(
         for(int j = i + 1; j < n; ++j) {
             Node* node_i = component[i];
             Node* node_j = component[j];
-            if (node_i->canCoverOtherNodeByCommunicationAntenna(node_j)
-                    && node_j->canCoverOtherNodeByCommunicationAntenna(node_i)) {
+            if (canTwoNodesConnectEachOther(node_i, node_j)) {
                 communication_edges.push_back(addCommunicationEdge(node_i, node_j));
             }
         }
     }
     return communication_edges;
+}
+
+SteinerizeShortEdgeResult LongShortEdgeRelaysAlg::steinerizeShortEdgeWithOrientation(
+    MSTNodeLam* terminal1, MSTNodeLam* terminal2, const std::vector<Point2D>& type_4_relays_pos,
+    GraphNodeType graph_node_type
+) const {
+    SteinerizeShortEdgeResult result;
+    std::vector<MSTNodeLam*> all_nodes;
+    all_nodes.push_back(terminal1);
+    for(const Point2D& relay_pos : type_4_relays_pos) {
+        Node* relay_node = createRelayNode(relay_pos, RELAY_DD_NODE_TYPE_4, graph_node_type, r_c_, theta_c_);
+        result.type_4_relays.push_back(relay_node);
+        all_nodes.push_back((MSTNodeLam*) relay_node);
+    }
+    all_nodes.push_back(terminal2);
+    for(int i = 1; i < all_nodes.size() - 1; ++i) {
+        MSTNodeLam* cur_node = all_nodes[i];
+        MSTNodeLam* prev_node = all_nodes[i - 1];
+        MSTNodeLam* next_node = all_nodes[i + 1];
+        orientNodeToCoverNodes(cur_node, {prev_node, next_node});
+        if (!cur_node->canCoverOtherNodeByCommunicationAntenna(next_node)) {
+            std::cout << "BUG " << __PRETTY_FUNCTION__ << '\n';
+            for(Node* node : all_nodes) {
+                std::cout << *node->getCommunicationAntenna() << '\n';
+            }
+            std::cout << "END BUG\n";
+        }
+        assert(cur_node->canCoverOtherNodeByCommunicationAntenna(prev_node));
+        assert(cur_node->canCoverOtherNodeByCommunicationAntenna(next_node));
+        result.communication_edges.push_back(addCommunicationEdge(prev_node, cur_node));
+        setNodeFixed(cur_node);
+    }
+
+    Node* last_relay_node = result.type_4_relays.back();
+    if (terminal2->free_) {
+        orientNodeToBisectorCoverNode(terminal2, last_relay_node);
+        setNodeFixed(terminal2);
+    }
+    result.communication_edges.push_back(addCommunicationEdge(terminal2, last_relay_node));
+
+    return result;
 }
 
 LongShortEdgeRelaysAlg::~LongShortEdgeRelaysAlg() {

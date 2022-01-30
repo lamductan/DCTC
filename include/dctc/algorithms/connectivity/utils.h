@@ -12,5 +12,6 @@ std::vector<Node*> orientFourNodesPI_2CoverPlane(std::vector<Node*> nodes);
 
 bool canNodesCoverPoint2D(const std::vector<Node*>& nodes, const Point2D& point2D);
 bool canNodesCoverPlane(const std::vector<Node*>& nodes);
+bool canTwoNodesConnectEachOther(Node* a, Node* b);
 
 #endif //DCTC_ALGORITHMS_CONNECTIVITY_UTILS_H_

@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cassert>
 #include <vector>
 #include <unordered_map>
 
@@ -185,6 +186,13 @@ bool CommunicationChecker::checkConnectivityAndAngle(const MSTGraph* MST_graph) 
 }
 
 bool CommunicationChecker::checkConnectivityAngleAndRange(const MSTGraph* MST_graph) {
-    return checkConnectivity(MST_graph) && checkSymmetricConnectivity(MST_graph)
-           && checkAngle(MST_graph) && checkRange(MST_graph);
+    bool connectivity_OK = checkConnectivity(MST_graph);
+    bool symmetric_connectivity_OK = checkSymmetricConnectivity(MST_graph);
+    bool angle_OK = checkAngle(MST_graph);
+    bool range_OK = checkRange(MST_graph);
+    assert(connectivity_OK);
+    assert(symmetric_connectivity_OK);
+    assert(angle_OK);
+    assert(range_OK);
+    return connectivity_OK && symmetric_connectivity_OK && angle_OK && range_OK;
 }

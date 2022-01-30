@@ -15,6 +15,8 @@ void SimpleRelaysAlg::init(long double r_c, long double theta_c) {
 
     terminals_ = MST_graph_->getNodes();
     n_total_nodes_omni_ = MST_graph_->getNTotalNodesOmni();
+    n_long_or_medium_edges_ = 0;
+    n_short_edges_ = 0;
     std::cout << MST_graph_->getMaximumMSTEdgeLength() << ' ' << r_c_ << ' ' << n_total_nodes_omni_ << '\n';
 }
 
@@ -23,7 +25,7 @@ SimpleRelaysAlg::SimpleRelaysAlg(MSTGraph* MST_graph, long double r_c, long doub
     init(r_c, theta_c);
 }
 
-bool SimpleRelaysAlg::isShortEdge(Edge* edge) const {return !isLongEdge(edge);}
+bool SimpleRelaysAlg::isShortEdge(Edge* edge) const {return !isLongOrMediumEdge(edge);}
 
 bool SimpleRelaysAlg::isLongOrMediumEdge(Edge* edge) const {return edge->length() > r_c_ + EPSILON;}
 
@@ -35,10 +37,9 @@ bool SimpleRelaysAlg::isMediumEdge(Edge* edge) const {
 }
 
 RelaysMSTGraph* SimpleRelaysAlg::solve() {
-    int n_long_or_medium_edges = 0;
     for(Edge* MST_edge : MST_edges_) {
         if (isLongOrMediumEdge(MST_edge)) {
-            ++n_long_or_medium_edges;
+            ++n_long_or_medium_edges_;
             Edge* edge;
             bool delete_edge_later = false;
             if (isMediumEdge(MST_edge)) edge = MST_edge;
@@ -66,23 +67,36 @@ RelaysMSTGraph* SimpleRelaysAlg::solve() {
                 delete edge;
             }
         } else {
+            ++n_short_edges_;
             Edge* communication_edge = addCommunicationEdge(MST_edge->getEndpoint1(), MST_edge->getEndpoint2());
             communication_edges_.push_back(communication_edge);
         }
     }
 
+    return statAndReturnRelaysMSTGraph();
+}
+
+RelaysMSTGraph* SimpleRelaysAlg::statAndReturnRelaysMSTGraph() {
+    nodes_ = terminals_ + relays_;
     int n_type1_relays = 0;
     int n_type2_relays = 0;
+    int n_type3_relays = 0;
+    int n_type4_relays = 0;
     for(Node* relay : relays_) {
         if (relay->getNodeType() == RELAY_DD_NODE_TYPE_1) ++n_type1_relays;
         else if (relay->getNodeType() == RELAY_DD_NODE_TYPE_2) ++n_type2_relays;
+        else if (relay->getNodeType() == RELAY_DD_NODE_TYPE_3) ++n_type3_relays;
+        else if (relay->getNodeType() == RELAY_DD_NODE_TYPE_4) ++n_type4_relays;
     }
-    assert(n_type1_relays + n_type2_relays == relays_.size());
-    int n = terminals_.size();
-    std::cout << "Check size: " << n << '\n';
-    std::cout << "Type 1: " << n_type1_relays << ' ' << 2*n_long_or_medium_edges << '\n';
+    assert(n_type1_relays + n_type2_relays + n_type3_relays + n_type4_relays == relays_.size());
+    int n = nodes_.size();
+    std::cout << "Num total nodes: " << n << '\n';
+    std::cout << "Terminals = " << terminals_.size() << ", Relays = " << relays_.size() << '\n';
+    std::cout << "Type 1: " << n_type1_relays << ' ' << 2*n_long_or_medium_edges_ << '\n';
     std::cout << "Type 2: " << n_type2_relays << ' ' << 3*(n_total_nodes_omni_ - terminals_.size()) << '\n';
-    nodes_ = terminals_ + relays_;
+    std::cout << "Type 3: " << n_type3_relays << ' ' << 2*n_long_or_medium_edges_ << '\n';
+    std::cout << "Type 4: " << n_type4_relays << ' ' << 3*n_short_edges_ << '\n';
+
     return new RelaysMSTGraph(nodes_, graph_node_type_, r_c_, theta_c_, communication_edges_, n_total_nodes_omni_);
 }
 

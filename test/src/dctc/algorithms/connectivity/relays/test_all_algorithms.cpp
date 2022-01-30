@@ -44,6 +44,7 @@ TEST(TestSaveGraph, Test1)
     std::cout << "Done SetUp()\n";
 
     /* Aschner */
+    std::cout << "\n-----------------------------Aschner--------------------------------------------\n";
     MSTGraphAschner* MST_graph_Aschner_ptr = new MSTGraphAschner(MST_graph_ptr);
     MSTGraph* result_MST_graph_Aschner_ptr = MST_graph_Aschner_ptr->doAllSteps();
     SimpleRelaysAlg* simple_relays_alg_Aschner = new SimpleRelaysAlg(result_MST_graph_Aschner_ptr, r_c, theta_c);
@@ -53,6 +54,7 @@ TEST(TestSaveGraph, Test1)
     relays_MST_graph_Aschner->save(save_dir + "relays_mst_graph_Aschner.txt");
 
     /* Tran */
+    std::cout << "\n-----------------------------Tran-----------------------------------------------\n";
     MSTGraphTran* MST_graph_Tran_ptr = new MSTGraphTran(MST_graph_ptr);
     MSTGraph* result_MST_graph_Tran_ptr = MST_graph_Tran_ptr->doAllSteps();
     SimpleRelaysAlg* simple_relays_alg_Tran = new SimpleRelaysAlg(result_MST_graph_Tran_ptr, r_c, theta_c);
@@ -61,13 +63,17 @@ TEST(TestSaveGraph, Test1)
     std::cout << "Tran's beta = " << relays_MST_graph_Tran->getBeta() << '\n';
     relays_MST_graph_Tran->save(save_dir + "relays_mst_graph_Tran.txt");
 
-    /* Lam_SEF */
+    /* Lam_LEF */
+    std::cout << "\n-----------------------------Lam_LEF--------------------------------------------\n";
     LongEdgeFirstRelaysAlg* long_edge_first_relays_alg = new LongEdgeFirstRelaysAlg(
         MST_graph_ptr, r_c, theta_c);
     RelaysMSTGraph* relays_MST_graph_Lam_LEF = long_edge_first_relays_alg->solve();
     ASSERT_TRUE(CommunicationChecker::checkConnectivityAngleAndRange(relays_MST_graph_Lam_LEF));
     std::cout << "Lam_LEF's beta = " << relays_MST_graph_Lam_LEF->getBeta() << '\n';
     relays_MST_graph_Lam_LEF->save(save_dir + "relays_mst_graph_Lam_LEF.txt");
+
+    /* Lam_SEF */
+    std::cout << "\n-----------------------------Lam_SEF--------------------------------------------\n";
 
     /* Write result */
     logger.append("n_total_omni = %d\n", MST_graph_ptr->getNTotalNodesOmni());

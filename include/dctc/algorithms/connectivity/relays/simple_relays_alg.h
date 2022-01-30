@@ -25,6 +25,8 @@ protected:
     std::vector<Node*> relays_;
     std::vector<Node*> nodes_;
     std::vector<Edge*> communication_edges_;
+    int n_long_or_medium_edges_;
+    int n_short_edges_;
 
     virtual void init(long double r_c, long double theta_c);
     virtual void connectTerminalsWithType1Relays(
@@ -41,6 +43,8 @@ protected:
         Edge* medium_edge, GraphNodeType graph_node_type) const;
     virtual SteinerizeLongOrMediumEdgeResult_LEF steinerizeLongOrMediumEdge(
         Edge* long_or_medium_edge, GraphNodeType graph_node_type);
+
+    RelaysMSTGraph* statAndReturnRelaysMSTGraph();
 
 public:
     SimpleRelaysAlg();
