@@ -20,8 +20,8 @@ void Node::draw(CImg<unsigned char>& img) {
     }
     else if (node_type_ == 8) color = draw_utils::GREEN; // type1 relay
     else if (node_type_ == 9) color = draw_utils::YELLOW; // type2 relay
-    else if (node_type_ == 10) color = draw_utils::CYAN; // type3 relay
-    else if (node_type_ == 11) color = draw_utils::BLUE; // type4 (short edge) relay
+    else if (node_type_ == 10) color = draw_utils::BLUE; // type3 (short edge) relay
+    else if (node_type_ == 11) color = draw_utils::CYAN; // type4 relay
 
     img.draw_circle(x, y, node_size, color);
     
