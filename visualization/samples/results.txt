@@ -2,3 +2,4 @@ n_total_omni = 21
 Aschner: 73 3.476
 Tran: 84 4.000
 Lam_LEF: 58 2.762
+Lam_SEF: 62 2.952
