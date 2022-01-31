@@ -38,7 +38,7 @@ TEST(TestRelaysMSTGraphAschnerTranLam, TestFixedRS)
 
     std::string filename = PROJECT_ROOT_PATH + "/results/Aschner_Tran_Lam.csv";
     Logger logger(filename);
-    logger.write(",Aschner,Tran,Lam_LEF\n");
+    logger.write(",Aschner,Tran,Lam_LEF,Lam_SEF\n");
 
     for(long double r_c = 10; r_c <= 100; r_c += 10) {
         long double total_beta_Aschner = 0.0;

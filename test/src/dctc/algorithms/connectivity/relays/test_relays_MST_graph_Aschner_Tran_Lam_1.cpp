@@ -38,7 +38,7 @@ TEST(TestRelaysMSTGraphAschnerTranLam_1, TestFixedRS)
 
     std::string filename = PROJECT_ROOT_PATH + "/results/Aschner_Tran_Lam_1_r_s_pi_3.csv";
     Logger logger(filename);
-    logger.write(",beta_Aschner,beta_Tran,beta_Lam_LEF,n_total_omni,n_total_Aschner,n_total_Tran,n_total_Lam_LEF\n");
+    logger.write(",beta_Aschner,beta_Tran,beta_Lam_LEF,beta_Lam_SEF,n_total_omni,n_total_Aschner,n_total_Tran,n_total_Lam_LEF,n_total_Lam_SEF\n");
 
     for(long double r_c = 10; r_c <= 10; r_c += 10) {
         long double total_beta_Aschner = 0.0;
