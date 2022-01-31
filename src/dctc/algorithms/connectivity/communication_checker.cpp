@@ -5,6 +5,7 @@
 
 #include "geometric_primitives/geom2D.h"
 #include "dctc/utils.h"
+#include "dctc/algorithms/connectivity/utils.h"
 #include "dctc/algorithms/connectivity/communication_checker.h"
 
 
@@ -57,8 +58,7 @@ bool CommunicationChecker::checkSymmetricConnectivity(const MSTGraph* MST_graph)
 
 bool CommunicationChecker::checkSymmetricConnectivityOneNode(MSTNode* node) {
     for(Node* adj_node : node->getMSTEdgeAdjNodes()) {
-        if (!node->canCoverOtherNodeByCommunicationAntenna(adj_node)
-                || !adj_node->canCoverOtherNodeByCommunicationAntenna(node)) {
+        if (!canTwoNodesConnectEachOther(node, adj_node)) {        
             std::cout << "BUG: " << __PRETTY_FUNCTION__ << '\n';
             Sector* sA = (Sector*) node->getCommunicationAntenna();
             Sector* sB = (Sector*) adj_node->getCommunicationAntenna();
@@ -76,8 +76,7 @@ bool CommunicationChecker::checkSymmetricConnectivityOneNode(MSTNode* node) {
 
 bool CommunicationChecker::checkSymmetricConnectivityOneNode1(MSTNode* node) {
     for(Node* adj_node : node->getCommunicationEdgeAdjNodes()) {
-        if (!node->canCoverOtherNodeByCommunicationAntenna(adj_node)
-                || !adj_node->canCoverOtherNodeByCommunicationAntenna(node)) {
+        if (!canTwoNodesConnectEachOther(node, adj_node)) {        
             std::cout << "BUG: " << __PRETTY_FUNCTION__ << '\n';
             Sector* sA = (Sector*) node->getCommunicationAntenna();
             Sector* sB = (Sector*) adj_node->getCommunicationAntenna();

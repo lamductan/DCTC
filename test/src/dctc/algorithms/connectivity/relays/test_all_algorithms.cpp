@@ -11,6 +11,7 @@
 #include "dctc/algorithms/connectivity/communication_checker.h"
 #include "dctc/algorithms/connectivity/relays/simple_relays_alg.h"
 #include "dctc/algorithms/connectivity/Lam/long_edge_first_relays_alg.h"
+#include "dctc/algorithms/connectivity/Lam/short_edge_first_relays_alg.h"
 
 
 TEST(TestSaveGraph, Test1)
@@ -74,6 +75,12 @@ TEST(TestSaveGraph, Test1)
 
     /* Lam_SEF */
     std::cout << "\n-----------------------------Lam_SEF--------------------------------------------\n";
+    ShortEdgeFirstRelaysAlg* short_edge_first_relays_alg = new ShortEdgeFirstRelaysAlg(
+        MST_graph_ptr, r_c, theta_c);
+    RelaysMSTGraph* relays_MST_graph_Lam_SEF = short_edge_first_relays_alg->solve();
+    ASSERT_TRUE(CommunicationChecker::checkConnectivityAngleAndRange(relays_MST_graph_Lam_SEF));
+    std::cout << "Lam_SEF's beta = " << relays_MST_graph_Lam_SEF->getBeta() << '\n';
+    relays_MST_graph_Lam_SEF->save(save_dir + "relays_mst_graph_Lam_SEF.txt");
 
     /* Write result */
     logger.append("n_total_omni = %d\n", MST_graph_ptr->getNTotalNodesOmni());
@@ -86,7 +93,11 @@ TEST(TestSaveGraph, Test1)
     logger.append(
         "Lam_LEF: %d %.3f\n",
         relays_MST_graph_Lam_LEF->getNumTotalNodes(), (double) relays_MST_graph_Lam_LEF->getBeta());
+    logger.append(
+        "Lam_SEF: %d %.3f\n",
+        relays_MST_graph_Lam_SEF->getNumTotalNodes(), (double) relays_MST_graph_Lam_SEF->getBeta());
 
+    /* Free memory */
     delete MST_graph_ptr;
 
     delete MST_graph_Aschner_ptr;
@@ -98,6 +109,12 @@ TEST(TestSaveGraph, Test1)
     delete result_MST_graph_Tran_ptr;
     delete simple_relays_alg_Tran;
     delete relays_MST_graph_Tran;
+
+    delete long_edge_first_relays_alg;
+    delete relays_MST_graph_Lam_LEF;
+
+    delete short_edge_first_relays_alg;
+    delete relays_MST_graph_Lam_SEF;
 
     for(Node* coverage_sensor : coverage_sensors)
         delete coverage_sensor;

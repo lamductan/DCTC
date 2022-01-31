@@ -11,6 +11,7 @@
 #include "dctc/algorithms/connectivity/communication_checker.h"
 #include "dctc/algorithms/connectivity/relays/simple_relays_alg.h"
 #include "dctc/algorithms/connectivity/Lam/long_edge_first_relays_alg.h"
+#include "dctc/algorithms/connectivity/Lam/short_edge_first_relays_alg.h"
 
 
 TEST(TestMSTGraphAschnerTranLam_1, TestFixedRS)
@@ -40,14 +41,15 @@ TEST(TestMSTGraphAschnerTranLam_1, TestFixedRS)
     logger.write(",beta_Aschner,beta_Tran,beta_Lam_LEF,n_total_omni,n_total_Aschner,n_total_Tran,n_total_Lam_LEF\n");
 
     for(long double r_c = 10; r_c <= 10; r_c += 10) {
-
         long double total_beta_Aschner = 0.0;
         long double total_beta_Tran = 0.0;
         long double total_beta_Lam_LEF = 0.0;
+        long double total_beta_Lam_SEF = 0.0;
         int n_total_nodes_omni = 0;
         int n_total_nodes_Aschner = 0;
         int n_total_nodes_Tran = 0;
         int n_total_nodes_Lam_LEF = 0;
+        int n_total_nodes_Lam_SEF = 0;
 
         std::cout << "\n===========================================================\n";
         for(int i = 0; i < n_tests; ++i) {
@@ -107,10 +109,18 @@ TEST(TestMSTGraphAschnerTranLam_1, TestFixedRS)
             delete relays_MST_graph_Lam_LEF;
 
             /* Lam_SEF */
-            //TODO: add SEF
+            std::cout << "=========================Lam_SEF==============================\n";
+            ShortEdgeFirstRelaysAlg* short_edge_first_relays_alg = new ShortEdgeFirstRelaysAlg(
+                MST_graph_ptr, r_c, theta_c);
+            RelaysMSTGraph* relays_MST_graph_Lam_SEF = short_edge_first_relays_alg->solve();
+            ASSERT_TRUE(CommunicationChecker::checkConnectivityAngleAndRange(relays_MST_graph_Lam_SEF));
+            std::cout << "Lam_SEF's beta = " << relays_MST_graph_Lam_SEF->getBeta() << '\n';
+            total_beta_Lam_SEF += relays_MST_graph_Lam_SEF->getBeta();
+            n_total_nodes_Lam_SEF += relays_MST_graph_Lam_SEF->getNNodes();
+            delete short_edge_first_relays_alg;
+            delete relays_MST_graph_Lam_SEF;
 
             delete MST_graph_ptr;
-
             for(Node* coverage_sensor : coverage_sensors)
                 delete coverage_sensor;
         }
@@ -119,22 +129,27 @@ TEST(TestMSTGraphAschnerTranLam_1, TestFixedRS)
         long double average_beta_Aschner = total_beta_Aschner/n_tests;
         long double average_beta_Tran = total_beta_Tran/n_tests;
         long double average_beta_Lam_LEF = total_beta_Lam_LEF/n_tests;
+        long double average_beta_Lam_SEF = total_beta_Lam_SEF/n_tests;
         double average_n_total_nodes_omni = n_total_nodes_omni/n_tests;
         double average_n_total_nodes_Aschner = n_total_nodes_Aschner/n_tests;
         double average_n_total_nodes_Tran = n_total_nodes_Tran/n_tests;
         double average_n_total_nodes_Lam_LEF = n_total_nodes_Lam_LEF/n_tests;
+        double average_n_total_nodes_Lam_SEF = n_total_nodes_Lam_SEF/n_tests;
 
         std::cout << "Average Aschner's beta = " << average_beta_Aschner << '\n';
         std::cout << "Average Tran's beta    = " << average_beta_Tran << '\n';
         std::cout << "Average Lam_LEF's beta    = " << average_beta_Lam_LEF << '\n';
+        std::cout << "Average Lam_SEF's beta    = " << average_beta_Lam_SEF << '\n';
         std::cout << "Average total omni nodes = " << average_n_total_nodes_omni << '\n';
         std::cout << "Average total nodes by Aschner = " << average_n_total_nodes_Aschner << '\n';
         std::cout << "Average total nodes by Tran = " << average_n_total_nodes_Tran << '\n';
         std::cout << "Average total nodes by Lam_LEF = " << average_n_total_nodes_Lam_LEF << '\n';
+        std::cout << "Average total nodes by Lam_SEF = " << average_n_total_nodes_Lam_SEF << '\n';
 
-        logger.append("%d,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f\n", (int) r_c, 
-            (double) average_beta_Aschner, (double) average_beta_Tran, (double) average_beta_Lam_LEF,
+        logger.append("%d,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f\n", (int) r_c, 
+            (double) average_beta_Aschner, (double) average_beta_Tran, 
+            (double) average_beta_Lam_LEF, (double) average_beta_Lam_SEF,
             average_n_total_nodes_omni, average_n_total_nodes_Aschner, average_n_total_nodes_Tran,
-            average_n_total_nodes_Lam_LEF);
+            average_n_total_nodes_Lam_LEF, average_n_total_nodes_Lam_SEF);
     }
 }

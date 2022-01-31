@@ -44,16 +44,15 @@ void ShortEdgeFirstRelaysAlg::steinerizeAndOrientShortSubtree(MSTNodeLam* termin
         MSTNodeLam* adj_node = (MSTNodeLam*) it.first;
         Edge* edge = it.second;
         if (!isShortEdge(edge)) continue;
-        orientNodeToBisectorCoverNode(terminal, adj_node);
-        setNodeFixed(terminal);
-        std::cout << "Subtree " << *(Node*) terminal << '\n';
+        if (terminal->free_) {
+            orientNodeToBisectorCoverNode(terminal, adj_node);
+            setNodeFixed(terminal);
+        }
         dfsShortSubtree(adj_node, terminal, edge);
-        std::cout << "============================End subtree=============================\n\n";
     }
 }
 
 void ShortEdgeFirstRelaysAlg::dfsShortSubtree(MSTNodeLam* terminal, MSTNodeLam* parent, Edge* edge_to_parent) {
-    std::cout << *(Node*) terminal << '\n';
     SteinerizeShortEdgeResult steinerize_short_edge_result = steinerizeShortEdge(edge_to_parent, graph_node_type_);
     relays_ += steinerize_short_edge_result.type_4_relays;
     communication_edges_ += steinerize_short_edge_result.communication_edges;
@@ -107,25 +106,35 @@ SteinerizeShortEdgeResult ShortEdgeFirstRelaysAlg::steinerizeShortEdge(
 }
 
 Point2D ShortEdgeFirstRelaysAlg::findType3RelayPos(Node* terminal, Node* type_1_relay) {
-    std::cout << '\n' << __PRETTY_FUNCTION__ << '\n';
-    std::cout << *terminal << ' ' << *type_1_relay << '\n';
     Point2D A = terminal->getPoint2D();
     Sector* sA = (Sector*) terminal->getCommunicationAntenna();
     Point2D B = type_1_relay->getPoint2D();
     Sector* sB = (Sector*) type_1_relay->getCommunicationAntenna();
 
     Point2D type_3_relay_pos;
-    Point2D A1 = sA->getEndpoint1();
+    Point2D E1 = sA->getEndpoint1();
+    Point2D E2 = sA->getEndpoint2();
+    Point2D A1 = (A + E1) / 2;
+    Point2D A2 = (A + E2) / 2;
     if (sB->containsPoint2D(A1))
         type_3_relay_pos = A1;
-    else type_3_relay_pos = sA->getEndpoint2();
+    else { 
+        type_3_relay_pos = A2;
+        if (!sB->containsPoint2D(type_3_relay_pos)) {
+            std::cout << "BUG: " << __PRETTY_FUNCTION__ << '\n';
+            std::cout << *sA << '\n';
+            std::cout << *sB << '\n';
+            std::cout << type_3_relay_pos << '\n';
+            assert(false);
+        }
+    }
     assert(computeGeometricAngle(A, type_3_relay_pos, B) <= PI_2 + EPSILON*2.5);
+    assert(sA->containsPoint2D(type_3_relay_pos));
+    assert(sB->containsPoint2D(type_3_relay_pos));
     return type_3_relay_pos;
 }
 
 void ShortEdgeFirstRelaysAlg::connectTerminalWithType1Relays(MSTNodeLam* terminal) {
-    std::cout << '\n' << __PRETTY_FUNCTION__ << '\n';
-    std::cout << *terminal << '\n';
     std::vector<std::vector<Node*>> type_1_relays_connected_components 
         = findConnectedComponentsType1RelaysSurroundingTerminals(terminal->type_1_relays_);
     for(const std::vector<Node*>& component : type_1_relays_connected_components) {
@@ -136,6 +145,7 @@ void ShortEdgeFirstRelaysAlg::connectTerminalWithType1Relays(MSTNodeLam* termina
     int n_components = type_1_relays_connected_components.size();
     std::vector<bool> can_terminal_connect_components(n_components, false);
 
+    // Terminal is free, can orient it to connect with their type-1 relays
     if (terminal->free_) {
         if (n_components == 1) {
             Node* type_1_relay = type_1_relays_connected_components[0][0];
@@ -152,6 +162,7 @@ void ShortEdgeFirstRelaysAlg::connectTerminalWithType1Relays(MSTNodeLam* termina
         return;
     }
 
+    // Terminal is not free, must use at most two type-3 relays
     for(int i = 0; i < n_components; ++i) {
         const std::vector<Node*>& component = type_1_relays_connected_components[i];
         for(Node* node : component) {
@@ -162,47 +173,46 @@ void ShortEdgeFirstRelaysAlg::connectTerminalWithType1Relays(MSTNodeLam* termina
         }
     }
 
-    bool can_terminal_connect_all_components = true;
-    int cannot_connect_component_id = -1;
+    std::vector<int> id_components_cannot_connect;
     for(int i = 0; i < n_components; ++i)
         if (!can_terminal_connect_components[i]) {
-            can_terminal_connect_all_components = false;
-            cannot_connect_component_id = i;
-            break;
+            id_components_cannot_connect.push_back(i);
         }
 
-    if (can_terminal_connect_all_components) return;
+    int m = id_components_cannot_connect.size();
+    if (m == 0) return;
 
-    Node* type_1_relay = type_1_relays_connected_components[cannot_connect_component_id][0];
-    Point2D type_3_relay_pos = findType3RelayPos(terminal, type_1_relay);
-    Node* type_3_relay = createRelayNode(type_3_relay_pos, RELAY_DD_NODE_TYPE_3, graph_node_type_, r_c_, theta_c_);
-    orientNodeToCoverNodes(type_3_relay, {terminal, type_1_relay});
-    setNodeFixed(type_3_relay);
-    relays_.push_back(type_3_relay);
-    communication_edges_.push_back(addCommunicationEdge(terminal, type_3_relay));
-    communication_edges_.push_back(addCommunicationEdge(type_1_relay, type_3_relay));
+    int id_component = id_components_cannot_connect[0];
+    Node* type_1_relay = type_1_relays_connected_components[id_component][0];
+    Point2D type_3_relay_pos_1 = findType3RelayPos(terminal, type_1_relay);
+    Node* type_3_relay_1 = createRelayNode(type_3_relay_pos_1, RELAY_DD_NODE_TYPE_3, graph_node_type_, r_c_, theta_c_);
+    orientNodeToCoverNodes(type_3_relay_1, {terminal, type_1_relay});
+    setNodeFixed(type_3_relay_1);
+    relays_.push_back(type_3_relay_1);
+    communication_edges_.push_back(addCommunicationEdge(terminal, type_3_relay_1));
+    communication_edges_.push_back(addCommunicationEdge(type_1_relay, type_3_relay_1));
 
-    if (type_1_relays_connected_components.size() == 2) {
+    if (m == 2) {
         std::vector<Node*> leaders{type_1_relays_connected_components[0][0], type_1_relays_connected_components[1][0]};
         Point2D B = leaders[0]->getPoint2D();
         Sector* sB = (Sector*) leaders[0]->getCommunicationAntenna();
         Point2D C = leaders[1]->getPoint2D();
         Sector* sC = (Sector*) leaders[1]->getCommunicationAntenna();
-        Circle cA(terminal->getPoint2D(), r_c_);
+        Circle cA(terminal->getPoint2D(), r_c_/2);
         Line2D perpendicular_bisector_BC = Segment2D(B, C).getPerpendicularBisector();
         std::vector<Point2D> intersections = cA.findIntersectionsWithLine2D(perpendicular_bisector_BC);
         for(Point2D X : intersections) {
             if (sB->containsPoint2D(X) && sC->containsPoint2D(X)) {
                 assert(computeGeometricAngle(B, X, C) <= PI_2 + EPSILON*2.5);
-                Node* type_3_relay = createRelayNode(type_3_relay_pos, RELAY_DD_NODE_TYPE_3, graph_node_type_, r_c_, theta_c_);
-                orientNodeToCoverNodes(type_3_relay, {terminal, type_1_relay});
-                setNodeFixed(type_3_relay);
-                relays_.push_back(type_3_relay);
-                communication_edges_.push_back(addCommunicationEdge(leaders[0], type_3_relay));
-                communication_edges_.push_back(addCommunicationEdge(leaders[1], type_3_relay));
+                Node* type_3_relay_2 = createRelayNode(X, RELAY_DD_NODE_TYPE_3, graph_node_type_, r_c_, theta_c_);
+                orientNodeToCoverNodes(type_3_relay_2, leaders);
+                setNodeFixed(type_3_relay_2);
+                relays_.push_back(type_3_relay_2);
+                communication_edges_.push_back(addCommunicationEdge(leaders[0], type_3_relay_2));
+                communication_edges_.push_back(addCommunicationEdge(leaders[1], type_3_relay_2));
                 return;
             }
         }
+        assert(false);
     }
-    return;
 }

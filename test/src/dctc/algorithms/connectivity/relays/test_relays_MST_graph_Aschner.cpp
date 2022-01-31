@@ -33,10 +33,6 @@ protected:
             deterministic, seed);
         coverage_sensors = instance.putCoverageSensors(TRIVIAL_COVERAGE_ALG);
         MST_graph_ptr = Instance::constructMSTGraphCoverageSensors(coverage_sensors);
-        //long double min_MST_edge_length = MST_graph_ptr->getMinimumMSTEdgeLength();
-        //long double max_MST_edge_length = MST_graph_ptr->getMaximumMSTEdgeLength();
-        //DoubleGenerator generator(min_MST_edge_length, max_MST_edge_length, true, 1);
-        //r_c = generator.next();
         std::cout << "Done MST_graph_ptr" << '\n';
         std::cout << "r_c = " << r_c << '\n';
         std::cout << "Done SetUp()\n";
@@ -69,7 +65,7 @@ TEST(TestMSTGraphAschner1, TestRandomNondeterministic)
 {
     int n_tests = 50;
     bool deterministic = false;
-    long unsigned int seed = 1;
+    long unsigned int seed = time(NULL);
 
     int n_targets = 200;
     long double min_range = 0;
@@ -90,7 +86,7 @@ TEST(TestMSTGraphAschner1, TestRandomNondeterministic)
         instance = Instance(
             n_targets, min_range, max_range,
             node_type, r_s, r_c, theta_s, theta_c,
-            deterministic, seed);
+            deterministic, seed + i);
         coverage_sensors = instance.putCoverageSensors(TRIVIAL_COVERAGE_ALG);
         MST_graph_ptr = Instance::constructMSTGraphCoverageSensors(coverage_sensors);
         std::cout << "Done MST_graph_ptr" << '\n';

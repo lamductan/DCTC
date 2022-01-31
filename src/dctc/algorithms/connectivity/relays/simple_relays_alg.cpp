@@ -91,6 +91,7 @@ RelaysMSTGraph* SimpleRelaysAlg::statAndReturnRelaysMSTGraph() {
     assert(n_type1_relays + n_type2_relays + n_type3_relays + n_type4_relays == relays_.size());
     int n = nodes_.size();
     std::cout << "Num total nodes: " << n << '\n';
+    std::cout << "Num total omnidirection nodes: " << n_total_nodes_omni_ << '\n';
     std::cout << "Terminals = " << terminals_.size() << ", Relays = " << relays_.size() << '\n';
     std::cout << "Type 1: " << n_type1_relays << ' ' << 2*n_long_or_medium_edges_ << '\n';
     std::cout << "Type 2: " << n_type2_relays << ' ' << 3*(n_total_nodes_omni_ - terminals_.size()) << '\n';
