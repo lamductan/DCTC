@@ -61,7 +61,7 @@ TEST_F(TestRelaysMSTGraphTran, Test1)
     delete relays_MST_graph_Tran;
 }
 
-TEST(TestMSTGraphTran1, TestRandomNondeterministic)
+TEST(TestRelaysMSTGraphTran1, TestRandomNondeterministic)
 {
     int n_tests = 50;
     bool deterministic = false;

@@ -95,8 +95,8 @@ RelaysMSTGraph* SimpleRelaysAlg::statAndReturnRelaysMSTGraph() {
     std::cout << "Terminals = " << terminals_.size() << ", Relays = " << relays_.size() << '\n';
     std::cout << "Type 1: " << n_type1_relays << ' ' << 2*n_long_or_medium_edges_ << '\n';
     std::cout << "Type 2: " << n_type2_relays << ' ' << 3*(n_total_nodes_omni_ - terminals_.size()) << '\n';
-    std::cout << "Type 3: " << n_type3_relays << ' ' << 2*n_long_or_medium_edges_ << '\n';
-    std::cout << "Type 4: " << n_type4_relays << ' ' << 3*n_short_edges_ << '\n';
+    std::cout << "Type 3: " << n_type3_relays << ' ' << 3*n_short_edges_ << '\n';
+    std::cout << "Type 4: " << n_type4_relays << ' ' << 2*n_long_or_medium_edges_ << '\n';
 
     return new RelaysMSTGraph(nodes_, graph_node_type_, r_c_, theta_c_, communication_edges_, n_total_nodes_omni_);
 }

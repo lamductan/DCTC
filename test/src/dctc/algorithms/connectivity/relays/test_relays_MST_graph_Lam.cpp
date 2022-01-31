@@ -52,7 +52,6 @@ protected:
     }
 };
 
-/*
 TEST_F(TestRelaysMSTGraphLam, TestLongEdgeFirst1)
 {
     LongEdgeFirstRelaysAlg* long_edge_first_relays_alg = new LongEdgeFirstRelaysAlg(MST_graph_ptr, r_c, theta_c);
@@ -63,7 +62,6 @@ TEST_F(TestRelaysMSTGraphLam, TestLongEdgeFirst1)
     delete long_edge_first_relays_alg;
     delete relays_MST_graph_Lam;
 }
-*/
 
 TEST_F(TestRelaysMSTGraphLam, TestShortEdgeFirst1)
 {
@@ -77,7 +75,6 @@ TEST_F(TestRelaysMSTGraphLam, TestShortEdgeFirst1)
     delete relays_MST_graph_Lam;
 }
 
-/*
 TEST(TestRelaysMSTGraphLam_LongEdgeFirst, TestRandomNondeterministic)
 {
     int n_tests = 2;
@@ -130,7 +127,6 @@ TEST(TestRelaysMSTGraphLam_LongEdgeFirst, TestRandomNondeterministic)
     }
     std::cout << "Average Lam_LEF's beta = " << total_beta_Lam/n_tests << '\n';
 }
-*/
 
 TEST(TestRelaysMSTGraphLam_ShortEdgeFirst, TestRandomNondeterministic)
 {

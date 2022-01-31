@@ -46,7 +46,7 @@ TEST_F(SimpleRelaysAlgTest, TestSimpleRelaysAlg_LongEdges)
     for(Edge* edge : MST_graph->getMSTEdges()) {
         if (simple_relays_alg->isLongEdge(edge)) {
             SteinerizeLongOrMediumEdgeResult_LEF steinerize_long_edge_result_LEF =
-                simple_relays_alg->steinerizeLongEdges(edge);
+                simple_relays_alg->steinerizeLongOrMediumEdge(edge);
             std::cout << "Test steinerizing long edges\n"; 
             std::cout << "Type 1 relays:\n";
             print_vector_ptr<Node>(steinerize_long_edge_result_LEF.type_1_relays, '\n');
@@ -54,18 +54,6 @@ TEST_F(SimpleRelaysAlgTest, TestSimpleRelaysAlg_LongEdges)
             print_vector_ptr_new_line<Node>(steinerize_long_edge_result_LEF.type_2_relays, '\n');
             std::cout << "Communication Edges";
             print_vector_ptr_new_line<Edge>(steinerize_long_edge_result_LEF.communication_edges, '\n');
-
-            for(Node* type_1_relay : steinerize_long_edge_result_LEF.type_1_relays) delete type_1_relay;
-            for(Node* type_2_relay : steinerize_long_edge_result_LEF.type_2_relays) delete type_2_relay;
-            for(Edge* edge : steinerize_long_edge_result_LEF.communication_edges) delete edge;
         }
     } 
-}
-
-TEST_F(SimpleRelaysAlgTest, TestSimpleRelaysAlg_Solve)
-{
-    RelaysMSTGraph* relays_MST_graph = simple_relays_alg->solve();
-    std::cout << *relays_MST_graph << '\n';
-    ASSERT_TRUE(CommunicationChecker::checkConnectivityAngleAndRange(relays_MST_graph));
-    delete relays_MST_graph;
 }

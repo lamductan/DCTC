@@ -30,15 +30,15 @@ set(TESTS
     #"src/dctc/algorithms/connectivity/Aschner/test_MST_graph_Aschner.cpp"
 
     #"src/dctc/algorithms/connectivity/relays/test_relays_utils.cpp"
-    #"src/dctc/algorithms/connectivity/relays/test_simple_relays_alg.cpp"
-    #"src/dctc/algorithms/connectivity/relays/test_relays_MST_graph_Tran.cpp"
-    #"src/dctc/algorithms/connectivity/relays/test_relays_MST_graph_Aschner.cpp"
-    #"src/dctc/algorithms/connectivity/relays/test_relays_MST_graph_Aschner_and_Tran.cpp"
-    #"src/dctc/algorithms/connectivity/relays/test_relays_MST_graph_Aschner_and_Tran_1.cpp"
-    #"src/dctc/algorithms/connectivity/relays/test_relays_MST_graph_Lam.cpp"
+    "src/dctc/algorithms/connectivity/relays/test_simple_relays_alg.cpp"
+    "src/dctc/algorithms/connectivity/relays/test_relays_MST_graph_Tran.cpp"
+    "src/dctc/algorithms/connectivity/relays/test_relays_MST_graph_Aschner.cpp"
+    "src/dctc/algorithms/connectivity/relays/test_relays_MST_graph_Aschner_and_Tran.cpp"
+    "src/dctc/algorithms/connectivity/relays/test_relays_MST_graph_Aschner_and_Tran_1.cpp"
+    "src/dctc/algorithms/connectivity/relays/test_relays_MST_graph_Lam.cpp"
     "src/dctc/algorithms/connectivity/relays/test_relays_MST_graph_Aschner_Tran_Lam_1.cpp"
 
-    #"src/dctc/algorithms/connectivity/relays/test_all_algorithms.cpp"
+    "src/dctc/algorithms/connectivity/relays/test_all_algorithms.cpp"
 )
 set(TESTS_ALL
     "src/dctc/algorithms/connectivity/relays/test_relays_MST_graph_Aschner_Tran_Lam.cpp"

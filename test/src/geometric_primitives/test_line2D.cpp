@@ -90,10 +90,10 @@ TEST(TestLine2D, TestLine2D_distanceToPoint)
 {
     Line2D line2D_1 = Line2D::fromCoefficients(std::vector<long double>{2, 3, -13});
     Point2D p1(2, 1);
-    ASSERT_long double_EQ(line2D_1.distanceToPoint2D(p1), 6.0/sqrtl(13));
+    ASSERT_DOUBLE_EQ(line2D_1.distanceToPoint2D(p1), 6.0/sqrtl(13));
     Line2D line2D_2 = Line2D::fromCoefficients(std::vector<long double>{4, 3, -5});
     Point2D p2(2, 4);
-    ASSERT_long double_EQ(line2D_2.distanceToPoint2D(p2), 3);
+    ASSERT_DOUBLE_EQ(line2D_2.distanceToPoint2D(p2), 3);
 }
 
 TEST(TestLine2D, TestLine2D_distanceToLine)
@@ -102,7 +102,7 @@ TEST(TestLine2D, TestLine2D_distanceToLine)
     Line2D line2D_2 = Line2D::fromCoefficients(std::vector<long double>{4, 3, -5});
     ASSERT_TRUE(line2D_1.distanceToLine2D(line2D_2) == 0);
     Line2D line2D_3 = Line2D::fromCoefficients(std::vector<long double>{2, 3, -1});
-    ASSERT_long double_EQ(line2D_1.distanceToLine2D(line2D_3), 12.0/sqrtl(13));
+    ASSERT_DOUBLE_EQ(line2D_1.distanceToLine2D(line2D_3), 12.0/sqrtl(13));
 }
 
 TEST(TestLine2D, TestLine2D_getPointsOnObject)

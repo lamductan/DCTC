@@ -36,13 +36,11 @@ protected:
         std::vector<Edge*>& communication_edges) const;
     virtual SteinerizeLongOrMediumEdgeResult_LEF steinerizeLongOrMediumEdgesWithOrientation(
         Edge* edge, const std::pair<Point2D, Point2D>& type_1_relays_pos,
-        const std::vector<Point2D>& type_2_relays_pos, GraphNodeType graph_node_type) const;
+        const std::vector<Point2D>& type_2_relays_pos, GraphNodeType graph_node_type=MST_GRAPH_NODE) const;
     virtual SteinerizeLongOrMediumEdgeResult_LEF steinerizeLongEdges(
-        Edge* long_edge, GraphNodeType graph_node_type) const;
+        Edge* long_edge, GraphNodeType graph_node_type=MST_GRAPH_NODE) const;
     virtual SteinerizeLongOrMediumEdgeResult_LEF steinerizeMediumEdge(
-        Edge* medium_edge, GraphNodeType graph_node_type) const;
-    virtual SteinerizeLongOrMediumEdgeResult_LEF steinerizeLongOrMediumEdge(
-        Edge* long_or_medium_edge, GraphNodeType graph_node_type);
+        Edge* medium_edge, GraphNodeType graph_node_type=MST_GRAPH_NODE) const;
 
     RelaysMSTGraph* statAndReturnRelaysMSTGraph();
 
@@ -55,6 +53,8 @@ public:
     bool isLongOrMediumEdge(Edge* edge) const;
     bool isLongEdge(Edge* edge) const;
     bool isMediumEdge(Edge* edge) const;
+    virtual SteinerizeLongOrMediumEdgeResult_LEF steinerizeLongOrMediumEdge(
+        Edge* long_or_medium_edge, GraphNodeType graph_node_type=MST_GRAPH_NODE);
 
     GraphNodeType getGraphNodeType() const;
     long double getThetaC() const;

@@ -12,9 +12,9 @@
 #include "dctc/algorithms/connectivity/relays/simple_relays_alg.h"
 
 
-TEST(TestMSTGraphAschnerAndTran, TestFixedRS)
+TEST(TestRelaysMSTGraphAschnerAndTran, TestFixedRS)
 {
-    int n_tests = 100;
+    int n_tests = 10;
     long unsigned int seed = time(NULL);
 
     bool deterministic = false;
@@ -52,7 +52,7 @@ TEST(TestMSTGraphAschnerAndTran, TestFixedRS)
                 n_targets, min_range, max_range,
                 node_type, r_s, r_c, theta_s, theta_c,
                 deterministic, seed + i);
-            instance.save(instance_save_path);
+            //instance.save(instance_save_path);
             
             coverage_sensors = instance.putCoverageSensors(TRIVIAL_COVERAGE_ALG);
             MST_graph_ptr = Instance::constructMSTGraphCoverageSensors(coverage_sensors);

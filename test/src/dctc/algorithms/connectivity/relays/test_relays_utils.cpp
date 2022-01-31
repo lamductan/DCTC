@@ -18,7 +18,6 @@ protected:
 public:
 };
 
-/*
 TEST_F(RelaysUtilsTest, TestRelaysUtils_1)
 {
     std::pair<Point2D, Point2D> type_1_relays_pos = calculateRelaysType1Positions(segment2D, r_c);
@@ -41,7 +40,6 @@ TEST_F(RelaysUtilsTest, TestRelaysUtils_2)
     std::cout << "Type 2 relays position: ";
     print_vector<Point2D>(type_2_relays_pos, '\n');
 }
-*/
 
 TEST(RelaysUtilsTestShortEdgeRelays_TwoFixed, Test1)
 {

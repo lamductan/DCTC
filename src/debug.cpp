@@ -13,6 +13,7 @@
 #include "dctc/algorithms/connectivity/communication_checker.h"
 #include "dctc/algorithms/connectivity/relays/simple_relays_alg.h"
 #include "dctc/algorithms/connectivity/Lam/long_edge_first_relays_alg.h"
+#include "dctc/algorithms/connectivity/Lam/short_edge_first_relays_alg.h"
 
 
 void debug(char* path_cstr) {
@@ -64,7 +65,14 @@ void debug(char* path_cstr) {
     delete relays_MST_graph_Lam_LEF;
 
     /* Lam_SEF */
-    //TODO: add SEF
+    std::cout << "=========================Lam_SEF==============================\n";
+    ShortEdgeFirstRelaysAlg* short_edge_first_relays_alg = new ShortEdgeFirstRelaysAlg(
+        MST_graph_ptr, instance.getRC(), instance.getThetaC());
+    RelaysMSTGraph* relays_MST_graph_Lam_SEF = short_edge_first_relays_alg->solve();
+    assert(CommunicationChecker::checkConnectivityAngleAndRange(relays_MST_graph_Lam_SEF));
+    std::cout << "Lam_SEF's beta = " << relays_MST_graph_Lam_SEF->getBeta() << '\n';
+    delete short_edge_first_relays_alg;
+    delete relays_MST_graph_Lam_SEF;
 
     delete MST_graph_ptr;
 

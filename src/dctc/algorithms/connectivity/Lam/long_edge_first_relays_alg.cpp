@@ -13,14 +13,14 @@ LongEdgeFirstRelaysAlg::LongEdgeFirstRelaysAlg(MSTGraph* MST_graph, long double 
 
 RelaysMSTGraph* LongEdgeFirstRelaysAlg::solve() {
     // Step 1: Connect relay nodes on long edges
-    std::cout << "Step 1: Connect relay nodes on long edges\n";
+    std::cout << "Step 1: Put and Connect relay nodes (type-1 and type-2) on long edges\n";
     for(Edge* long_or_medium_edge : long_or_medium_edges_) {
         SteinerizeLongOrMediumEdgeResult_LEF steinerize_long_or_medium_edge_result = steinerizeLongOrMediumEdge(
             long_or_medium_edge, graph_node_type_);
     }
 
     // Step 2: Connect terminals to type-1 relay nodes
-    std::cout << "Step 2: Connect terminals to type-1 relay nodes\n";
+    std::cout << "Step 2: Connect terminals to their corresponding type-1 relays\n";
     for(Node* terminal_ : terminals_) {
         MSTNodeLam* terminal = (MSTNodeLam*) terminal_;
         if (terminal->type_1_relays_.empty()) continue;
@@ -29,10 +29,10 @@ RelaysMSTGraph* LongEdgeFirstRelaysAlg::solve() {
     }
 
     // Step 3: Connect terminals on short edges
-    std::cout << "Step 3: Connect terminals on short edges\n";
+    std::cout << "Step 3: Connect terminals on short edges by type-3 relays\n";
     for(Edge* short_edge : short_edges_) {
         SteinerizeShortEdgeResult steinerize_short_edge_result = steinerizeShortEdge(short_edge, graph_node_type_);
-        relays_ += steinerize_short_edge_result.type_4_relays;
+        relays_ += steinerize_short_edge_result.type_3_relays;
         communication_edges_ += steinerize_short_edge_result.communication_edges;
     }
 
@@ -83,16 +83,16 @@ SteinerizeShortEdgeResult LongEdgeFirstRelaysAlg::steinerizeShortEdge(
 
     if (terminal1->free_) std::swap(terminal1, terminal2);
 
-    std::vector<Point2D> type_4_relays_pos;
+    std::vector<Point2D> type_3_relays_pos;
     if (terminal2->free_) {
-        type_4_relays_pos = calculateShortEdgeRelaysPos_OneFree(
+        type_3_relays_pos = calculateShortEdgeRelaysPos_OneFree(
             (Sector*) terminal1->getCommunicationAntenna(), (Sector*) terminal2->getCommunicationAntenna());
     } else {
-        type_4_relays_pos = calculateShortEdgeRelaysPos_TwoNonFree_general(
+        type_3_relays_pos = calculateShortEdgeRelaysPos_TwoNonFree_general(
             (Sector*) terminal1->getCommunicationAntenna(), (Sector*) terminal2->getCommunicationAntenna());
     }
 
-    if (type_4_relays_pos.empty()) {
+    if (type_3_relays_pos.empty()) {
         if (terminal2->free_) {
             orientNodeToBisectorCoverNode(terminal2, terminal1);
             setNodeFixed(terminal2);
@@ -100,5 +100,5 @@ SteinerizeShortEdgeResult LongEdgeFirstRelaysAlg::steinerizeShortEdge(
         result.communication_edges.push_back(addCommunicationEdge(terminal1, terminal2));
         return result;
     }
-    return steinerizeShortEdgeWithOrientation(terminal1, terminal2, type_4_relays_pos, graph_node_type);
+    return steinerizeShortEdgeWithOrientation(terminal1, terminal2, type_3_relays_pos, graph_node_type);
 }

@@ -6,7 +6,7 @@
 
 
 struct SteinerizeShortEdgeResult {
-    std::vector<Node*> type_4_relays;
+    std::vector<Node*> type_3_relays;
     std::vector<Edge*> communication_edges;
 };
 
@@ -29,7 +29,7 @@ protected:
     std::vector<Edge*> connectType1RelaysInTheSameComponent(const std::vector<Node*>& component) const;
 
     SteinerizeShortEdgeResult steinerizeShortEdgeWithOrientation(
-        MSTNodeLam* terminal1, MSTNodeLam* terminal2, const std::vector<Point2D>& type_4_relays_pos,
+        MSTNodeLam* terminal1, MSTNodeLam* terminal2, const std::vector<Point2D>& type_3_relays_pos,
         GraphNodeType graph_node_type) const;
 
 public:

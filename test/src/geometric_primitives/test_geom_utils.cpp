@@ -12,7 +12,7 @@ TEST(TestGeomUtils, TestGetPointOnRayAtDistance)
     long double distance = sqrtl(3);
     Point2D p2 = getPointOnRayAtDistance(ray2D, distance);
     ASSERT_TRUE(ray2D.passesThroughPoint2D(p2));
-    ASSERT_long double_EQ(computeEuclidDistance(p1, p2), distance);
+    ASSERT_DOUBLE_EQ(computeEuclidDistance(p1, p2), distance);
 }
 
 TEST(TestGeomUtils, TestGetPointOnSegmentAtDistance)
@@ -23,10 +23,10 @@ TEST(TestGeomUtils, TestGetPointOnSegmentAtDistance)
     long double distance = sqrtl(5);
     Point2D p3 = getPointOnSegmentAtDistanceFromEndpoint1(segment2D, distance);
     ASSERT_TRUE(segment2D.passesThroughPoint2D(p3));
-    ASSERT_long double_EQ(computeEuclidDistance(p1, p3), distance);
+    ASSERT_DOUBLE_EQ(computeEuclidDistance(p1, p3), distance);
     Point2D p4 = getPointOnSegmentAtDistanceFromEndpoint2(segment2D, distance);
     ASSERT_TRUE(segment2D.passesThroughPoint2D(p4));
-    ASSERT_long double_EQ(computeEuclidDistance(p2, p4), distance);
+    ASSERT_DOUBLE_EQ(computeEuclidDistance(p2, p4), distance);
 }
 
 TEST(TestGeomUtils, TestGetLineParallel)

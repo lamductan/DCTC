@@ -6,7 +6,7 @@
 
 class ShortEdgeFirstRelaysAlg : public LongShortEdgeRelaysAlg {
 private:
-    static Point2D findType3RelayPos(Node* terminal, Node* type_1_relay);
+    static Point2D findType4RelayPos(Node* terminal, Node* type_1_relay);
 protected:
     void steinerizeAndOrientShortSubtree(MSTNodeLam* terminal);
     SteinerizeShortEdgeResult steinerizeShortEdge(Edge* short_edge, GraphNodeType graph_node_type) const;

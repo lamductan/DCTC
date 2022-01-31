@@ -13,7 +13,7 @@ TEST(TestRotation, TestRotation1)
     long double angle = 0.235;
     Point2D R = rotate(A, O, angle);
     long double angle1 = computeAngle(A, O, R);
-    ASSERT_long double_EQ(angle, angle1); 
+    ASSERT_DOUBLE_EQ(angle, angle1); 
 }
 
 TEST(TestRotation, TestRotation2)
@@ -23,5 +23,5 @@ TEST(TestRotation, TestRotation2)
     long double angle = TWO_PI;
     Point2D R = rotate(A, O, angle);
     long double angle1 = computeAngle(A, O, R);
-    ASSERT_long double_EQ(standardize_angle(angle), angle1); 
+    ASSERT_DOUBLE_EQ(standardize_angle(angle), angle1); 
 }

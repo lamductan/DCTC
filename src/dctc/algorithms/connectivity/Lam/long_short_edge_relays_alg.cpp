@@ -109,15 +109,15 @@ std::vector<Edge*> LongShortEdgeRelaysAlg::connectType1RelaysInTheSameComponent(
 }
 
 SteinerizeShortEdgeResult LongShortEdgeRelaysAlg::steinerizeShortEdgeWithOrientation(
-    MSTNodeLam* terminal1, MSTNodeLam* terminal2, const std::vector<Point2D>& type_4_relays_pos,
+    MSTNodeLam* terminal1, MSTNodeLam* terminal2, const std::vector<Point2D>& type_3_relays_pos,
     GraphNodeType graph_node_type
 ) const {
     SteinerizeShortEdgeResult result;
     std::vector<MSTNodeLam*> all_nodes;
     all_nodes.push_back(terminal1);
-    for(const Point2D& relay_pos : type_4_relays_pos) {
-        Node* relay_node = createRelayNode(relay_pos, RELAY_DD_NODE_TYPE_4, graph_node_type, r_c_, theta_c_);
-        result.type_4_relays.push_back(relay_node);
+    for(const Point2D& relay_pos : type_3_relays_pos) {
+        Node* relay_node = createRelayNode(relay_pos, RELAY_DD_NODE_TYPE_3, graph_node_type, r_c_, theta_c_);
+        result.type_3_relays.push_back(relay_node);
         all_nodes.push_back((MSTNodeLam*) relay_node);
     }
     all_nodes.push_back(terminal2);
@@ -125,9 +125,13 @@ SteinerizeShortEdgeResult LongShortEdgeRelaysAlg::steinerizeShortEdgeWithOrienta
         MSTNodeLam* cur_node = all_nodes[i];
         MSTNodeLam* prev_node = all_nodes[i - 1];
         MSTNodeLam* next_node = all_nodes[i + 1];
-        orientNodeToCoverNodes(cur_node, {prev_node, next_node});
+        long double orientation_angle = orientNodeToCoverNodes(cur_node, {prev_node, next_node});
+        assert(orientation_angle != -1);
         if (!cur_node->canCoverOtherNodeByCommunicationAntenna(next_node)) {
             std::cout << "BUG " << __PRETTY_FUNCTION__ << '\n';
+            std::cout << "orientation_angle = " << orientation_angle << '\n';
+            std::cout << dynamic_cast<Sector*>(
+                cur_node->getCommunicationAntenna())->calculateCriterion(next_node->getPoint2D()) << '\n';
             for(Node* node : all_nodes) {
                 std::cout << *node->getCommunicationAntenna() << '\n';
             }
@@ -139,7 +143,7 @@ SteinerizeShortEdgeResult LongShortEdgeRelaysAlg::steinerizeShortEdgeWithOrienta
         setNodeFixed(cur_node);
     }
 
-    Node* last_relay_node = result.type_4_relays.back();
+    Node* last_relay_node = result.type_3_relays.back();
     if (terminal2->free_) {
         orientNodeToBisectorCoverNode(terminal2, last_relay_node);
         setNodeFixed(terminal2);

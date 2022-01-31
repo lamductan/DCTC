@@ -14,7 +14,7 @@
 #include "dctc/algorithms/connectivity/Lam/short_edge_first_relays_alg.h"
 
 
-TEST(TestMSTGraphAschnerTranLam_1, TestFixedRS)
+TEST(TestRelaysMSTGraphAschnerTranLam_1, TestFixedRS)
 {
     int n_tests = 50;
     long unsigned int seed = time(NULL);

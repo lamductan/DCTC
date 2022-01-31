@@ -61,7 +61,7 @@ TEST_F(TestRelaysMSTGraphAschner, Test1)
     delete relays_MST_graph_Aschner;
 }
 
-TEST(TestMSTGraphAschner1, TestRandomNondeterministic)
+TEST(TestRelaysMSTGraphAschner1, TestRandomNondeterministic)
 {
     int n_tests = 50;
     bool deterministic = false;

@@ -92,7 +92,7 @@ long double Sector::calculateCriterion(const Point2D& p) const {
 bool Sector::containsPoint2DWithInfRange(const Point2D& p) const {
     long double criterion = calculateCriterion(p);
     //std::cout << "Check inside sector: " << *this << ", " << p << ' ' << criterion << '\n';
-    return criterion >= -EPSILON;
+    return criterion >= -EPSILON*20;
 }
 
 std::vector<Point2D> Sector::findIntersectionsSectorWithLine2D(const Line2D& line2D) const {

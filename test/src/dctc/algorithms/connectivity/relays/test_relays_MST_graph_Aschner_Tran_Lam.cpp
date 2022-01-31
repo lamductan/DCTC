@@ -14,9 +14,9 @@
 #include "dctc/algorithms/connectivity/Lam/short_edge_first_relays_alg.h"
 
 
-TEST(TestMSTGraphAschnerTranLam, TestFixedRS)
+TEST(TestRelaysMSTGraphAschnerTranLam, TestFixedRS)
 {
-    int n_tests = 100;
+    int n_tests = 10; //100
     long unsigned int seed = time(NULL);
 
     bool deterministic = false;

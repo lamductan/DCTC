@@ -12,7 +12,7 @@
 #include "dctc/algorithms/connectivity/relays/simple_relays_alg.h"
 
 
-TEST(TestMSTGraphAschnerAndTran1, TestFixedRS)
+TEST(TestRelaysMSTGraphAschnerAndTran1, TestFixedRS)
 {
     int n_tests = 1;
     long unsigned int seed = time(NULL);
