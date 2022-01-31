@@ -52,7 +52,7 @@ def main(timestamp):
         with open(os.path.join(results_dir, "results_all_" + test_type + ".csv"), "w") as f:
             for theta_s in a.keys():
                 f.write("theta_s = " + str(theta_s) + '\n')
-                f.write(',beta_Aschner,beta_Tran,beta_Lam_LEF,n_total_omni,n_total_Aschner,n_total_Tran,n_total_Lam_LEF\n')
+                f.write(',beta_Aschner,beta_Tran,beta_Lam_LEF,beta_Lam_SEF,n_total_omni,n_total_Aschner,n_total_Tran,n_total_Lam_LEF,n_total_Lam_SEF\n')
                 b = a[theta_s]
                 for r in sorted(b.keys()):
                     f.write(str(r) + ',' + b[r] + '\n')
