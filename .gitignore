@@ -12,4 +12,4 @@ visualization/visualize
 *.gch
 visualization/samples_*
 visualization/degub_SEF.sh
-!**/.gitkeep
+!data/.gitkeep
