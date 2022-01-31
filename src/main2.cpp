@@ -39,7 +39,7 @@ void test6(long double theta_s, long double theta_c, long double r_s, long doubl
     std::vector<Node*> coverage_sensors; 
 
     Logger logger(out_path);
-    logger.write(",beta_Aschner,beta_Tran,beta_Lam_LEF,n_total_omni,n_total_Aschner,n_total_Tran,n_total_Lam_LEF\n");
+    logger.write(",beta_Aschner,beta_Tran,beta_Lam_LEF,beta_Lam_SEF,n_total_omni,n_total_Aschner,n_total_Tran,n_total_Lam_LEF,n_total_Lam_SEF\n");
     std::string instance_save_path = PROJECT_ROOT_PATH + "/data/" + out_filename + ".dat";
 
     long double total_beta_Aschner = 0.0;
