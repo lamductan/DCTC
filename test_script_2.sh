@@ -2,3 +2,4 @@
 
 ./build/main > logs/out_$rc.txt 2> logs/err_$rc.txt &
 echo "Done"
+
