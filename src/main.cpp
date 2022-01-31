@@ -327,7 +327,7 @@ void testFixed_RC(
 
 int main(int argc, char** argv) {
     if (argc == 1) {
-        int n_tests = 100;
+        int n_tests = 10;
         for(int r_c = 10; r_c <= 100; r_c += 10) {
             test5(r_c, n_tests);
         }

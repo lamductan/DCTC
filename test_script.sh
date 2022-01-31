@@ -63,4 +63,7 @@ echo "Done Fixed RC. Results are saved in results/$timestamp/results_all_fixed_r
 
 ## Merge results
 python3 merge_results.py $timestamp
+
+echo "Done Fixed RS. Results are saved in results/$timestamp/fixed_rs.csv"
+echo "Done Fixed RC. Results are saved in results/$timestamp/results_all_fixed_rc.csv"
 echo "All done"

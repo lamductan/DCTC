@@ -46,3 +46,6 @@ Blue: Type-4 (short edge) relays
 
 **Lam's LongEdgeFirst algorithm: 58 sensors are needed, beta = 2.762**
 ![alt text](visualization/samples/relays_mst_graph_Lam_LEF.png)
+
+**Lam's ShortEdgeFirst algorithm: 62 sensors are needed, beta = 2.952**
+![alt text](visualization/samples/relays_mst_graph_Lam_SEF.png)

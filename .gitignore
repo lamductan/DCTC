@@ -5,11 +5,11 @@ third_party
 config
 !.gitignore
 results_1
-data
+data/**
+!data/.gitkeep
 logs
 results
 visualization/visualize
 *.gch
 visualization/samples_*
 visualization/degub_SEF.sh
-!data/.gitkeep
