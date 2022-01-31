@@ -28,7 +28,6 @@ void Node::draw(CImg<unsigned char>& img) {
     if (node_type_ == 4) {
         draw_utils::draw_sector_1(img, x, y, r, angle_, 0, color, FILL_OPACITY);
     }
-    
 }
 
 /* Graph */
