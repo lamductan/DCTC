@@ -4,7 +4,6 @@ third_party
 !third_party.zip
 config
 !.gitignore
-!**.gitkeep
 results_1
 data
 logs
@@ -13,3 +12,4 @@ visualization/visualize
 *.gch
 visualization/samples_*
 visualization/degub_SEF.sh
+!**/.gitkeep
