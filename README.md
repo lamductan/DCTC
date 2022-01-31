@@ -9,6 +9,7 @@ If you want to visualize the graph, you need to install `X11` (to use [CImg](htt
 ## To build and run
 ```
 git clone https://github.com/lamductan/DCTC
+cd DCTC
 unzip third_party.zip
 mkdir build
 cd build
