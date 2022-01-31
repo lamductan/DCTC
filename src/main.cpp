@@ -136,11 +136,11 @@ void test5(long double r_c, int n_tests) {
     long double average_beta_Tran = total_beta_Tran/n_tests;
     long double average_beta_Lam_LEF = total_beta_Lam_LEF/n_tests;
     long double average_beta_Lam_SEF = total_beta_Lam_SEF/n_tests;
-    double average_n_total_nodes_omni = n_total_nodes_omni/n_tests;
-    double average_n_total_nodes_Aschner = n_total_nodes_Aschner/n_tests;
-    double average_n_total_nodes_Tran = n_total_nodes_Tran/n_tests;
-    double average_n_total_nodes_Lam_LEF = n_total_nodes_Lam_LEF/n_tests;
-    double average_n_total_nodes_Lam_SEF = n_total_nodes_Lam_SEF/n_tests;
+    double average_n_total_nodes_omni = 1.0*n_total_nodes_omni/n_tests;
+    double average_n_total_nodes_Aschner = 1.0*n_total_nodes_Aschner/n_tests;
+    double average_n_total_nodes_Tran = 1.0*n_total_nodes_Tran/n_tests;
+    double average_n_total_nodes_Lam_LEF = 1.0*n_total_nodes_Lam_LEF/n_tests;
+    double average_n_total_nodes_Lam_SEF = 1.0*n_total_nodes_Lam_SEF/n_tests;
 
     std::cout << "Average Aschner's beta = " << average_beta_Aschner << '\n';
     std::cout << "Average Tran's beta    = " << average_beta_Tran << '\n';
@@ -273,10 +273,10 @@ void test6(long double theta_s, long double theta_c, long double r_s, long doubl
     long double average_beta_Lam_LEF = total_beta_Lam_LEF/n_tests;
     long double average_beta_Lam_SEF = total_beta_Lam_SEF/n_tests;
     double average_n_total_nodes_omni = n_total_nodes_omni/n_tests;
-    double average_n_total_nodes_Aschner = n_total_nodes_Aschner/n_tests;
-    double average_n_total_nodes_Tran = n_total_nodes_Tran/n_tests;
-    double average_n_total_nodes_Lam_LEF = n_total_nodes_Lam_LEF/n_tests;
-    double average_n_total_nodes_Lam_SEF = n_total_nodes_Lam_SEF/n_tests;
+    double average_n_total_nodes_Aschner = 1.0*n_total_nodes_Aschner/n_tests;
+    double average_n_total_nodes_Tran = 1.0*n_total_nodes_Tran/n_tests;
+    double average_n_total_nodes_Lam_LEF = 1.0*n_total_nodes_Lam_LEF/n_tests;
+    double average_n_total_nodes_Lam_SEF = 1.0*n_total_nodes_Lam_SEF/n_tests;
 
     std::cout << "Average Aschner's beta = " << average_beta_Aschner << '\n';
     std::cout << "Average Tran's beta    = " << average_beta_Tran << '\n';
