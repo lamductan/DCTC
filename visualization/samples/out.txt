@@ -1,0 +1,103 @@
+Running main() from /home/tdlam/dev/phd/research/2021/2021-09b/DCTC/third_party/googletest/googletest/src/gtest_main.cc
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from TestSaveGraph
+[ RUN      ] TestSaveGraph.Test1
+seed = 1
+Strip coverage alg: OK. There are 20 targets and 17 sensors.
+Done build MST in 0s
+Done MST_graph_ptr
+Done SetUp()
+
+-----------------------------Aschner--------------------------------------------
+
+Orient and connect inside each group
+
+Intergroup orientation and connection
+
+Orient and connect remain nodes
+Done build MST in 0s
+Done MSTGraph* MSTGraphAschner::doAllSteps() in 0s
+Result: OK. Returned MST Graph satisfies both symmetric connectivity and angle requirements.
+17.4929 5 21
+Num total nodes: 73
+Num total omnidirection nodes: 21
+Terminals = 17, Relays = 56
+Type 1: 22 22
+Type 2: 34 12
+Type 3: 0 15
+Type 4: 0 22
+Done build MST in 0s
+save at /home/tdlam/dev/phd/research/2021/2021-09b/DCTC/visualization/samples_1/relays_mst_graph_Lam_SEF.txt
+Result: OK. Returned Relays MST Graph satisfies symmetric connectivity, angle and range requirements.
+beta = 73/21 = 3.47619
+Aschner's beta = 3.47619
+
+-----------------------------Tran-----------------------------------------------
+
+Orient and connect inside each group
+
+Intergroup orientation and connection
+
+Orient and connect remain nodes
+Done build MST in 0s
+Done MSTGraph* MSTGraphTran::doAllSteps() in 0s
+Result: OK. Returned MST Graph satisfies both symmetric connectivity and angle requirements.
+14.2829 5 21
+Num total nodes: 84
+Num total omnidirection nodes: 21
+Terminals = 17, Relays = 67
+Type 1: 28 28
+Type 2: 39 12
+Type 3: 0 6
+Type 4: 0 28
+Done build MST in 0s
+save at /home/tdlam/dev/phd/research/2021/2021-09b/DCTC/visualization/samples_1/relays_mst_graph_Lam_SEF.txt
+Result: OK. Returned Relays MST Graph satisfies symmetric connectivity, angle and range requirements.
+beta = 84/21 = 4
+Tran's beta = 4
+
+-----------------------------Lam_LEF--------------------------------------------
+7.14143 5 21
+n_long_or_medium_edges = 4, n_short_edges = 12
+Step 1: Put and Connect relay nodes (type-1 and type-2) on long edges
+Step 2: Connect terminals to their corresponding type-1 relays
+Step 3: Connect terminals on short edges by type-3 relays
+Num total nodes: 58
+Num total omnidirection nodes: 21
+Terminals = 17, Relays = 41
+Type 1: 8 8
+Type 2: 12 12
+Type 3: 21 36
+Type 4: 0 8
+Done build MST in 0s
+save at /home/tdlam/dev/phd/research/2021/2021-09b/DCTC/visualization/samples_1/relays_mst_graph_Lam_SEF.txt
+Result: OK. Returned Relays MST Graph satisfies symmetric connectivity, angle and range requirements.
+beta = 58/21 = 2.7619
+Lam_LEF's beta = 2.7619
+
+-----------------------------Lam_SEF--------------------------------------------
+7.14143 5 21
+n_long_or_medium_edges = 4, n_short_edges = 12
+Step 1: Connect short subtrees
+Step 2: Connect relay nodes on long edges
+Step 3: Connect terminals to type-1 relay nodes
+Num total nodes: 62
+Num total omnidirection nodes: 21
+Terminals = 17, Relays = 45
+Type 1: 8 8
+Type 2: 12 12
+Type 3: 20 36
+Type 4: 5 8
+Done build MST in 0s
+save at /home/tdlam/dev/phd/research/2021/2021-09b/DCTC/visualization/samples_1/relays_mst_graph_Lam_SEF.txt
+Result: OK. Returned Relays MST Graph satisfies symmetric connectivity, angle and range requirements.
+beta = 62/21 = 2.95238
+Lam_SEF's beta = 2.95238
+Done TearDown
+[       OK ] TestSaveGraph.Test1 (61 ms)
+[----------] 1 test from TestSaveGraph (61 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (61 ms total)
+[  PASSED  ] 1 test.

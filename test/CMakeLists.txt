@@ -40,18 +40,25 @@ set(TESTS
 
     "src/dctc/algorithms/connectivity/relays/test_all_algorithms.cpp"
 )
+
 set(TESTS_ALL
     "src/dctc/algorithms/connectivity/relays/test_relays_MST_graph_Aschner_Tran_Lam.cpp"
 )
 
+set(TESTS_VISUALIZATION
+    "src/dctc/algorithms/connectivity/relays/test_all_algorithms.cpp"
+)
+
 add_executable(tests ${TESTS})
 add_executable(tests_all ${TESTS_ALL})
+add_executable(tests_visualization ${TESTS_VISUALIZATION})
 set_target_properties(${This} PROPERTIES
     FOLDER Tests
 )
 
 target_link_libraries(tests gtest_main dctc)
 target_link_libraries(tests_all gtest_main dctc)
+target_link_libraries(tests_visualization gtest_main dctc)
 
 add_test(
     NAME ${This}
